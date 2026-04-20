@@ -17,6 +17,14 @@ app:
         config:
           path: /
 
+    # Register available languages for the AppLanguageApi (shows Language toggle in Settings → Appearance)
+    - api:app/app-language:
+        config:
+          availableLanguages:
+            - en
+            - de
+          defaultLanguage: de
+
 organization:
   name: Stadt Wien
 
