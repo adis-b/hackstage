@@ -7,7 +7,7 @@
  *  - the sidebar notifications item text
  *  - titles of NavItems that are otherwise hard-coded in each plugin's
  *    NavItemBlueprint / PageBlueprint (e.g. "Catalog", "APIs", "Docs",
- *    "Catalog Graph", "Visualizer", "Kubernetes", "Register ...",
+ *    "Catalog Graph", "Visualizer", "OpenShift", "Register ...",
  *    "Settings", "Create", "Notifications")
  *
  * The ref is defined with English default messages; localised German
@@ -46,7 +46,7 @@ export const wienCdTranslationRef = createTranslationRef({
       nav_item_techdocs: 'Docs',
       page_catalog_graph: 'Catalog Graph',
       page_notifications: 'Notifications',
-      page_kubernetes: 'Kubernetes',
+      page_kubernetes: 'OpenShift',
       page_catalog_import: 'Register Existing Component',
       page_app_visualizer: 'Visualizer',
       nav_item_app_visualizer: 'Visualizer',
