@@ -20,7 +20,7 @@ export const wienCdDe = createTranslationMessages({
     'navItemTitles.nav_item_techdocs': 'Dokumentation',
     'navItemTitles.page_catalog_graph': 'Katalog-Diagramm',
     'navItemTitles.page_notifications': 'Benachrichtigungen',
-    'navItemTitles.page_kubernetes': 'Kubernetes',
+    'navItemTitles.page_kubernetes': 'OpenShift',
     'navItemTitles.page_catalog_import': 'Bestehende Komponente registrieren',
     'navItemTitles.page_app_visualizer': 'Visualisierung',
     'navItemTitles.nav_item_app_visualizer': 'Visualisierung',
