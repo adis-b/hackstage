@@ -19,7 +19,7 @@ app:
 
     # Enable the language toggle under Settings → Appearance with German and
     # English (German default, matching the Stadt Wien CD). The actual German
-    # translation resources are registered by packages/app/src/modules/i18n.
+    # translation resources are registered by @stadt-wien/backstage-plugin-cd.
     - api:app/app-language:
         config:
           availableLanguages:
@@ -27,7 +27,11 @@ app:
             - en
           defaultLanguage: de
 
-    # Configure the catalog index page to be the root page, this is normally mounted on /catalog
+    # Configure the catalog index page to be the root page (normally
+    # mounted on /catalog).  The sidebar label is translated via the
+    # wienCdTranslationRef in @stadt-wien/backstage-plugin-cd, so no
+    # hard-coded `title:` override is needed here — the language toggle
+    # under Settings → Appearance swaps them bidirectionally.
     - page:catalog:
         config:
           path: /
