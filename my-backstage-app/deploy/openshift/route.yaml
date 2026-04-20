@@ -1,0 +1,19 @@
+---
+# OpenShift Route to expose Backstage externally
+# This replaces the Kubernetes Ingress for OpenShift deployments
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: backstage
+  namespace: backstage
+  labels:
+    app: backstage
+spec:
+  to:
+    kind: Service
+    name: backstage
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
