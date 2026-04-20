@@ -16,9 +16,9 @@ export const kubernetesDe = createTranslationMessages({
     'kubernetesContentPage.permissionAlert.message':
       'Um Kubernetes-Objekte anzusehen, bitten Sie Ihre:n Portaladministrator:in, Ihnen die Berechtigungen „kubernetes.clusters.read" und „kubernetes.resources.read" zuzuweisen.',
     'kubernetesContentPage.title': 'Ihre Cluster',
-    'kubernetesContentPage.emptyState.title': 'Keine Kubernetes-Ressourcen',
+    'kubernetesContentPage.emptyState.title': 'Keine OpenShift-Ressourcen',
     'kubernetesContentPage.emptyState.description':
       'Keine Ressourcen auf bekannten Clustern für {{entityName}}',
-    'entityContent.title': 'Kubernetes',
+    'entityContent.title': 'OpenShift',
   },
 });
