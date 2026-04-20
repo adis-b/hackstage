@@ -1,0 +1,618 @@
+/**
+ * Wien Stadt i18n module
+ *
+ * Registers German (de) translations for all core Backstage plugins by
+ * creating TranslationBlueprint extensions from the official RHDH i18n pattern.
+ *
+ * The language toggle in Settings → Appearance will show when more than
+ * one language is registered via TranslationBlueprint — config-based
+ * `i18n.locales` alone is not sufficient.
+ */
+import {
+  createFrontendPlugin,
+  createTranslationResource,
+  createTranslationMessages,
+} from '@backstage/frontend-plugin-api';
+import {
+  TranslationBlueprint,
+} from '@backstage/plugin-app-react';
+
+// Translation refs from each plugin
+import { catalogTranslationRef } from '@backstage/plugin-catalog/alpha';
+import { catalogReactTranslationRef } from '@backstage/plugin-catalog-react/alpha';
+import { scaffolderTranslationRef } from '@backstage/plugin-scaffolder/alpha';
+import { scaffolderReactTranslationRef } from '@backstage/plugin-scaffolder-react/alpha';
+import { searchTranslationRef } from '@backstage/plugin-search/alpha';
+import { searchReactTranslationRef } from '@backstage/plugin-search-react/alpha';
+import { userSettingsTranslationRef } from '@backstage/plugin-user-settings/alpha';
+import { notificationsTranslationRef } from '@backstage/plugin-notifications/alpha';
+import { orgTranslationRef } from '@backstage/plugin-org/alpha';
+import { apiDocsTranslationRef } from '@backstage/plugin-api-docs/alpha';
+import { catalogImportTranslationRef } from '@backstage/plugin-catalog-import/alpha';
+import { catalogGraphTranslationRef } from '@backstage/plugin-catalog-graph/alpha';
+import { coreComponentsTranslationRef } from '@backstage/core-components/alpha';
+
+// ── German messages ────────────────────────────────────────────────────────
+
+const catalogDe = createTranslationMessages({
+  ref: catalogTranslationRef,
+  messages: {
+    'deleteEntity.description':
+      'Diese Entität wird von keinem Standort referenziert und erhält daher keine Aktualisierungen.',
+    'deleteEntity.cancelButtonTitle': 'Abbrechen',
+    'deleteEntity.deleteButtonTitle': 'Löschen',
+    'deleteEntity.dialogTitle': 'Möchten Sie diese Entität wirklich löschen?',
+    'deleteEntity.actionButtonTitle': 'Entität löschen',
+    'indexPage.title': '{{orgName}} Katalog',
+    'indexPage.createButtonTitle': 'Erstellen',
+    'indexPage.supportButtonContent': 'Alle Einträge im Software-Katalog',
+    'entityPage.notFoundMessage':
+      'Es gibt kein {{kind}} mit dem angeforderten {{link}}.',
+    'entityPage.notFoundLinkText': 'Art, Namespace und Name',
+    'aboutCard.title': 'Über',
+    'aboutCard.unknown': 'unbekannt',
+    'aboutCard.refreshButtonTitle': 'Aktualisierung planen',
+    'aboutCard.editButtonTitle': 'Metadaten bearbeiten',
+    'aboutCard.editButtonAriaLabel': 'Bearbeiten',
+    'aboutCard.createSimilarButtonTitle': 'Ähnliches erstellen',
+    'aboutCard.refreshScheduledMessage': 'Aktualisierung geplant',
+    'aboutCard.refreshButtonAriaLabel': 'Aktualisieren',
+    'aboutCard.launchTemplate': 'Vorlage starten',
+    'aboutCard.viewTechdocs': 'TechDocs ansehen',
+    'aboutCard.viewSource': 'Quellcode ansehen',
+    'aboutCard.descriptionField.value': 'Keine Beschreibung',
+    'aboutCard.descriptionField.label': 'Beschreibung',
+    'aboutCard.ownerField.value': 'Kein Eigentümer',
+    'aboutCard.ownerField.label': 'Eigentümer',
+    'aboutCard.domainField.value': 'Keine Domain',
+    'aboutCard.domainField.label': 'Bereich',
+    'aboutCard.systemField.value': 'Kein System',
+    'aboutCard.systemField.label': 'System',
+    'aboutCard.parentComponentField.value': 'Keine übergeordnete Komponente',
+    'aboutCard.parentComponentField.label': 'Übergeordnete Komponente',
+    'aboutCard.kindField.label': 'Art',
+    'aboutCard.typeField.label': 'Typ',
+    'aboutCard.lifecycleField.label': 'Lebenszyklus',
+    'aboutCard.tagsField.value': 'Keine Tags',
+    'aboutCard.tagsField.label': 'Tags',
+    'aboutCard.targetsField.label': 'Ziele',
+    'searchResultItem.type': 'Typ',
+    'searchResultItem.kind': 'Art',
+    'searchResultItem.owner': 'Eigentümer',
+    'searchResultItem.lifecycle': 'Lebenszyklus',
+    'catalogTable.allFilters': 'Alle',
+    'catalogTable.warningPanelTitle': 'Katalogeinträge konnten nicht geladen werden.',
+    'catalogTable.viewActionTitle': 'Anzeigen',
+    'catalogTable.editActionTitle': 'Bearbeiten',
+    'catalogTable.starActionTitle': 'Zu Favoriten hinzufügen',
+    'catalogTable.unStarActionTitle': 'Aus Favoriten entfernen',
+    'dependencyOfComponentsCard.title': 'Abhängigkeit von Komponenten',
+    'dependencyOfComponentsCard.emptyMessage':
+      'Keine Komponente hängt von dieser Komponente ab.',
+    'dependsOnComponentsCard.title': 'Hängt von Komponenten ab',
+    'dependsOnComponentsCard.emptyMessage':
+      'Diese Komponente hat keine Abhängigkeiten.',
+    'dependsOnResourcesCard.title': 'Hängt von Ressourcen ab',
+    'dependsOnResourcesCard.emptyMessage':
+      'Diese Komponente hat keine Ressourcenabhängigkeiten.',
+    'entityContextMenu.copiedMessage': 'Kopiert!',
+    'entityContextMenu.moreButtonTitle': 'Mehr',
+    'entityContextMenu.inspectMenuTitle': 'Entität untersuchen',
+    'entityContextMenu.copyURLMenuTitle': 'Entitäts-URL kopieren',
+    'entityContextMenu.unregisterMenuTitle': 'Entität abmelden',
+    'entityContextMenu.moreButtonAriaLabel': 'mehr',
+    'entityLabelsCard.title': 'Labels',
+    'entityLabelsCard.readMoreButtonTitle': 'Mehr lesen',
+    'entityLabelsCard.columnKeyLabel': 'Label',
+    'entityLabelsCard.columnValueLabel': 'Wert',
+    'entityLabelsCard.emptyDescription':
+      'Keine Labels für diese Entität definiert.',
+    'entityLabels.ownerLabel': 'Eigentümer',
+    'entityLabels.warningPanelTitle': 'Entität nicht gefunden',
+    'entityLabels.lifecycleLabel': 'Lebenszyklus',
+    'entityLinksCard.title': 'Links',
+    'entityLinksCard.readMoreButtonTitle': 'Mehr lesen',
+    'entityLinksCard.emptyDescription': 'Keine Links für diese Entität definiert.',
+    'entityNotFound.title': 'Entität nicht gefunden',
+    'entityNotFound.description':
+      'Möchten Sie uns helfen? Lesen Sie unsere Erste-Schritte-Dokumentation.',
+    'entityNotFound.docButtonTitle': 'DOKUMENTATION',
+    'entityTabs.tabsAriaLabel': 'Tabs',
+    'entityProcessingErrorsDescription': 'Der folgende Fehler stammt aus',
+    'entityRelationWarningDescription':
+      'Diese Entität hat Beziehungen zu anderen Entitäten, die im Katalog nicht gefunden werden können. Nicht gefundene Entitäten: ',
+    'hasComponentsCard.title': 'Hat Komponenten',
+    'hasComponentsCard.emptyMessage': 'Keine Komponente ist Teil dieses Systems.',
+    'hasResourcesCard.title': 'Hat Ressourcen',
+    'hasResourcesCard.emptyMessage': 'Keine Ressource ist Teil dieses Systems.',
+    'hasSubcomponentsCard.title': 'Hat Unterkomponenten',
+    'hasSubcomponentsCard.emptyMessage':
+      'Keine Unterkomponente ist Teil dieser Komponente.',
+    'hasSubdomainsCard.title': 'Hat Teilbereiche',
+    'hasSubdomainsCard.emptyMessage': 'Kein Teilbereich ist Teil dieser Domain.',
+    'hasSystemsCard.title': 'Hat Systeme',
+    'hasSystemsCard.emptyMessage': 'Kein System ist Teil dieser Domain.',
+    'relatedEntitiesCard.emptyHelpLinkTitle': 'So ändern Sie dies.',
+    'systemDiagramCard.title': 'Systemdiagramm',
+    'systemDiagramCard.description': 'Zum Bewegen zoomen und verschieben.',
+    'systemDiagramCard.edgeLabels.partOf': 'Teil von',
+    'systemDiagramCard.edgeLabels.dependsOn': 'hängt ab von',
+    'systemDiagramCard.edgeLabels.provides': 'stellt bereit',
+  },
+});
+
+const catalogReactDe = createTranslationMessages({
+  ref: catalogReactTranslationRef,
+  messages: {
+    'catalogFilter.title': 'Filter',
+    'catalogFilter.buttonTitle': 'Filter',
+    'entityKindPicker.title': 'Art',
+    'entityKindPicker.errorMessage': 'Entitätsarten konnten nicht geladen werden',
+    'entityLifecyclePicker.title': 'Lebenszyklus',
+    'entityNamespacePicker.title': 'Namespace',
+    'entityOwnerPicker.title': 'Eigentümer',
+    'entityProcessingStatusPicker.title': 'Verarbeitungsstatus',
+    'entityTagPicker.title': 'Tags',
+    'entityPeekAheadPopover.title': 'In die Entität einsteigen, um alle Tags zu sehen.',
+    'entityPeekAheadPopover.entityCardActionsAriaLabel': 'Anzeigen',
+    'entityPeekAheadPopover.entityCardActionsTitle': 'Details anzeigen',
+    'entityPeekAheadPopover.emailCardAction.title': 'E-Mail an {{email}}',
+    'entityPeekAheadPopover.emailCardAction.ariaLabel': 'E-Mail',
+    'entityPeekAheadPopover.emailCardAction.subTitle': 'mailto {{email}}',
+    'entitySearchBar.placeholder': 'Suchen',
+    'entityTypePicker.title': 'Typ',
+    'entityTypePicker.errorMessage': 'Entitätstypen konnten nicht geladen werden',
+    'entityTypePicker.optionAllTitle': 'alle',
+    'favoriteEntity.addToFavorites': 'Zu Favoriten hinzufügen',
+    'favoriteEntity.removeFromFavorites': 'Aus Favoriten entfernen',
+    'inspectEntityDialog.title': 'Entitäts-Inspektor',
+    'inspectEntityDialog.closeButtonTitle': 'Schließen',
+    'inspectEntityDialog.tabsAriaLabel': 'Inspektor-Optionen',
+    'inspectEntityDialog.ancestryPage.title': 'Herkunft',
+    'inspectEntityDialog.ancestryPage.description':
+      'Dies ist die Herkunft der Entitäten über der aktuellen.',
+    'inspectEntityDialog.ancestryPage.processorsLink': 'Prozessoren haben emittiert',
+    'inspectEntityDialog.colocatedPage.title': 'Gemeinsam gehostet',
+    'inspectEntityDialog.colocatedPage.description':
+      'Dies sind Entitäten, die zusammen mit dieser Entität gehostet werden.',
+    'inspectEntityDialog.colocatedPage.alertNoLocation':
+      'Entität hatte keine Standortinformation.',
+    'inspectEntityDialog.colocatedPage.alertNoEntity':
+      'Es gab keine anderen Entitäten an diesem Standort.',
+    'inspectEntityDialog.colocatedPage.locationHeader': 'Am gleichen Standort',
+    'inspectEntityDialog.colocatedPage.originHeader': 'Am gleichen Ursprung',
+    'inspectEntityDialog.colocatedPage.entityListAriaLabel':
+      'Gemeinsam gehostete Entitäten',
+    'inspectEntityDialog.jsonPage.title': 'Entität als JSON',
+    'inspectEntityDialog.jsonPage.description':
+      'Dies sind die rohen Entitätsdaten aus dem Katalog im JSON-Format.',
+    'inspectEntityDialog.overviewPage.title': 'Übersicht',
+    'inspectEntityDialog.overviewPage.metadata.title': 'Metadaten',
+    'inspectEntityDialog.overviewPage.labels': 'Labels',
+    'inspectEntityDialog.overviewPage.status.title': 'Status',
+    'inspectEntityDialog.overviewPage.identity.title': 'Identität',
+    'inspectEntityDialog.overviewPage.annotations': 'Annotationen',
+    'inspectEntityDialog.overviewPage.tags': 'Tags',
+    'inspectEntityDialog.overviewPage.relation.title': 'Beziehungen',
+    'inspectEntityDialog.overviewPage.copyAriaLabel': '{{label}} kopieren',
+    'inspectEntityDialog.overviewPage.copiedStatus': 'Kopiert',
+    'inspectEntityDialog.overviewPage.helpLinkAriaLabel': 'Mehr erfahren',
+    'inspectEntityDialog.yamlPage.title': 'Entität als YAML',
+    'inspectEntityDialog.yamlPage.description':
+      'Dies sind die rohen Entitätsdaten aus dem Katalog im YAML-Format.',
+    'inspectEntityDialog.tabNames.json': 'Rohes JSON',
+    'inspectEntityDialog.tabNames.yaml': 'Rohes YAML',
+    'inspectEntityDialog.tabNames.overview': 'Übersicht',
+    'inspectEntityDialog.tabNames.ancestry': 'Herkunft',
+    'inspectEntityDialog.tabNames.colocated': 'Gemeinsam gehostet',
+    'unregisterEntityDialog.title':
+      'Möchten Sie diese Entität wirklich abmelden?',
+    'unregisterEntityDialog.cancelButtonTitle': 'Abbrechen',
+    'unregisterEntityDialog.deleteButtonTitle': 'Entität löschen',
+    'unregisterEntityDialog.deleteEntitySuccessMessage':
+      'Entität {{entityName}} entfernt',
+    'unregisterEntityDialog.onlyDeleteStateTitle':
+      'Diese Entität stammt nicht von einem registrierten Standort.',
+    'unregisterEntityDialog.errorStateTitle': 'Interner Fehler: Unbekannter Status',
+    'unregisterEntityDialog.bootstrapState.title':
+      'Sie können diese Entität nicht abmelden, da sie aus einer geschützten Konfiguration stammt.',
+    'unregisterEntityDialog.bootstrapState.advancedDescription':
+      'Sie haben die Möglichkeit, die Entität selbst aus dem Katalog zu löschen.',
+    'unregisterEntityDialog.bootstrapState.advancedOptions': 'Erweiterte Optionen',
+    'unregisterEntityDialog.unregisterState.title':
+      'Diese Aktion meldet die folgenden Entitäten ab:',
+    'unregisterEntityDialog.unregisterState.description':
+      'Um rückgängig zu machen, registrieren Sie die Entität erneut in {{appTitle}}.',
+    'unregisterEntityDialog.unregisterState.subTitle':
+      'Befindet sich am folgenden Standort:',
+    'unregisterEntityDialog.unregisterState.advancedDescription':
+      'Sie haben auch die Möglichkeit, die Entität selbst aus dem Katalog zu löschen.',
+    'unregisterEntityDialog.unregisterState.advancedOptions': 'Erweiterte Optionen',
+    'unregisterEntityDialog.unregisterState.unregisterButtonTitle':
+      'Standort abmelden',
+    'userListPicker.defaultOrgName': 'Unternehmen',
+    'userListPicker.orgFilterAllLabel': 'Alle',
+    'userListPicker.personalFilter.title': 'Persönlich',
+    'userListPicker.personalFilter.ownedLabel': 'Meine',
+    'userListPicker.personalFilter.starredLabel': 'Favoriten',
+    'entityTableColumnTitle.name': 'Name',
+    'entityTableColumnTitle.type': 'Typ',
+    'entityTableColumnTitle.label': 'Label',
+    'entityTableColumnTitle.title': 'Titel',
+    'entityTableColumnTitle.description': 'Beschreibung',
+    'entityTableColumnTitle.system': 'System',
+    'entityTableColumnTitle.namespace': 'Namespace',
+    'entityTableColumnTitle.domain': 'Bereich',
+    'entityTableColumnTitle.tags': 'Tags',
+    'entityTableColumnTitle.owner': 'Eigentümer',
+    'entityTableColumnTitle.lifecycle': 'Lebenszyklus',
+    'entityTableColumnTitle.targets': 'Ziele',
+    'entityRelationCard.emptyHelpLinkTitle': 'So ändern Sie dies.',
+    'missingAnnotationEmptyState.title': 'Fehlende Annotation',
+    'missingAnnotationEmptyState.readMore': 'Mehr lesen',
+    'missingAnnotationEmptyState.annotationYaml':
+      'Fügen Sie die Annotation zu Ihrer {{entityKind}} YAML hinzu:',
+    'missingAnnotationEmptyState.generateDescription_one':
+      'Die Annotation {{annotations}} fehlt. Sie müssen die Annotation zu Ihrer {{entityKind}} hinzufügen.',
+    'missingAnnotationEmptyState.generateDescription_other':
+      'Die Annotationen {{annotations}} fehlen. Sie müssen die Annotationen zu Ihrer {{entityKind}} hinzufügen.',
+  },
+});
+
+const userSettingsDe = createTranslationMessages({
+  ref: userSettingsTranslationRef,
+  messages: {
+    'featureFlags.title': 'Feature-Flags',
+    'featureFlags.description':
+      'Bitte laden Sie die Seite nach dem Umschalten von Feature-Flags neu',
+    'featureFlags.filterTitle': 'Filtern',
+    'featureFlags.clearFilter': 'Filter zurücksetzen',
+    'featureFlags.emptyFlags.title': 'Keine Feature-Flags',
+    'featureFlags.emptyFlags.action.title':
+      'Beispiel für das Hinzufügen eines Feature-Flags:',
+    'featureFlags.emptyFlags.action.readMoreButtonTitle': 'Mehr lesen',
+    'featureFlags.emptyFlags.description':
+      'Feature-Flags ermöglichen es Plugins, Funktionen für Benutzer zur Auswahl anzubieten.',
+    'featureFlags.flagItem.title.disable': 'Deaktivieren',
+    'featureFlags.flagItem.title.enable': 'Aktivieren',
+    'featureFlags.flagItem.subtitle.registeredInApplication':
+      'In der Anwendung registriert',
+    'featureFlags.flagItem.subtitle.registeredInPlugin':
+      'Im {{pluginId}}-Plugin registriert',
+    'languageToggle.select': 'Sprache {{language}} auswählen',
+    'languageToggle.title': 'Sprache',
+    'languageToggle.description': 'Sprache ändern',
+    'themeToggle.select': '{{theme}} auswählen',
+    'themeToggle.title': 'Design',
+    'themeToggle.description': 'Design-Modus ändern',
+    'themeToggle.names.auto': 'Automatisch',
+    'themeToggle.names.dark': 'Dunkel',
+    'themeToggle.names.light': 'Hell',
+    'themeToggle.selectAuto': 'Automatisches Design auswählen',
+    'signOutMenu.title': 'Abmelden',
+    'signOutMenu.moreIconTitle': 'mehr',
+    'pinToggle.title': 'Seitenleiste anheften',
+    'pinToggle.description': 'Verhindert das Einklappen der Seitenleiste',
+    'pinToggle.ariaLabelTitle': 'Seitenleiste anheften – Schalter',
+    'pinToggle.switchTitles.unpin': 'Seitenleiste lösen',
+    'pinToggle.switchTitles.pin': 'Seitenleiste anheften',
+    'identityCard.title': 'Backstage-Identität',
+    'identityCard.noIdentityTitle': 'Keine Backstage-Identität',
+    'identityCard.userEntity': 'Benutzerentität',
+    'identityCard.ownershipEntities': 'Eigentümerschaftsentitäten',
+    'defaultProviderSettings.description':
+      'Bietet Authentifizierung gegenüber {{provider}}-APIs und -Identitäten',
+    'emptyProviders.title': 'Keine Authentifizierungsanbieter',
+    'emptyProviders.action.title':
+      'Öffnen Sie app-config.yaml und nehmen Sie die unten hervorgehobenen Änderungen vor:',
+    'emptyProviders.action.readMoreButtonTitle': 'Mehr lesen',
+    'emptyProviders.description':
+      'Sie können Authentifizierungsanbieter zu Backstage hinzufügen.',
+    'providerSettingsItem.title.signOut': 'Von {{title}} abmelden',
+    'providerSettingsItem.title.signIn': 'Bei {{title}} anmelden',
+    'providerSettingsItem.buttonTitle.signOut': 'Abmelden',
+    'providerSettingsItem.buttonTitle.signIn': 'Anmelden',
+    'authProviders.title': 'Verfügbare Anbieter',
+    'defaultSettingsPage.tabsTitle.featureFlags': 'Feature-Flags',
+    'defaultSettingsPage.tabsTitle.authProviders': 'Authentifizierungsanbieter',
+    'defaultSettingsPage.tabsTitle.general': 'Allgemein',
+    'settingsLayout.title': 'Einstellungen',
+    'sidebarTitle': 'Einstellungen',
+    'profileCard.title': 'Profil',
+    'appearanceCard.title': 'Erscheinungsbild',
+  },
+});
+
+const searchDe = createTranslationMessages({
+  ref: searchTranslationRef,
+  messages: {
+    'searchModal.viewFullResults': 'Alle Ergebnisse anzeigen',
+    'searchType.tabs.allTitle': 'Alle',
+    'searchType.allResults': 'Alle Ergebnisse',
+    'searchType.accordion.collapse': 'Einklappen',
+    'searchType.accordion.numberOfResults': '{{number}} Ergebnisse',
+    'searchType.accordion.allTitle': 'Alle',
+    'sidebarSearchModal.title': 'Suche',
+  },
+});
+
+const searchReactDe = createTranslationMessages({
+  ref: searchReactTranslationRef,
+  messages: {
+    'searchBar.title': 'Suche',
+    'searchBar.placeholder': 'In {{org}} suchen',
+    'searchBar.clearButtonTitle': 'Löschen',
+    'searchFilter.allOptionTitle': 'Alle',
+    'searchPagination.limitLabel': 'Ergebnisse pro Seite:',
+    'searchPagination.limitText': 'von {{num}}',
+    'noResultsDescription': 'Es wurden leider keine Ergebnisse gefunden',
+    'searchResultGroup.linkTitle': 'Alle anzeigen',
+    'searchResultGroup.addFilterButtonTitle': 'Filter hinzufügen',
+    'searchResultPager.next': 'Weiter',
+    'searchResultPager.previous': 'Zurück',
+  },
+});
+
+const coreComponentsDe = createTranslationMessages({
+  ref: coreComponentsTranslationRef,
+  messages: {
+    'table.filter.title': 'Filter',
+    'table.filter.placeholder': 'Alle Ergebnisse',
+    'table.filter.clearAll': 'Alle löschen',
+    'table.body.emptyDataSourceMessage': 'Keine Einträge vorhanden',
+    'table.header.actions': 'Aktionen',
+    'table.toolbar.search': 'Filtern',
+    'table.pagination.labelDisplayedRows': '{from}-{to} von {count}',
+    'table.pagination.firstTooltip': 'Erste Seite',
+    'table.pagination.labelRowsSelect': 'Zeilen',
+    'table.pagination.lastTooltip': 'Letzte Seite',
+    'table.pagination.nextTooltip': 'Nächste Seite',
+    'table.pagination.previousTooltip': 'Vorherige Seite',
+    'emptyState.missingAnnotation.title': 'Fehlende Annotation',
+    'emptyState.missingAnnotation.actionTitle':
+      'Fügen Sie die Annotation zu Ihrer Komponenten-YAML hinzu:',
+    'emptyState.missingAnnotation.readMore': 'Mehr lesen',
+    'signIn.title': 'Anmelden',
+    'signIn.loginFailed': 'Anmeldung fehlgeschlagen',
+    'signIn.guestProvider.title': 'Gast',
+    'signIn.guestProvider.enter': 'Eintreten',
+    'signIn.guestProvider.subtitle':
+      'Als Gastbenutzer eintreten.\nSie haben keine verifizierte Identität, sodass einige Funktionen möglicherweise nicht verfügbar sind.',
+    'skipToContent': 'Zum Inhalt springen',
+    'copyTextButton.tooltipText': 'Text in Zwischenablage kopiert',
+    'simpleStepper.finish': 'Fertigstellen',
+    'simpleStepper.reset': 'Zurücksetzen',
+    'simpleStepper.next': 'Weiter',
+    'simpleStepper.skip': 'Überspringen',
+    'simpleStepper.back': 'Zurück',
+    'errorPage.title': 'Hier ist etwas schiefgelaufen!',
+    'errorPage.subtitle': 'FEHLER {{status}}: {{statusMessage}}',
+    'errorPage.goBack': 'Zurück',
+    'errorPage.showMoreDetails': 'Mehr Details anzeigen',
+    'errorPage.showLessDetails': 'Weniger Details anzeigen',
+    'oauthRequestDialog.message':
+      'Melden Sie sich an, um {{appTitle}} Zugriff auf {{provider}}-APIs zu gewähren.',
+    'oauthRequestDialog.title': 'Anmeldung erforderlich',
+    'oauthRequestDialog.authRedirectTitle':
+      'Dies löst eine HTTP-Weiterleitung zur OAuth-Anmeldung aus.',
+    'oauthRequestDialog.login': 'Anmelden',
+    'oauthRequestDialog.rejectAll': 'Alle ablehnen',
+    'supportButton.title': 'Support',
+    'supportButton.close': 'Schließen',
+    'alertDisplay.message_one': '({{ count }} neuere Nachricht)',
+    'alertDisplay.message_other': '({{ count }} neuere Nachrichten)',
+    'dependencyGraph.fullscreenTooltip': 'Vollbild umschalten',
+    'logViewer.searchField.placeholder': 'Suchen',
+    'logViewer.downloadBtn.tooltip': 'Protokolle herunterladen',
+  },
+});
+
+const scaffolderDe = createTranslationMessages({
+  ref: scaffolderTranslationRef,
+  messages: {
+    'fields.entityNamePicker.title': 'Name',
+    'fields.entityNamePicker.description': 'Eindeutiger Name der Komponente',
+    'fields.entityPicker.title': 'Entität',
+    'fields.entityPicker.description': 'Eine Entität aus dem Katalog',
+    'fields.entityTagsPicker.title': 'Tags',
+    'fields.entityTagsPicker.description':
+      "Relevante Tags hinzufügen, 'Enter' drücken um neue Tags hinzuzufügen.",
+    'fields.ownerPicker.title': 'Eigentümer',
+    'fields.ownerPicker.description': 'Der Eigentümer der Komponente',
+    'actionsPage.title': 'Aktionen',
+    'actionsPage.subtitle':
+      'Die folgenden Aktionen sind in dieser Backstage-Installation verfügbar',
+    'actionsPage.pageTitle': 'Erstellen-Aktionen',
+    'actionsPage.action.examples': 'Beispiele',
+    'actionsPage.action.input': 'Eingabe',
+    'actionsPage.action.output': 'Ausgabe',
+    'actionsPage.content.emptyState.title': 'Keine installierten Aktionen',
+    'actionsPage.content.emptyState.description':
+      'Es sind keine Aktionen in dieser Backstage-Installation installiert',
+    'actionsPage.content.searchFieldPlaceholder': 'Aktionen filtern',
+    'aboutCard.launchTemplate': 'Vorlage starten',
+  },
+});
+
+const scaffolderReactDe = createTranslationMessages({
+  ref: scaffolderReactTranslationRef,
+  messages: {
+    'templateCard.button.chooseTitle': 'Auswählen',
+    'templateCard.title.type': 'Typ',
+    'templateCard.title.createdUsing': 'Erstellt mit',
+    'templateList.noCategoryTitle': 'Keine Kategorie',
+  },
+});
+
+const notificationsDe = createTranslationMessages({
+  ref: notificationsTranslationRef,
+  messages: {
+    'table.errors.markAllReadFailed': 'Alle als gelesen markieren fehlgeschlagen',
+    'table.emptyMessage': 'Keine Einträge vorhanden',
+    'table.bulkActions.markAllRead': 'Alle als gelesen markieren',
+    'table.bulkActions.markSelectedAsRead': 'Ausgewählte als gelesen markieren',
+    'table.bulkActions.returnSelectedAmongUnread':
+      'Ausgewählte unter ungelesen zurückgeben',
+    'table.bulkActions.saveSelectedForLater': 'Ausgewählte für später speichern',
+    'table.bulkActions.undoSaveForSelected':
+      'Speichern für Ausgewählte rückgängig machen',
+    'table.confirmDialog.cancel': 'Abbrechen',
+    'table.confirmDialog.title': 'Sind Sie sicher?',
+    'table.confirmDialog.markAllReadDescription':
+      'Alle Benachrichtigungen als gelesen markieren.',
+    'table.confirmDialog.markAllReadConfirmation': 'Alle markieren',
+    'filters.view.all': 'Alle',
+    'filters.view.label': 'Ansicht',
+    'filters.view.read': 'Gelesene Benachrichtigungen',
+  },
+});
+
+const orgDe = createTranslationMessages({
+  ref: orgTranslationRef,
+  messages: {
+    'groupCard.title': 'Gruppe',
+    'groupCard.membersTitle': 'Mitglieder',
+    'groupCard.parentTitle': 'Übergeordnete Gruppe',
+    'groupCard.subGroupsTitle': 'Untergruppen',
+    'ownershipCard.title': 'Eigentümerschaft',
+    'ownershipCard.aggregateRootDescription':
+      'Wird Eigentümer von Entitäten, die im Besitz von Untergruppen sind',
+    'membersListCard.title': 'Mitgliederliste',
+    'membersListCard.aggregate':
+      'Alle Mitglieder der Organisationshierarchie zusammenfassen',
+    'memberComponent.alertTitle': 'Keine E-Mail',
+    'memberComponent.alertDescription':
+      'Dieses Mitglied hat keine E-Mail-Adresse.',
+    'userCard.title': 'Benutzer',
+    'userCard.groupsTitle': 'Gruppen',
+  },
+});
+
+const apiDocsDe = createTranslationMessages({
+  ref: apiDocsTranslationRef,
+  messages: {
+    'apiDocsCard.title': 'API-Definitionen',
+    'apiDocsCard.emptyMessage': 'Keine API-Definitionen vorhanden.',
+    'definitionCard.title': 'Definition',
+    'consumedApisCard.title': 'Verbrauchte APIs',
+    'consumedApisCard.emptyMessage': 'Diese Komponente verbraucht keine APIs.',
+    'providedApisCard.title': 'Bereitgestellte APIs',
+    'providedApisCard.emptyMessage': 'Diese Komponente stellt keine APIs bereit.',
+  },
+});
+
+const catalogImportDe = createTranslationMessages({
+  ref: catalogImportTranslationRef,
+  messages: {
+    'importPage.title': 'Komponente registrieren',
+    'importPage.subtitle': 'Komponenten in den Katalog importieren',
+    'importPage.stepper.url.title': 'Wählen Sie eine URL',
+    'importPage.stepper.url.description':
+      'Geben Sie die URL zu einer catalog-info.yaml-Datei an',
+    'importPage.stepper.analyze.title': 'Analysieren',
+    'importPage.stepper.analyze.description': 'Analyse der gefundenen Entitäten',
+    'importPage.stepper.review.title': 'Überprüfen',
+    'importPage.stepper.review.description': 'Überprüfen Sie die zu importierenden Entitäten',
+    'importPage.stepper.finish.title': 'Fertig',
+    'importPage.stepper.finish.description': 'Entitäten wurden erfolgreich importiert',
+  },
+});
+
+const catalogGraphDe = createTranslationMessages({
+  ref: catalogGraphTranslationRef,
+  messages: {
+    'catalogGraphPage.title': 'Katalog-Graph',
+    'catalogGraphPage.subtitle':
+      'Visualisierung der Entitätsbeziehungen im Katalog',
+    'catalogGraphCard.title': 'Systemdiagramm',
+    'catalogGraphCard.description': 'Zum Bewegen zoomen und verschieben.',
+  },
+});
+
+// ── TranslationResources (lazy-loaded per locale) ──────────────────────────
+
+const catalogTranslations = createTranslationResource({
+  ref: catalogTranslationRef,
+  translations: { de: async () => ({ default: catalogDe }) },
+});
+
+const catalogReactTranslations = createTranslationResource({
+  ref: catalogReactTranslationRef,
+  translations: { de: async () => ({ default: catalogReactDe }) },
+});
+
+const userSettingsTranslations = createTranslationResource({
+  ref: userSettingsTranslationRef,
+  translations: { de: async () => ({ default: userSettingsDe }) },
+});
+
+const searchTranslations = createTranslationResource({
+  ref: searchTranslationRef,
+  translations: { de: async () => ({ default: searchDe }) },
+});
+
+const searchReactTranslations = createTranslationResource({
+  ref: searchReactTranslationRef,
+  translations: { de: async () => ({ default: searchReactDe }) },
+});
+
+const coreComponentsTranslations = createTranslationResource({
+  ref: coreComponentsTranslationRef,
+  translations: { de: async () => ({ default: coreComponentsDe }) },
+});
+
+const scaffolderTranslations = createTranslationResource({
+  ref: scaffolderTranslationRef,
+  translations: { de: async () => ({ default: scaffolderDe }) },
+});
+
+const scaffolderReactTranslations = createTranslationResource({
+  ref: scaffolderReactTranslationRef,
+  translations: { de: async () => ({ default: scaffolderReactDe }) },
+});
+
+const notificationsTranslations = createTranslationResource({
+  ref: notificationsTranslationRef,
+  translations: { de: async () => ({ default: notificationsDe }) },
+});
+
+const orgTranslations = createTranslationResource({
+  ref: orgTranslationRef,
+  translations: { de: async () => ({ default: orgDe }) },
+});
+
+const apiDocsTranslations = createTranslationResource({
+  ref: apiDocsTranslationRef,
+  translations: { de: async () => ({ default: apiDocsDe }) },
+});
+
+const catalogImportTranslations = createTranslationResource({
+  ref: catalogImportTranslationRef,
+  translations: { de: async () => ({ default: catalogImportDe }) },
+});
+
+const catalogGraphTranslations = createTranslationResource({
+  ref: catalogGraphTranslationRef,
+  translations: { de: async () => ({ default: catalogGraphDe }) },
+});
+
+// ── Plugin that registers all TranslationBlueprint extensions ──────────────
+
+export const wienI18nPlugin = createFrontendPlugin({
+  pluginId: 'wien-i18n',
+  extensions: [
+    TranslationBlueprint.make({ name: 'catalog', params: { resource: catalogTranslations } }),
+    TranslationBlueprint.make({ name: 'catalog-react', params: { resource: catalogReactTranslations } }),
+    TranslationBlueprint.make({ name: 'user-settings', params: { resource: userSettingsTranslations } }),
+    TranslationBlueprint.make({ name: 'search', params: { resource: searchTranslations } }),
+    TranslationBlueprint.make({ name: 'search-react', params: { resource: searchReactTranslations } }),
+    TranslationBlueprint.make({ name: 'core-components', params: { resource: coreComponentsTranslations } }),
+    TranslationBlueprint.make({ name: 'scaffolder', params: { resource: scaffolderTranslations } }),
+    TranslationBlueprint.make({ name: 'scaffolder-react', params: { resource: scaffolderReactTranslations } }),
+    TranslationBlueprint.make({ name: 'notifications', params: { resource: notificationsTranslations } }),
+    TranslationBlueprint.make({ name: 'org', params: { resource: orgTranslations } }),
+    TranslationBlueprint.make({ name: 'api-docs', params: { resource: apiDocsTranslations } }),
+    TranslationBlueprint.make({ name: 'catalog-import', params: { resource: catalogImportTranslations } }),
+    TranslationBlueprint.make({ name: 'catalog-graph', params: { resource: catalogGraphTranslations } }),
+  ],
+});
