@@ -1,0 +1,87 @@
+{
+  "name": "@stadt-wien/backstage-plugin-cd",
+  "version": "0.1.0",
+  "description": "Stadt Wien Corporate Design (Wien Rot palette, Wiener Melange typography and German translations) for Backstage's frontend system.",
+  "backstage": {
+    "role": "frontend-plugin",
+    "pluginId": "wien-cd",
+    "pluginPackages": [
+      "@stadt-wien/backstage-plugin-cd"
+    ],
+    "features": {
+      "./alpha": "@backstage/FrontendPlugin"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "backstage",
+    "backstage-plugin",
+    "theme",
+    "stadt-wien",
+    "wien",
+    "corporate-design"
+  ],
+  "homepage": "https://github.com/adis-b/hackstage/tree/main/my-backstage-app/plugins/wien-cd",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adis-b/hackstage",
+    "directory": "my-backstage-app/plugins/wien-cd"
+  },
+  "license": "Apache-2.0",
+  "sideEffects": false,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": {
+      "backstage": "@backstage/FrontendPlugin",
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./alpha": {
+      "backstage": "@backstage/FrontendPlugin",
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "backstage-cli package build",
+    "lint": "backstage-cli package lint",
+    "test": "backstage-cli package test",
+    "clean": "backstage-cli package clean",
+    "prepack": "backstage-cli package prepack",
+    "postpack": "backstage-cli package postpack"
+  },
+  "dependencies": {
+    "@backstage/core-components": "^0.18.0",
+    "@backstage/core-plugin-api": "^1.12.0",
+    "@backstage/frontend-plugin-api": "^0.16.0",
+    "@backstage/plugin-app-react": "^0.2.0",
+    "@backstage/plugin-catalog": "^2.0.0",
+    "@backstage/plugin-scaffolder": "^1.30.0",
+    "@backstage/plugin-user-settings": "^0.9.0",
+    "@backstage/theme": "^0.7.0",
+    "@material-ui/core": "^4.12.2",
+    "@material-ui/icons": "^4.9.1"
+  },
+  "peerDependencies": {
+    "react": "^17 || ^18",
+    "react-dom": "^17 || ^18"
+  },
+  "devDependencies": {
+    "@backstage/cli": "^0.36.0",
+    "@backstage/frontend-test-utils": "^0.5.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
+  }
+}
