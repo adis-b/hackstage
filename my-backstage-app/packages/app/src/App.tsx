@@ -1,8 +1,7 @@
 import { createApp } from '@backstage/frontend-defaults';
 import catalogPlugin from '@backstage/plugin-catalog/alpha';
-import { wienCdFeatures } from '@stadt-wien/backstage-plugin-cd';
-import { navModule } from './modules/nav';
+import { wienCdFeatures } from '@stadt-wien/backstage-plugin-cd/alpha';
 
 export default createApp({
-  features: [catalogPlugin, navModule, ...wienCdFeatures],
+  features: [catalogPlugin, ...wienCdFeatures],
 });

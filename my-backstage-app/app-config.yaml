@@ -6,20 +6,22 @@ app:
   packages: all
 
   extensions:
-    # Disable the nav items that we're manually rendering in packages/app/src/modules/nav/Sidebar.tsx
+    # Suppress the auto-generated nav items for plugins that the Wien
+    # branded sidebar renders as part of its own groups instead.
     - nav-item:search: false
     - nav-item:user-settings: false
     - nav-item:catalog: false
     - nav-item:scaffolder: false
 
-    # Replace the default Backstage light/dark themes with the Stadt Wien CD theme
-    # (see packages/app/src/modules/theme).
+    # Replace the default Backstage light/dark themes with the Stadt
+    # Wien CD themes provided by @stadt-wien/backstage-plugin-cd.
     - theme:app/light: false
     - theme:app/dark: false
 
-    # Enable the language toggle under Settings → Appearance with German and
-    # English (German default, matching the Stadt Wien CD). The actual German
-    # translation resources are registered by @stadt-wien/backstage-plugin-cd.
+    # Enable the language toggle under Settings → Appearance with
+    # German and English (German default, matching the Stadt Wien CD).
+    # German translation resources are registered by
+    # @stadt-wien/backstage-plugin-cd.
     - api:app/app-language:
         config:
           availableLanguages:
@@ -27,8 +29,14 @@ app:
             - en
           defaultLanguage: de
 
+    # Wordmark next to the Wiener Wappen in the sidebar.
+    - nav-content:app/wien-sidebar:
+        config:
+          title: Wien
+          subtitle: Developer Portal
+
     # Configure the catalog index page to be the root page (normally
-    # mounted on /catalog).  The sidebar label is translated via the
+    # mounted on /catalog). The sidebar label is translated via the
     # wienCdTranslationRef in @stadt-wien/backstage-plugin-cd, so no
     # hard-coded `title:` override is needed here — the language toggle
     # under Settings → Appearance swaps them bidirectionally.
