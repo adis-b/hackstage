@@ -67,4 +67,7 @@ COPY --chown=node:node examples ./examples
 COPY --chown=node:node packages/backend/dist/bundle.tar.gz app-config*.yaml ./
 RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
 
+# Copy i18n translation files
+COPY --chown=node:node translations/ ./translations/
+
 CMD ["node", "packages/backend", "--config", "app-config.yaml", "--config", "app-config.production.yaml"]

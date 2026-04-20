@@ -34,6 +34,14 @@ auth:
     guest:
       dangerouslyAllowOutsideDevelopment: true
 
+i18n:
+  locales:
+    - en
+    - de
+  defaultLocale: de
+  overrides:
+    - /app/translations/allTranslations.de.json
+
 catalog:
   # Overrides the default list locations from app-config.yaml as these contain example data.
   # See https://backstage.io/docs/features/software-catalog/#adding-components-to-the-catalog for more details

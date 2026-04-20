@@ -20,6 +20,12 @@ app:
 organization:
   name: Stadt Wien
 
+i18n:
+  locales:
+    - en
+    - de
+  defaultLocale: de
+
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
   # See https://backstage.io/docs/auth/service-to-service-auth for
