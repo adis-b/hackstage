@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#383838" />
     <meta
       name="description"
-      content="Backstage is an open source framework for building developer portals"
+      content="Stadt Wien Entwicklerportal – Software Catalog, Templates und Dokumentation für alle Dienste der Stadt Wien"
     />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -39,7 +39,15 @@
     <link
       rel="mask-icon"
       href="<%= publicPath %>/safari-pinned-tab.svg"
-      color="#5bbad5"
+      color="#FF0000"
+    />
+    <!-- Preload Wiener Melange variable font from Stadt Wien CDN -->
+    <link
+      rel="preload"
+      href="https://assets.wien.gv.at/theme/v2.9.0/fonts/WienerMelangeVF.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
     />
     <title><%= config.getOptionalString('app.title') ?? 'Backstage' %></title>
   </head>

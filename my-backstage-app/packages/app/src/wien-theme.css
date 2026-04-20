@@ -1,0 +1,373 @@
+/*
+ * Wien CD Theme for Backstage
+ * Based on the Stadt Wien Corporate Design Manual
+ * https://www.wien.gv.at/spezial/cd-manual/
+ * https://handbuch.wien.gv.at/
+ *
+ * Font: Wiener Melange (Variable Font, property of Stadt Wien)
+ * Served from: https://assets.wien.gv.at/theme/v2.9.0/
+ *
+ * Color palette (from the CD Manual):
+ *   Wien Rot:         #FF0000   — reserved for Wappen only
+ *   Ur Schwarz:       #000000
+ *   Fastschwarz:      oklch(28% 0 0)  ≈ #383838  — primary text
+ *   Morgenrot:        #FF5A64
+ *   Flieder:          #AAAAFA
+ *   Abendstimmung:    #462346
+ *   Frischgrün:       #82D282
+ *   Wasserblau:       #83D0F5
+ *   Goldgelb:         #E6C828
+ *   Nebelgrau:        #D6D1CA
+ *   Nebelgrau Leicht: #F3F1EF
+ */
+
+/* ── Font ────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'WienerMelange';
+  src: url('https://assets.wien.gv.at/theme/v2.9.0/fonts/WienerMelangeVF.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Root CSS token overrides ────────────────────────────── */
+:root,
+[data-theme-mode='light'] {
+  /* Font */
+  --bui-font-regular: 'WienerMelange', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', sans-serif;
+  --bui-font-weight-regular: 400;
+  --bui-font-weight-bold: 700;
+
+  /* Wien CD primary text colour (Fastschwarz ≈ #383838) */
+  --wien-fastschwarz:       #383838;
+  --wien-weiss:             #ffffff;
+
+  /* Wien secondary palette */
+  --wien-morgenrot:         #FF5A64;
+  --wien-morgenrot-light:   #FFCED1;
+  --wien-flieder:           #AAAAFA;
+  --wien-flieder-light:     #E6E5FE;
+  --wien-abendstimmung:     #462346;
+  --wien-abendstimmung-light: #C7BDC7;
+  --wien-frischgruen:       #82D282;
+  --wien-frischgruen-light: #CDEDCD;
+  --wien-wasserblau:        #83D0F5;
+  --wien-wasserblau-light:  #DFF2FD;
+  --wien-goldgelb:          #E6C828;
+  --wien-goldgelb-light:    #F8EFBD;
+  --wien-nebelgrau:         #D6D1CA;
+  --wien-nebelgrau-light:   #F3F1EF;
+
+  /* Map Wien colours onto Backstage UI tokens */
+
+  /* Primary solid = Wasserblau (the main interactive/brand colour on wien.gv.at) */
+  --bui-bg-solid:           #2d6e9e;
+  --bui-bg-solid-hover:     #245a84;
+  --bui-bg-solid-pressed:   #1b4464;
+  --bui-bg-solid-disabled:  #7aa8c6;
+
+  /* App background = Nebelgrau Leicht */
+  --bui-bg-app:             var(--wien-nebelgrau-light);
+
+  /* Neutral cards = white */
+  --bui-bg-neutral-1:       #ffffff;
+  --bui-bg-neutral-2:       var(--wien-nebelgrau-light);
+  --bui-bg-neutral-3:       var(--wien-nebelgrau);
+
+  /* Foreground = Fastschwarz */
+  --bui-fg-primary:         var(--wien-fastschwarz);
+  --bui-fg-secondary:       oklch(28% 0 0 / 55%);
+  --bui-fg-disabled:        oklch(28% 0 0 / 30%);
+  --bui-fg-solid:           var(--wien-weiss);
+
+  /* Status colours */
+  --bui-bg-danger:          var(--wien-morgenrot-light);
+  --bui-bg-warning:         var(--wien-goldgelb-light);
+  --bui-bg-success:         var(--wien-frischgruen-light);
+  --bui-bg-info:            var(--wien-wasserblau-light);
+
+  --bui-fg-danger:          #c0392b;
+  --bui-fg-warning:         #b7770d;
+  --bui-fg-success:         #1e7e34;
+  --bui-fg-info:            #1a6fa0;
+
+  /* Borders */
+  --bui-border-1:           var(--wien-nebelgrau);
+  --bui-border-2:           #b0a89e;
+}
+
+/* ── Dark mode ───────────────────────────────────────────── */
+[data-theme-mode='dark'] {
+  --bui-bg-app:             #1a1a1a;
+  --bui-bg-neutral-1:       #242424;
+  --bui-bg-neutral-2:       #2e2e2e;
+  --bui-bg-neutral-3:       #3a3a3a;
+  --bui-fg-primary:         #f0ece8;
+  --bui-fg-secondary:       rgba(240, 236, 232, 0.6);
+  --bui-bg-solid:           #3a87b8;
+  --bui-bg-solid-hover:     #4a97c8;
+}
+
+/* ── Global typography ───────────────────────────────────── */
+*,
+*::before,
+*::after {
+  font-family: var(--bui-font-regular);
+}
+
+body {
+  font-family: var(--bui-font-regular);
+  color: var(--bui-fg-primary);
+  background-color: var(--bui-bg-app);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings: ExtraBold (weight 800) per Wien CD */
+h1, h2, h3, h4, h5, h6,
+[class*="MuiTypography-h1"],
+[class*="MuiTypography-h2"],
+[class*="MuiTypography-h3"],
+[class*="MuiTypography-h4"],
+[class*="MuiTypography-h5"],
+[class*="MuiTypography-h6"] {
+  font-family: var(--bui-font-regular);
+  font-variation-settings: 'wght' 800;
+  font-weight: 800;
+  color: var(--wien-fastschwarz);
+  letter-spacing: -0.01em;
+}
+
+/* Body copy: Regular (weight 400) */
+p, li, td, th, label,
+[class*="MuiTypography-body"] {
+  font-family: var(--bui-font-regular);
+  font-variation-settings: 'wght' 400;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Subheadings / emphasis: Bold (weight 700) */
+strong, b,
+[class*="MuiTypography-subtitle"] {
+  font-variation-settings: 'wght' 700;
+  font-weight: 700;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+/* Wien.gv.at header/nav background: Fastschwarz */
+nav[class*="MuiDrawer"],
+[class*="BackstageSidebar"],
+aside[class*="MuiDrawer-paper"] {
+  background-color: var(--wien-fastschwarz) !important;
+}
+
+[class*="BackstageSidebarItem-root"] {
+  color: #f0ece8 !important;
+  font-family: var(--bui-font-regular) !important;
+  font-variation-settings: 'wght' 500 !important;
+}
+
+[class*="BackstageSidebarItem-root"]:hover,
+[class*="BackstageSidebarItem-buttonItem"]:hover {
+  background-color: rgba(240, 236, 232, 0.1) !important;
+}
+
+[class*="BackstageSidebarItem-root"][class*="selected"],
+[class*="BackstageSidebarItem-root"][aria-current="page"] {
+  background-color: var(--wien-wasserblau) !important;
+  color: var(--wien-fastschwarz) !important;
+}
+
+/* Sidebar logo area */
+[class*="BackstageSidebarLogo"] {
+  border-bottom: 1px solid rgba(240, 236, 232, 0.15);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+/* ── Header / App Bar ────────────────────────────────────── */
+header[class*="MuiAppBar"],
+[class*="BackstageHeader"],
+[class*="BackstagePageHeader"] {
+  background-color: var(--wien-fastschwarz) !important;
+  color: #f0ece8 !important;
+  box-shadow: none !important;
+  border-bottom: 3px solid var(--wien-wasserblau) !important;
+}
+
+/* Page title */
+[class*="BackstageHeader-title"],
+[class*="BackstagePageHeader-title"] {
+  font-family: var(--bui-font-regular) !important;
+  font-variation-settings: 'wght' 800 !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+[class*="MuiCard-root"],
+[class*="MuiPaper-root"] {
+  border-radius: 2px !important;
+  box-shadow: 0 1px 4px rgba(56, 56, 56, 0.12) !important;
+  border: 1px solid var(--wien-nebelgrau) !important;
+}
+
+[class*="MuiCard-root"]:hover {
+  box-shadow: 0 4px 12px rgba(56, 56, 56, 0.18) !important;
+}
+
+/* Card headers */
+[class*="MuiCardHeader-title"],
+[class*="InfoCard-header"],
+[class*="MuiCardContent-root"] h2,
+[class*="MuiCardContent-root"] h3 {
+  font-variation-settings: 'wght' 700 !important;
+  font-weight: 700 !important;
+  color: var(--wien-fastschwarz) !important;
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+[class*="MuiButton-containedPrimary"] {
+  background-color: #2d6e9e !important;
+  color: #ffffff !important;
+  border-radius: 2px !important;
+  font-variation-settings: 'wght' 700 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  box-shadow: none !important;
+}
+
+[class*="MuiButton-containedPrimary"]:hover {
+  background-color: #245a84 !important;
+  box-shadow: none !important;
+}
+
+[class*="MuiButton-outlinedPrimary"] {
+  border-color: #2d6e9e !important;
+  color: #2d6e9e !important;
+  border-radius: 2px !important;
+  text-transform: none !important;
+}
+
+[class*="MuiButton-root"] {
+  text-transform: none !important;
+  font-family: var(--bui-font-regular) !important;
+  font-variation-settings: 'wght' 700 !important;
+  border-radius: 2px !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* ── Tabs ────────────────────────────────────────────────── */
+[class*="MuiTab-root"] {
+  font-family: var(--bui-font-regular) !important;
+  font-variation-settings: 'wght' 500 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+[class*="MuiTabs-indicator"] {
+  background-color: var(--wien-wasserblau) !important;
+  height: 3px !important;
+}
+
+/* ── Links ───────────────────────────────────────────────── */
+a,
+[class*="MuiLink-root"] {
+  color: #1a6fa0 !important;
+  text-decoration: none !important;
+}
+
+a:hover,
+[class*="MuiLink-root"]:hover {
+  text-decoration: underline !important;
+  color: #245a84 !important;
+}
+
+/* ── Chips / Tags ────────────────────────────────────────── */
+[class*="MuiChip-root"] {
+  border-radius: 4px !important;
+  font-variation-settings: 'wght' 500 !important;
+  font-family: var(--bui-font-regular) !important;
+  background-color: var(--wien-nebelgrau-light) !important;
+  border: 1px solid var(--wien-nebelgrau) !important;
+  color: var(--wien-fastschwarz) !important;
+}
+
+/* ── Tables ──────────────────────────────────────────────── */
+[class*="MuiTableHead-root"] th {
+  background-color: var(--wien-nebelgrau-light) !important;
+  font-variation-settings: 'wght' 700 !important;
+  font-weight: 700 !important;
+  color: var(--wien-fastschwarz) !important;
+  border-bottom: 2px solid var(--wien-nebelgrau) !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+[class*="MuiTableRow-root"]:hover td {
+  background-color: var(--wien-wasserblau-light) !important;
+}
+
+/* ── Search ──────────────────────────────────────────────── */
+[class*="MuiInputBase-root"],
+[class*="MuiOutlinedInput-root"] {
+  border-radius: 2px !important;
+  font-family: var(--bui-font-regular) !important;
+}
+
+[class*="MuiOutlinedInput-root"]:focus-within [class*="MuiOutlinedInput-notchedOutline"],
+[class*="MuiOutlinedInput-root"][class*="Mui-focused"] [class*="MuiOutlinedInput-notchedOutline"] {
+  border-color: #2d6e9e !important;
+}
+
+/* ── Catalog entity cards ────────────────────────────────── */
+[class*="CatalogKindHeader"],
+[class*="EntitySearchBar"] {
+  background-color: var(--wien-fastschwarz) !important;
+  color: #f0ece8 !important;
+}
+
+/* ── Status indicators (use Wien palette) ────────────────── */
+[class*="Status-ok"],
+[class*="status-ok"] {
+  color: #1e7e34 !important;
+}
+
+[class*="Status-error"],
+[class*="status-error"] {
+  color: #c0392b !important;
+}
+
+[class*="Status-warning"],
+[class*="status-warning"] {
+  color: #b7770d !important;
+}
+
+/* ── Scrollbars ──────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--wien-nebelgrau-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--wien-nebelgrau);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b0a89e;
+}
+
+/* ── Focus ring (accessibility, matches Wien CD) ─────────── */
+:focus-visible {
+  outline: 2px solid #2d6e9e !important;
+  outline-offset: 2px !important;
+}
