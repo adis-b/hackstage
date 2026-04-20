@@ -9,7 +9,7 @@
  * `i18n.locales` alone is not sufficient.
  */
 import {
-  createFrontendPlugin,
+  createFrontendModule,
   createTranslationResource,
   createTranslationMessages,
 } from '@backstage/frontend-plugin-api';
@@ -596,10 +596,14 @@ const catalogGraphTranslations = createTranslationResource({
   translations: { de: async () => ({ default: catalogGraphDe }) },
 });
 
-// ── Plugin that registers all TranslationBlueprint extensions ──────────────
+// ── Module that registers all TranslationBlueprint extensions ──────────────
+// IMPORTANT: Must use createFrontendModule with pluginId:'app' so extensions
+// are treated as part of the 'app' plugin. The TranslationsApi input is marked
+// internal:true, which means only extensions from the same plugin ('app') are
+// accepted. Using a different pluginId causes EXTENSION_INPUT_INTERNAL_IGNORED.
 
-export const wienI18nPlugin = createFrontendPlugin({
-  pluginId: 'wien-i18n',
+export const wienI18nPlugin = createFrontendModule({
+  pluginId: 'app',
   extensions: [
     TranslationBlueprint.make({ name: 'catalog', params: { resource: catalogTranslations } }),
     TranslationBlueprint.make({ name: 'catalog-react', params: { resource: catalogReactTranslations } }),
