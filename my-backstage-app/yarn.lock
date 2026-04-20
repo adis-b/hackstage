@@ -4270,7 +4270,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage/plugin-techdocs@npm:^1.17.3":
+"@backstage/plugin-techdocs@npm:^1.17.0, @backstage/plugin-techdocs@npm:^1.17.3":
   version: 1.17.5
   resolution: "@backstage/plugin-techdocs@npm:1.17.5"
   dependencies:
@@ -10228,8 +10228,10 @@ __metadata:
     "@backstage/plugin-scaffolder-react": "npm:^1.19.0"
     "@backstage/plugin-search": "npm:^1.7.0"
     "@backstage/plugin-search-react": "npm:^1.9.0"
+    "@backstage/plugin-techdocs": "npm:^1.17.0"
     "@backstage/plugin-user-settings": "npm:^0.9.0"
     "@backstage/theme": "npm:^0.7.0"
+    "@backstage/ui": "npm:^0.14.0"
     "@material-ui/core": "npm:^4.12.2"
     "@material-ui/icons": "npm:^4.9.1"
     "@types/react": "npm:^18.0.0"

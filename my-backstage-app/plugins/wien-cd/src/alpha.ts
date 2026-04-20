@@ -50,6 +50,7 @@ import { WienDarkTheme, WienLightTheme } from './theme/themes';
 import { WienerMelangeFontElement } from './font/WienerMelangeFont';
 import { WienGermanTranslationExtensions } from './i18n/translations';
 import { WienSidebar } from './nav/WienSidebar';
+import { WienTechDocsPage } from './techdocs/WienTechDocsPage';
 
 /**
  * Frontend module that attaches everything that must live inside the
@@ -66,6 +67,7 @@ export const wienCdAppModule = createFrontendModule({
     WienDarkTheme,
     ...WienGermanTranslationExtensions,
     WienSidebar,
+    WienTechDocsPage,
   ],
 });
 

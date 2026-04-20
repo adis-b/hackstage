@@ -44,6 +44,9 @@ export const wienCdTranslationRef = createTranslationRef({
       nav_item_api_docs: 'APIs',
       page_techdocs: 'Docs',
       nav_item_techdocs: 'Docs',
+      // Replacement page registered by wien-cd; the upstream
+      // page:techdocs is disabled when this plugin is active.
+      page_app_wien_techdocs: 'Docs',
       page_catalog_graph: 'Catalog Graph',
       page_notifications: 'Notifications',
       page_kubernetes: 'OpenShift',
@@ -52,6 +55,21 @@ export const wienCdTranslationRef = createTranslationRef({
       nav_item_app_visualizer: 'Visualizer',
       page_user_settings: 'Settings',
       nav_item_user_settings: 'Settings',
+    },
+    // TechDocs index-page strings that the upstream `DocsTable` renders
+    // as hard-coded JSX literals (no upstream translation ref covers
+    // them). The Wien replacement page under
+    // `page:app/wien-techdocs` consumes these keys.
+    techdocs: {
+      errors: {
+        couldNotLoad: 'Could not load available documentation.',
+      },
+      emptyState: {
+        title: 'No documents to show',
+        description:
+          'Create your own document. Check out our Getting Started Information',
+        actionTitle: 'DOCS',
+      },
     },
   },
 });

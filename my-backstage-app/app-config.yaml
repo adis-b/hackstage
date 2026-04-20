@@ -35,6 +35,14 @@ app:
           title: Wien
           subtitle: Developer Portal
 
+    # Replace the upstream techdocs index page with the Wien version
+    # that renders a fully translated empty state. The upstream page
+    # hard-codes "No documents to show" / "Create your own document"
+    # / "DOCS" in JSX literals and does not route them through any
+    # translation ref, so wien-cd ships a thin replacement on the same
+    # `/docs` route (page:app/wien-techdocs).
+    - page:techdocs: false
+
     # Configure the catalog index page to be the root page (normally
     # mounted on /catalog). The sidebar label is translated via the
     # wienCdTranslationRef in @stadt-wien/backstage-plugin-cd, so no
