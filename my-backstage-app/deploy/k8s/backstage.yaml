@@ -1,0 +1,130 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backstage-config
+  namespace: backstage
+data:
+  app-config.production.yaml: |
+    app:
+      baseUrl: http://localhost:7007
+
+    backend:
+      baseUrl: http://localhost:7007
+      listen: ':7007'
+      database:
+        client: pg
+        connection:
+          host: ${POSTGRES_HOST}
+          port: ${POSTGRES_PORT}
+          user: ${POSTGRES_USER}
+          password: ${POSTGRES_PASSWORD}
+
+    auth:
+      providers:
+        guest: {}
+
+    catalog:
+      locations:
+        - type: file
+          target: ./examples/entities.yaml
+        - type: file
+          target: ./examples/template/template.yaml
+          rules:
+            - allow: [Template]
+        - type: file
+          target: ./examples/org.yaml
+          rules:
+            - allow: [User, Group]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backstage
+  namespace: backstage
+  labels:
+    app: backstage
+    app.kubernetes.io/name: backstage
+    app.kubernetes.io/part-of: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backstage
+  template:
+    metadata:
+      labels:
+        app: backstage
+    spec:
+      serviceAccountName: backstage
+      containers:
+        - name: backstage
+          image: backstage:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 7007
+          env:
+            - name: POSTGRES_HOST
+              value: backstage-postgres
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: backstage-postgres-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backstage-postgres-secret
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: backstage-config
+              mountPath: /app/app-config.production.yaml
+              subPath: app-config.production.yaml
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 7007
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 7007
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+      volumes:
+        - name: backstage-config
+          configMap:
+            name: backstage-config
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backstage
+  namespace: backstage
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backstage
+  namespace: backstage
+  labels:
+    app: backstage
+spec:
+  type: ClusterIP
+  selector:
+    app: backstage
+  ports:
+    - name: http
+      port: 7007
+      targetPort: 7007

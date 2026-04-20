@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../k8s/namespace.yaml
+  - ../k8s/postgres.yaml
+  - ../k8s/backstage.yaml
+  - route.yaml
+  - scc.yaml
+
+namespace: backstage
+
+patches:
+  # Update Backstage deployment for OpenShift (non-root user)
+  - patch: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: backstage
+        namespace: backstage
+      spec:
+        template:
+          spec:
+            securityContext:
+              runAsUser: 1001
+              fsGroup: 1001
+    target:
+      kind: Deployment
+      name: backstage
