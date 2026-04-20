@@ -42,6 +42,52 @@
       color="#5bbad5"
     />
     <title><%= config.getOptionalString('app.title') ?? 'Backstage' %></title>
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="<%= publicPath %>/fonts/WienerMelangeVF.woff2"
+      crossorigin="anonymous"
+    />
+    <style>
+      /*
+       * Wiener Melange — the custom variable font of the City of Vienna.
+       * Documented at https://handbuch.wien.gv.at/look-and-feel/typography/
+       * Served locally (packages/app/public/fonts/WienerMelangeVF.woff2) to
+       * avoid cross-origin and availability concerns.
+       */
+      @font-face {
+        font-family: 'Wiener Melange';
+        font-style: normal;
+        font-weight: 300 900;
+        font-display: swap;
+        src: url('<%= publicPath %>/fonts/WienerMelangeVF.woff2') format('woff2-variations'),
+             url('<%= publicPath %>/fonts/WienerMelangeVF.woff2') format('woff2');
+      }
+      :root {
+        /*
+         * The @backstage/ui package exposes its typography through CSS
+         * custom properties. Override them here so the whole portal uses
+         * the Wiener Melange variable font together with the Lucida Sans
+         * fallback chain documented in the Stadt Wien handbook.
+         */
+        --bui-font-regular: "Wiener Melange", "Lucida Sans Unicode",
+          "Lucida Grande", "Lucida Sans", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, sans-serif !important;
+      }
+      html, body, #root {
+        font-family: "Wiener Melange", "Lucida Sans Unicode", "Lucida Grande",
+                     "Lucida Sans", -apple-system, BlinkMacSystemFont,
+                     "Segoe UI", Roboto, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-family: "Wiener Melange", "Lucida Sans Unicode", "Lucida Grande",
+                     "Lucida Sans", -apple-system, BlinkMacSystemFont,
+                     "Segoe UI", Roboto, sans-serif !important;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
