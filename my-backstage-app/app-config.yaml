@@ -17,6 +17,16 @@ app:
     - theme:app/light: false
     - theme:app/dark: false
 
+    # Enable the language toggle under Settings → Appearance with German and
+    # English (German default, matching the Stadt Wien CD). The actual German
+    # translation resources are registered by packages/app/src/modules/i18n.
+    - api:app/app-language:
+        config:
+          availableLanguages:
+            - de
+            - en
+          defaultLanguage: de
+
     # Configure the catalog index page to be the root page, this is normally mounted on /catalog
     - page:catalog:
         config:
