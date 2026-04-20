@@ -51,11 +51,7 @@ import {
 
 import { WienDarkTheme, WienLightTheme } from './theme/themes';
 import { WienerMelangeFontElement } from './font/WienerMelangeFont';
-import {
-  WienCatalogGerman,
-  WienScaffolderGerman,
-  WienUserSettingsGerman,
-} from './i18n/translations';
+import { WienGermanTranslationExtensions } from './i18n/translations';
 
 /**
  * Stadt Wien Corporate Design — registers the two Wien themes and the
@@ -72,9 +68,7 @@ export const wienCdAppModule = createFrontendModule({
   extensions: [
     WienLightTheme,
     WienDarkTheme,
-    WienUserSettingsGerman,
-    WienCatalogGerman,
-    WienScaffolderGerman,
+    ...WienGermanTranslationExtensions,
   ],
 });
 
@@ -101,3 +95,4 @@ export default wienCdPlugin;
 
 export { wienColors, wienFontStack, wienLightTheme, wienDarkTheme } from './theme/wienTheme';
 export { wienGermanTranslations } from './i18n/deMessages';
+export { wienCdTranslationRef, slugifyNavItemId } from './i18n/wienCdTranslationRef';
