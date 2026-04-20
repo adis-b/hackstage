@@ -1,85 +1,116 @@
 # @stadt-wien/backstage-plugin-cd
 
-Stadt Wien Corporate Design for [Backstage](https://backstage.io) — brand colors (Wien Rot, Abendstimmung, Morgenrot, …), the **Wiener Melange** variable font, and German translations for the most common core plugins, all in one drop-in frontend plugin for the new Backstage frontend system.
+Stadt Wien Corporate Design for [Backstage](https://backstage.io) — in one drop-in frontend plugin:
 
-Wien light theme
+- brand colours (Wien Rot, Abendstimmung, Morgenrot, …) as two themes,
+- the **Wiener Melange** variable font (embedded),
+- a branded sidebar with the Wiener Wappen and configurable wordmark,
+- German translations for every user-visible core plugin,
+- full bidirectional language toggle (Deutsch ⇄ English) via Settings → Appearance.
 
-## What you get
-
-- **Themes** — `wien-light` (`Wien (hell)`) and `wien-dark` (`Wien (dunkel)`) built with `createUnifiedTheme`. Palette sourced from the official [wien.gv.at Farben handbook](https://handbuch.wien.gv.at/look-and-feel/farben/): Wien Rot `#ff0000`, Abendstimmung `#49274b`, Morgenrot `#ff5a64`, Fast Schwarz `#292929`, Nebelgrau Light `#f3f1ef`, …
-- **Typography** — the Wiener Melange variable font is embedded as a base64 woff2 inside the package (~30 KB). The plugin injects an `@font-face` rule and overrides both the body `font-family` and the `--bui-font-regular` custom property used by `@backstage/ui`, so every piece of Backstage UI renders in the Wien brand typography without any CDN or asset hosting on your side.
-- **Page themes** — red/purple/green/blue page banners for `home`, `documentation`, `tool`, `service`, `website`, `library`, `app`, `apis`, `other`, all using Wien CD colours.
-- **German translations** — localised UI for `user-settings`, `catalog` and `scaffolder`. Enables the Settings → Appearance language toggle (Deutsch / English).
+After installation and a ~10-line `app-config.yaml` change your Backstage app renders as a Stadt-Wien portal — no per-app styling, no per-app sidebar, no per-app i18n wiring required.
 
 ## Installation
 
 ```sh
-# npm
-npm install @stadt-wien/backstage-plugin-cd
-
-# yarn classic
-yarn add @stadt-wien/backstage-plugin-cd
-
-# yarn berry
+# public npm (or your internal registry — see "Publishing" below)
 yarn workspace app add @stadt-wien/backstage-plugin-cd
+
+# offline / air-gapped: install from tarball
+yarn workspace app add file:./stadt-wien-backstage-plugin-cd-0.2.0.tgz
 ```
 
-Peer deps: React 17/18 and Backstage frontend system >= 1.36.
+Peer deps: React 17/18 and Backstage frontend system ≥ 1.36.
 
-## Wiring it up
+## Wiring
 
-### 1. Register the features
-
-In `packages/app/src/App.tsx`:
+### 1. `packages/app/src/App.tsx`
 
 ```tsx
 import { createApp } from '@backstage/frontend-defaults';
 import catalogPlugin from '@backstage/plugin-catalog/alpha';
-import { wienCdFeatures } from '@stadt-wien/backstage-plugin-cd';
+import { wienCdFeatures } from '@stadt-wien/backstage-plugin-cd/alpha';
 
 export default createApp({
   features: [catalogPlugin, ...wienCdFeatures],
 });
 ```
 
-`wienCdFeatures` is a tuple of two `FrontendFeature`s:
+That is *the entire app-side code* — no `modules/theme`, no `modules/nav`, no `modules/i18n`.
 
-
-| Feature           | Purpose                                                                                                                                                                                                                             |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `wienCdAppModule` | Registers the `wien-light` / `wien-dark` themes and the German translation resources. Attaches to the core `app` plugin because Backstage marks the theme / translation inputs as `internal: true` and only accepts them from `app` |
-| `wienCdPlugin`    | Registers the `@font-face` injector for the Wiener Melange variable font                                                                                                                                                            |
-
-
-You can also import them individually if you prefer granular control:
-
-```ts
-import { wienCdPlugin, wienCdAppModule } from '@stadt-wien/backstage-plugin-cd';
-```
-
-### 2. Configure `app-config.yaml`
+### 2. `app-config.yaml`
 
 ```yaml
 app:
   extensions:
-    # Replace the built-in Backstage themes with the Stadt Wien CD themes.
+    # Replace the default Backstage light/dark themes with Stadt Wien.
     - theme:app/light: false
     - theme:app/dark: false
 
-    # Enable the language toggle in Settings → Appearance.
+    # Enable the German + English language toggle under Settings → Appearance.
     - api:app/app-language:
         config:
-          availableLanguages:
-            - de
-            - en
+          availableLanguages: [de, en]
           defaultLanguage: de
+
+    # Wordmark rendered next to the Wiener Wappen in the sidebar.
+    - nav-content:app/wien-sidebar:
+        config:
+          title: Wien
+          subtitle: Developer Portal
+
+    # Suppress the auto-generated NavItems that the branded sidebar
+    # already renders in its own groups.
+    - nav-item:search: false
+    - nav-item:catalog: false
+    - nav-item:scaffolder: false
+    - nav-item:user-settings: false
 ```
 
-That's it. The Wien themes appear under **Settings → Appearance → Theme**, the language toggle appears below them, and the Wiener Melange font is loaded automatically on app start.
+That's it.
 
-## Optional: disable the embedded font
+## What you get
 
-If you prefer to host the font yourself (e.g. via your own CDN or the `assets.wien.gv.at` CDN), disable the bundled `@font-face` injector in `app-config.yaml`:
+### Extensions registered
+
+
+| Extension id                                   | Kind             | Purpose                                                                                                                                                                                                                                      |
+| ---------------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `theme:app/wien-light`                         | theme            | Light theme (Wien Rot / Nebelgrau Light) named "Wien (hell)".                                                                                                                                                                                |
+| `theme:app/wien-dark`                          | theme            | Dark theme (Wien Rot on #1b1b1b) named "Wien (dunkel)".                                                                                                                                                                                      |
+| `translation:app/*-de` (x 14)                  | translation      | German resource bundles for `user-settings`, `catalog`, `catalog-react`, `scaffolder`, `scaffolder-react`, `api-docs`, `catalog-graph`, `catalog-import`, `notifications`, `search`, `search-react`, `org`, `core-components`, `kubernetes`. |
+| `translation:app/wien-cd-de`                   | translation      | Sidebar labels + NavItem title overrides (the things no upstream ref covers).                                                                                                                                                                |
+| `nav-content:app/wien-sidebar`                 | nav-content      | Replaces the default Backstage sidebar with the Wien-branded one. Configurable title/subtitle.                                                                                                                                               |
+| `app-root-element:wien-cd/wiener-melange-font` | app-root-element | `@font-face` injector with the embedded Wiener Melange variable font.                                                                                                                                                                        |
+
+
+### Programmatic exports
+
+`@stadt-wien/backstage-plugin-cd` (stable):
+
+```ts
+import {
+  wienColors, wienFontStack,
+  wienLightTheme, wienDarkTheme,        // raw UnifiedTheme objects
+  wienGermanTranslations,               // { userSettings, catalog, … } resources
+  wienCdTranslationRef, slugifyNavItemId,
+  WienerWappen, WienSidebarLogoFull, WienSidebarLogo,
+} from '@stadt-wien/backstage-plugin-cd';
+```
+
+`@stadt-wien/backstage-plugin-cd/alpha` (frontend-system):
+
+```ts
+import {
+  wienCdFeatures,      // [wienCdPlugin, wienCdAppModule]
+  wienCdPlugin,        // the font plugin on its own
+  wienCdAppModule,     // themes + translations + sidebar attached to 'app'
+} from '@stadt-wien/backstage-plugin-cd/alpha';
+```
+
+### Disabling the embedded font
+
+If you prefer to self-host the Wiener Melange font (e.g. from `assets.wien.gv.at`), disable the injector:
 
 ```yaml
 app:
@@ -87,31 +118,14 @@ app:
     - app-root-element:wien-cd/wiener-melange-font: false
 ```
 
-and add your own `<style>` / `<link rel="stylesheet">` to `packages/app/public/index.html`.
-
-## Programmatic theme access
-
-The raw `UnifiedTheme` objects and the brand palette are also exported:
-
-```ts
-import {
-  wienLightTheme,
-  wienDarkTheme,
-  wienColors,
-  wienFontStack,
-} from '@stadt-wien/backstage-plugin-cd';
-```
-
-Useful for standalone Material UI surfaces outside the Backstage shell (e.g. Storybook stories, standalone admin tools).
+and add your own `@font-face` to `packages/app/public/index.html`.
 
 ## Publishing / distributing
 
-The package is a regular Backstage frontend plugin under the `plugins/*` workspace. To distribute it:
-
-- **npm (public)** — `yarn workspace @stadt-wien/backstage-plugin-cd npm publish --access public`
-- **npm (GitHub Packages / Artifactory / Verdaccio)** — set `publishConfig.registry` in `package.json` and run the same command.
-- **Tarball (air-gapped)** — `yarn workspace @stadt-wien/backstage-plugin-cd pack` → produces a `.tgz` that can be installed with `npm install ./stadt-wien-backstage-plugin-cd-0.1.0.tgz`.
-- **In-repo monorepo** — other repos can consume the package directly as a yarn workspace or a `file:` / `portal:` dependency.
+- **Public npm**: `yarn workspace @stadt-wien/backstage-plugin-cd npm publish --access public`
+- **Internal registry** (GitHub Packages, Verdaccio, Artifactory): set `publishConfig.registry` in `package.json`, then same `npm publish` command.
+- **Tarball** (air-gapped): `yarn workspace @stadt-wien/backstage-plugin-cd pack -o wien-cd.tgz` → install with `yarn add ./wien-cd.tgz`.
+- **In-repo monorepo**: works out of the box as a `workspace:^` dep.
 
 ## Typography license
 

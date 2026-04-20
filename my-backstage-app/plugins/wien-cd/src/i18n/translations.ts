@@ -65,8 +65,4 @@ export const WienGermanTranslationExtensions = [
     name: 'core-components-de',
     params: { resource: wienGermanTranslations.coreComponents },
   }),
-  TranslationBlueprint.make({
-    name: 'kubernetes-de',
-    params: { resource: wienGermanTranslations.kubernetes },
-  }),
 ];

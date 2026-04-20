@@ -22,7 +22,6 @@ import { notificationsDe } from './messages/notifications';
 import { searchDe, searchReactDe } from './messages/search';
 import { orgDe } from './messages/org';
 import { coreComponentsDe } from './messages/coreComponents';
-import { kubernetesDe } from './messages/misc';
 
 import { userSettingsTranslationRef } from '@backstage/plugin-user-settings/alpha';
 import { catalogTranslationRef } from '@backstage/plugin-catalog/alpha';
@@ -37,7 +36,6 @@ import { searchTranslationRef } from '@backstage/plugin-search/alpha';
 import { searchReactTranslationRef } from '@backstage/plugin-search-react/alpha';
 import { orgTranslationRef } from '@backstage/plugin-org/alpha';
 import { coreComponentsTranslationRef } from '@backstage/core-components/alpha';
-import { kubernetesTranslationRef } from '@backstage/plugin-kubernetes/alpha';
 
 /** German translation resources keyed by plugin. */
 export const wienGermanTranslations = {
@@ -96,9 +94,5 @@ export const wienGermanTranslations = {
   coreComponents: createTranslationResource({
     ref: coreComponentsTranslationRef,
     translations: { de: async () => ({ default: coreComponentsDe }) },
-  }),
-  kubernetes: createTranslationResource({
-    ref: kubernetesTranslationRef,
-    translations: { de: async () => ({ default: kubernetesDe }) },
   }),
 };

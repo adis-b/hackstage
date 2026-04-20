@@ -1,16 +1,13 @@
 {
   "name": "@stadt-wien/backstage-plugin-cd",
-  "version": "0.1.0",
-  "description": "Stadt Wien Corporate Design (Wien Rot palette, Wiener Melange typography and German translations) for Backstage's frontend system.",
+  "version": "0.2.0",
+  "description": "Stadt Wien Corporate Design (Wien Rot palette, Wiener Melange typography, German translations and an opinionated branded sidebar) for Backstage's frontend system.",
   "backstage": {
     "role": "frontend-plugin",
     "pluginId": "wien-cd",
     "pluginPackages": [
       "@stadt-wien/backstage-plugin-cd"
-    ],
-    "features": {
-      "./alpha": "@backstage/FrontendPlugin"
-    }
+    ]
   },
   "publishConfig": {
     "access": "public"
@@ -31,26 +28,17 @@
   },
   "license": "Apache-2.0",
   "sideEffects": false,
+  "configSchema": "config.d.ts",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "exports": {
-    ".": {
-      "backstage": "@backstage/FrontendPlugin",
-      "types": "./src/index.ts",
-      "import": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
-    "./alpha": {
-      "backstage": "@backstage/FrontendPlugin",
-      "types": "./src/index.ts",
-      "import": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
+    ".": "./src/index.ts",
+    "./alpha": "./src/alpha.ts",
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
-    "src",
+    "config.d.ts",
     "README.md",
     "LICENSE"
   ],
@@ -63,6 +51,7 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
+    "@backstage/config": "^1.2.0",
     "@backstage/core-components": "^0.18.0",
     "@backstage/core-plugin-api": "^1.12.0",
     "@backstage/frontend-plugin-api": "^0.16.0",
@@ -72,7 +61,6 @@
     "@backstage/plugin-catalog-graph": "^0.6.0",
     "@backstage/plugin-catalog-import": "^0.13.0",
     "@backstage/plugin-catalog-react": "^2.0.0",
-    "@backstage/plugin-kubernetes": "^0.12.0",
     "@backstage/plugin-notifications": "^0.5.0",
     "@backstage/plugin-org": "^0.7.0",
     "@backstage/plugin-scaffolder": "^1.30.0",
@@ -82,7 +70,8 @@
     "@backstage/plugin-user-settings": "^0.9.0",
     "@backstage/theme": "^0.7.0",
     "@material-ui/core": "^4.12.2",
-    "@material-ui/icons": "^4.9.1"
+    "@material-ui/icons": "^4.9.1",
+    "zod": "^4.0.0"
   },
   "peerDependencies": {
     "react": "^17 || ^18",
