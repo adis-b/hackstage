@@ -1,0 +1,99 @@
+# =============================================================================
+#  catalog-info.yaml — Stadt Wien Beispielkomponente (de + en)
+#
+#  This file demonstrates how to register a Backstage Catalog `Component`
+#  whose textual metadata is available in both German (de) and English
+#  (en).  Backstage's entity descriptor only has ONE `title` and ONE
+#  `description` field per entity — so we put the German text in those
+#  primary fields (matching the portal's default language) and store the
+#  English variants as Stadt-Wien-specific annotations with a well-known
+#  prefix.
+#
+#  Diese Datei zeigt, wie man eine Backstage-Catalog-Komponente anlegt,
+#  deren Text-Metadaten sowohl auf Deutsch als auch auf Englisch
+#  vorliegen. Backstage kennt pro Entität nur je einen `title` und
+#  `description` — wir tragen die deutsche Fassung (die
+#  Standard-Sprache des Portals) in die Haupt-Felder ein und hinterlegen
+#  die englische Fassung als Stadt-Wien-spezifische Annotations.
+#
+#  Annotation-Konvention / naming convention:
+#
+#      wien.gv.at/title-de          — German title
+#      wien.gv.at/title-en          — English title
+#      wien.gv.at/description-de    — German description
+#      wien.gv.at/description-en    — English description
+#      wien.gv.at/<key>-<lang>      — any other localised piece
+#
+#  The @stadt-wien/backstage-plugin-cd package's `wienCdTranslationRef`
+#  is used for UI-chrome strings. This file, in contrast, is about
+#  **content** — the team decided what the component is called, in both
+#  languages — so there is no translation ref here. An entity card that
+#  wants to show the localised title/description reads
+#  `entity.metadata.annotations['wien.gv.at/title-' + currentLanguage]`
+#  (with a fallback to `entity.metadata.title`).
+#
+#  Backstage itself will happily ingest this file — annotations are part
+#  of the standard entity schema and do not require a plugin to be
+#  understood by the catalog.
+# =============================================================================
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  # Technical identifier — kebab-case, ASCII only, stable across renames.
+  # Appears in URLs like /catalog/default/component/wien-buergerservice.
+  name: wien-buergerservice
+
+  # Primary human-readable title. The portal defaults to German, so we
+  # put the German label here.
+  title: Wiener Bürgerservice
+
+  # Primary description. Same reasoning — German first.
+  description: >-
+    Zentraler Dienst für alle digitalen Kontakte zwischen Wienerinnen,
+    Wienern und der Stadt Wien. Bietet Single Sign-On, Formular-
+    Management und Rückfragen-Tracking.
+
+  tags:
+    - stadt-wien
+    - buergerservice
+    - oidc
+
+  links:
+    - url: https://handbuch.wien.gv.at
+      title: wien.gv.at Handbuch
+      icon: docs
+    - url: https://assets.wien.gv.at
+      title: Stadt Wien Assets
+      icon: web
+
+  annotations:
+    # --- i18n metadata: German ------------------------------------------
+    wien.gv.at/title-de: Wiener Bürgerservice
+    wien.gv.at/description-de: >-
+      Zentraler Dienst für alle digitalen Kontakte zwischen
+      Wienerinnen, Wienern und der Stadt Wien. Bietet Single Sign-On,
+      Formular-Management und Rückfragen-Tracking.
+
+    # --- i18n metadata: English -----------------------------------------
+    wien.gv.at/title-en: City of Vienna Citizen Service
+    wien.gv.at/description-en: >-
+      Central service for every digital interaction between citizens
+      and the City of Vienna. Provides single sign-on, form management
+      and follow-up tracking.
+
+    # --- Standard Backstage integration annotations ---------------------
+    # (Backstage reads these natively. They are shown here to keep the
+    # example realistic for a Stadt Wien team.)
+    backstage.io/source-location: url:https://github.com/stadt-wien/buergerservice
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: stadt-wien/buergerservice
+    sonarqube.org/project-key: stadt-wien:buergerservice
+
+spec:
+  type: service
+  lifecycle: production
+  owner: team:stadt-wien-platform
+  system: buergerservice-system
+  providesApis:
+    - wien-buergerservice-api
