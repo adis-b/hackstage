@@ -150,6 +150,12 @@ catalog:
     - type: file
       target: ../../examples/entities.yaml
 
+    # Stadt Wien bilingual example component plus the Group/System/API it references
+    - type: file
+      target: ../../examples/catalog-info.de-en.yaml
+    - type: file
+      target: ../../examples/catalog-info.de-en.deps.yaml
+
     # Local example template
     - type: file
       target: ../../examples/template/template.yaml

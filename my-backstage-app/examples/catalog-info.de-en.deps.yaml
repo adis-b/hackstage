@@ -1,0 +1,53 @@
+# Companion entities referenced by catalog-info.de-en.yaml (the bilingual
+# Stadt Wien example). Kept in a separate file so the main example stays
+# minimal and copy-paste friendly.
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: buergerservice-system
+  title: Bürgerservice-System
+  description: Gemeinsame Plattform für alle digitalen Kontaktpunkte der Stadt Wien.
+  annotations:
+    wien.gv.at/title-de: Bürgerservice-System
+    wien.gv.at/title-en: Citizen Service Platform
+    wien.gv.at/description-de: Gemeinsame Plattform für alle digitalen Kontaktpunkte der Stadt Wien.
+    wien.gv.at/description-en: Shared platform backing every digital contact point of the City of Vienna.
+spec:
+  owner: team:stadt-wien-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: stadt-wien-platform
+  title: Stadt Wien Platform Team
+  description: Plattform-Team der Stadt Wien.
+spec:
+  type: team
+  profile:
+    displayName: Stadt Wien Platform Team
+    email: platform@ma53.wien.gv.at
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: wien-buergerservice-api
+  title: Bürgerservice API
+  description: Öffentliche REST-API des Bürgerservice.
+  annotations:
+    wien.gv.at/title-de: Bürgerservice API
+    wien.gv.at/title-en: Citizen Service API
+    wien.gv.at/description-de: Öffentliche REST-API des Bürgerservice.
+    wien.gv.at/description-en: Public REST API of the Citizen Service.
+spec:
+  type: openapi
+  lifecycle: production
+  owner: team:stadt-wien-platform
+  system: buergerservice-system
+  definition: |
+    openapi: 3.0.0
+    info:
+      title: Bürgerservice API
+      version: 1.0.0
+    paths: {}
