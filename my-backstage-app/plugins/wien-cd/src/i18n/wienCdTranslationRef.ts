@@ -60,14 +60,20 @@ export const wienCdTranslationRef = createTranslationRef({
     // as hard-coded JSX literals (no upstream translation ref covers
     // them). The Wien replacement page under
     // `page:app/wien-techdocs` consumes these keys.
+    //
+    // `emptyState.description` uses the `{{link}}` interpolation hook
+    // documented in
+    // https://backstage.io/docs/frontend-system/building-plugins/internationalization#jsx-elements
+    // so the link label is translated together with the surrounding
+    // sentence. `emptyState.linkLabel` is the inner text of the anchor.
     techdocs: {
       errors: {
         couldNotLoad: 'Could not load available documentation.',
       },
       emptyState: {
         title: 'No documents to show',
-        description:
-          'Create your own document. Check out our Getting Started Information',
+        description: 'Create your own document. Check out our {{link}}.',
+        linkLabel: 'Getting Started Information',
         actionTitle: 'DOCS',
       },
     },

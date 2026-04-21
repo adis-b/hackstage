@@ -3,6 +3,7 @@ import { catalogGraphTranslationRef } from '@backstage/plugin-catalog-graph/alph
 
 export const catalogGraphDe = createTranslationMessages({
   ref: catalogGraphTranslationRef,
+  full: false,
   messages: {
     'catalogGraphCard.title': 'Beziehungen',
     'catalogGraphCard.deepLinkTitle': 'Diagramm anzeigen',

@@ -3,6 +3,7 @@ import { catalogTranslationRef } from '@backstage/plugin-catalog/alpha';
 
 export const catalogDe = createTranslationMessages({
   ref: catalogTranslationRef,
+  full: false,
   messages: {
     'indexPage.title': '{{orgName}} Katalog',
     'indexPage.createButtonTitle': 'Erstellen',

@@ -3,6 +3,7 @@ import { apiDocsTranslationRef } from '@backstage/plugin-api-docs/alpha';
 
 export const apiDocsDe = createTranslationMessages({
   ref: apiDocsTranslationRef,
+  full: false,
   messages: {
     'apiDefinitionCard.error.title': 'API konnte nicht geladen werden',
     'apiDefinitionCard.rawButtonTitle': 'Rohformat',

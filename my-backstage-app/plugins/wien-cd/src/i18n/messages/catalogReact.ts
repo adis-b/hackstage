@@ -3,6 +3,7 @@ import { catalogReactTranslationRef } from '@backstage/plugin-catalog-react/alph
 
 export const catalogReactDe = createTranslationMessages({
   ref: catalogReactTranslationRef,
+  full: false,
   messages: {
     'catalogFilter.title': 'Filter',
     'catalogFilter.buttonTitle': 'Filter',

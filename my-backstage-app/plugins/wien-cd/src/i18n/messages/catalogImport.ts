@@ -3,6 +3,7 @@ import { catalogImportTranslationRef } from '@backstage/plugin-catalog-import/al
 
 export const catalogImportDe = createTranslationMessages({
   ref: catalogImportTranslationRef,
+  full: false,
   messages: {
     'buttons.back': 'Zurück',
     'defaultImportPage.headerTitle': 'Bestehende Komponente registrieren',

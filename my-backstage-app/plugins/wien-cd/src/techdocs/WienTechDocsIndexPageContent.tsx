@@ -25,6 +25,7 @@ import {
 } from '@backstage/plugin-catalog-react';
 import {
   EmptyState,
+  Link,
   LinkButton,
   WarningPanel,
 } from '@backstage/core-components';
@@ -35,6 +36,9 @@ import {
 import { useTranslationRef } from '@backstage/frontend-plugin-api';
 
 import { wienCdTranslationRef } from '../i18n/wienCdTranslationRef';
+
+const GETTING_STARTED_URL =
+  'https://backstage.io/docs/features/techdocs/getting-started';
 
 const TechDocsContent = () => {
   const { t } = useTranslationRef(wienCdTranslationRef);
@@ -52,15 +56,27 @@ const TechDocsContent = () => {
   }
 
   if (!loading && entities && entities.length === 0) {
+    // The description follows the JSX-interpolation pattern from
+    // https://backstage.io/docs/frontend-system/building-plugins/internationalization#jsx-elements
+    // so the anchor label is translated together with the rest of the
+    // sentence — `t(...)` returns a JSX.Element because the `link`
+    // value is a JSX element.
+    const description = t('techdocs.emptyState.description', {
+      link: (
+        <Link to={GETTING_STARTED_URL}>
+          {t('techdocs.emptyState.linkLabel')}
+        </Link>
+      ),
+    });
     return (
       <EmptyState
         missing="data"
         title={t('techdocs.emptyState.title')}
-        description={t('techdocs.emptyState.description')}
+        description={description}
         action={
           <LinkButton
             color="primary"
-            to="https://backstage.io/docs/features/techdocs/getting-started"
+            to={GETTING_STARTED_URL}
             variant="contained"
           >
             {t('techdocs.emptyState.actionTitle')}

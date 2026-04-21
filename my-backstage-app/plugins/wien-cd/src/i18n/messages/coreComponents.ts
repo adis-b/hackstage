@@ -3,6 +3,7 @@ import { coreComponentsTranslationRef } from '@backstage/core-components/alpha';
 
 export const coreComponentsDe = createTranslationMessages({
   ref: coreComponentsTranslationRef,
+  full: false,
   messages: {
     'signIn.title': 'Anmelden',
     'signIn.loginFailed': 'Anmeldung fehlgeschlagen',

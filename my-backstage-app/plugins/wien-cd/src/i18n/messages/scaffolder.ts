@@ -3,6 +3,7 @@ import { scaffolderTranslationRef } from '@backstage/plugin-scaffolder/alpha';
 
 export const scaffolderDe = createTranslationMessages({
   ref: scaffolderTranslationRef,
+  full: false,
   messages: {
     'templateListPage.title': 'Neue Komponente erstellen',
     'templateListPage.pageTitle': 'Neue Komponente erstellen',

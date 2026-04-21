@@ -3,6 +3,7 @@ import { notificationsTranslationRef } from '@backstage/plugin-notifications/alp
 
 export const notificationsDe = createTranslationMessages({
   ref: notificationsTranslationRef,
+  full: false,
   messages: {
     'notificationsPage.title': 'Benachrichtigungen',
     'notificationsPage.tableTitle.all_one':

@@ -3,6 +3,7 @@ import { scaffolderReactTranslationRef } from '@backstage/plugin-scaffolder-reac
 
 export const scaffolderReactDe = createTranslationMessages({
   ref: scaffolderReactTranslationRef,
+  full: false,
   messages: {
     'passwordWidget.content':
       'Dieses Widget ist unsicher. Bitte verwenden Sie [`ui:field: Secret`](https://backstage.io/docs/features/software-templates/writing-templates/#using-secrets) anstelle von `ui:widget: password`.',

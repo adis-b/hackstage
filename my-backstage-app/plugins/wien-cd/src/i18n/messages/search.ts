@@ -4,6 +4,7 @@ import { searchReactTranslationRef } from '@backstage/plugin-search-react/alpha'
 
 export const searchDe = createTranslationMessages({
   ref: searchTranslationRef,
+  full: false,
   messages: {
     'searchModal.viewFullResults': 'Vollständige Ergebnisse anzeigen',
     'searchType.allResults': 'Alle Ergebnisse',
@@ -17,6 +18,7 @@ export const searchDe = createTranslationMessages({
 
 export const searchReactDe = createTranslationMessages({
   ref: searchReactTranslationRef,
+  full: false,
   messages: {
     'searchBar.title': 'Suche',
     'searchBar.placeholder': 'In {{org}} suchen',

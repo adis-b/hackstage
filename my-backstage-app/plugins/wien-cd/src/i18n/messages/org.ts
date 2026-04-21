@@ -3,6 +3,7 @@ import { orgTranslationRef } from '@backstage/plugin-org/alpha';
 
 export const orgDe = createTranslationMessages({
   ref: orgTranslationRef,
+  full: false,
   messages: {
     'groupProfileCard.groupNotFound': 'Gruppe nicht gefunden',
     'groupProfileCard.editIconButtonTitle': 'Metadaten bearbeiten',

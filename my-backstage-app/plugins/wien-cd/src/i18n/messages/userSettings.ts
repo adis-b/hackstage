@@ -3,6 +3,7 @@ import { userSettingsTranslationRef } from '@backstage/plugin-user-settings/alph
 
 export const userSettingsDe = createTranslationMessages({
   ref: userSettingsTranslationRef,
+  full: false,
   messages: {
     'sidebarTitle': 'Einstellungen',
     'settingsLayout.title': 'Einstellungen',

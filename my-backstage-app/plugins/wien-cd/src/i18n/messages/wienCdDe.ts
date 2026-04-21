@@ -3,6 +3,7 @@ import { wienCdTranslationRef } from '../wienCdTranslationRef';
 
 export const wienCdDe = createTranslationMessages({
   ref: wienCdTranslationRef,
+  full: false,
   messages: {
     'sidebar.groups.search': 'Suche',
     'sidebar.groups.menu': 'Menü',
@@ -31,7 +32,8 @@ export const wienCdDe = createTranslationMessages({
       'Die verfügbare Dokumentation konnte nicht geladen werden.',
     'techdocs.emptyState.title': 'Keine Dokumente vorhanden',
     'techdocs.emptyState.description':
-      'Erstellen Sie Ihr eigenes Dokument. Sehen Sie sich dazu unsere Einstiegs-Information an.',
+      'Erstellen Sie Ihr eigenes Dokument. Sehen Sie sich dazu unsere {{link}} an.',
+    'techdocs.emptyState.linkLabel': 'Einstiegs-Information',
     'techdocs.emptyState.actionTitle': 'Dokumentation',
   },
 });
