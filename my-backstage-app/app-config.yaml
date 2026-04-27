@@ -162,6 +162,13 @@ catalog:
       rules:
         - allow: [Template]
 
+    # Stadt Wien bilingual component template — generates a catalog-info.yaml
+    # whose metadata is filled out in both German and English.
+    - type: file
+      target: ../../examples/template-wien-bilingual/template.yaml
+      rules:
+        - allow: [Template]
+
     # Local example organizational data
     - type: file
       target: ../../examples/org.yaml

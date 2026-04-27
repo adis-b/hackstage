@@ -1,0 +1,205 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+# https://backstage.io/docs/features/software-templates/writing-templates
+kind: Template
+metadata:
+  name: wien-bilingual-component
+  title: Bilingualer Catalog-Component (DE + EN)
+  description: >-
+    Erzeugt eine catalog-info.yaml für eine Stadt-Wien-Komponente, deren
+    Titel und Beschreibung sowohl auf Deutsch als auch Englisch hinterlegt
+    sind. Die deutschen Werte landen direkt in metadata.title und
+    metadata.description, die englischen werden als Annotations
+    wien.gv.at/title-en und wien.gv.at/description-en mitgegeben.
+
+    Generates a catalog-info.yaml for a Stadt Wien component whose title
+    and description are stored in both German and English. The German
+    values go straight into metadata.title and metadata.description, the
+    English variants are stored as wien.gv.at/title-en and
+    wien.gv.at/description-en annotations.
+  tags:
+    - stadt-wien
+    - bilingual
+    - catalog-info
+spec:
+  owner: team:stadt-wien-platform
+  type: documentation
+
+  # Drei Form-Schritte: Identität, deutscher Inhalt, englischer Inhalt.
+  parameters:
+    - title: Komponenten-Identität / Component identity
+      required:
+        - name
+        - type
+        - lifecycle
+        - owner
+      properties:
+        name:
+          title: Technischer Name
+          description: >-
+            kebab-case, ASCII, eindeutig. Erscheint in URLs und Entity-Refs.
+            kebab-case, ASCII only, unique. Shows up in URLs and entity refs.
+          type: string
+          pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+          ui:autofocus: true
+          ui:placeholder: wien-buergerservice
+        type:
+          title: Komponenten-Typ / Component type
+          type: string
+          default: service
+          enum:
+            - service
+            - website
+            - library
+            - documentation
+        lifecycle:
+          title: Lebenszyklus / Lifecycle
+          type: string
+          default: experimental
+          enum:
+            - experimental
+            - production
+            - deprecated
+        owner:
+          title: Eigentümer / Owner
+          description: >-
+            Entity-Ref der besitzenden Gruppe oder Person.
+            Entity ref of the owning group or user.
+          type: string
+          default: team:stadt-wien-platform
+          ui:placeholder: team:stadt-wien-platform
+        system:
+          title: System (optional)
+          description: >-
+            Entity-Ref des Systems, zu dem die Komponente gehört.
+            Entity ref of the system this component is part of.
+          type: string
+          ui:placeholder: buergerservice-system
+        tags:
+          title: Tags (optional)
+          description: >-
+            Eine oder mehrere Marker-Tags. kebab-case.
+            One or more marker tags. kebab-case.
+          type: array
+          ui:options:
+            addable: true
+            orderable: false
+            removable: true
+          items:
+            type: string
+            pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+
+    - title: Deutscher Inhalt / German content
+      required:
+        - titleDe
+        - descriptionDe
+      properties:
+        titleDe:
+          title: Titel (Deutsch)
+          description: >-
+            Anzeigename der Komponente. Wird in metadata.title geschrieben
+            und ist die Standard-Sprache des Portals.
+          type: string
+          ui:placeholder: Wiener Bürgerservice
+        descriptionDe:
+          title: Beschreibung (Deutsch)
+          description: >-
+            Wird in metadata.description geschrieben.
+          type: string
+          ui:widget: textarea
+          ui:options:
+            rows: 4
+          ui:placeholder: Zentraler Dienst für alle digitalen Kontakte zwischen Bürgerinnen, Bürgern und der Stadt Wien.
+
+    - title: English content
+      required:
+        - titleEn
+        - descriptionEn
+      properties:
+        titleEn:
+          title: Title (English)
+          description: >-
+            Stored as the wien.gv.at/title-en annotation. The portal's UI
+            picks this up when the user switches the language to English.
+          type: string
+          ui:placeholder: City of Vienna Citizen Service
+        descriptionEn:
+          title: Description (English)
+          description: >-
+            Stored as the wien.gv.at/description-en annotation.
+          type: string
+          ui:widget: textarea
+          ui:options:
+            rows: 4
+          ui:placeholder: Central service for every digital interaction between citizens and the City of Vienna.
+
+  # Wir bauen das Entity-Objekt zur Laufzeit zusammen und schreiben es in den
+  # Workspace. Damit landet die fertige catalog-info.yaml als File in der
+  # Output-Section, die User runterladen oder per Copy-Paste übernehmen.
+  steps:
+    - id: write-catalog-info
+      name: Schreibe catalog-info.yaml
+      action: catalog:write
+      input:
+        entity:
+          apiVersion: backstage.io/v1alpha1
+          kind: Component
+          metadata:
+            name: ${{ parameters.name }}
+            title: ${{ parameters.titleDe }}
+            description: ${{ parameters.descriptionDe }}
+            tags: ${{ parameters.tags | dump }}
+            annotations:
+              wien.gv.at/title-de: ${{ parameters.titleDe }}
+              wien.gv.at/title-en: ${{ parameters.titleEn }}
+              wien.gv.at/description-de: ${{ parameters.descriptionDe }}
+              wien.gv.at/description-en: ${{ parameters.descriptionEn }}
+          spec:
+            type: ${{ parameters.type }}
+            lifecycle: ${{ parameters.lifecycle }}
+            owner: ${{ parameters.owner }}
+            system: ${{ parameters.system if parameters.system else null }}
+
+    - id: log-result
+      name: Vorschau / Preview
+      action: debug:log
+      input:
+        message: |
+          catalog-info.yaml ist im Workspace abgelegt — siehe Output unten.
+          Sie können sie auf einen Stadt-Wien-Repo legen (z. B. `git checkout -b add-catalog-info && git add catalog-info.yaml && git commit -m 'add bilingual catalog-info' && git push`)
+          und in Backstage anschließend über "Bestehende Komponente registrieren" mit der Datei-URL ingesten.
+
+          The catalog-info.yaml is in the workspace — see the output below.
+          Place it on a Stadt-Wien repo and then register it in Backstage via
+          "Register Existing Component" with the file URL.
+
+  output:
+    text:
+      - title: catalog-info.yaml
+        content: |
+          ```yaml
+          apiVersion: backstage.io/v1alpha1
+          kind: Component
+          metadata:
+            name: ${{ parameters.name }}
+            title: ${{ parameters.titleDe }}
+            description: |-
+              ${{ parameters.descriptionDe }}
+            tags:
+          {%- for t in (parameters.tags or []) %}
+              - ${{ t }}
+          {%- endfor %}
+            annotations:
+              wien.gv.at/title-de: ${{ parameters.titleDe }}
+              wien.gv.at/title-en: ${{ parameters.titleEn }}
+              wien.gv.at/description-de: |-
+                ${{ parameters.descriptionDe }}
+              wien.gv.at/description-en: |-
+                ${{ parameters.descriptionEn }}
+          spec:
+            type: ${{ parameters.type }}
+            lifecycle: ${{ parameters.lifecycle }}
+            owner: ${{ parameters.owner }}
+          {%- if parameters.system %}
+            system: ${{ parameters.system }}
+          {%- endif %}
+          ```
