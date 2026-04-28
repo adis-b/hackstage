@@ -124,7 +124,7 @@ yarn workspace app add @stadt-wien/backstage-plugin-cd
 yarn workspace app add @stadt-wien/backstage-plugin-cd --registry https://npm.stadt-wien.gv.at
 
 # or from a tarball (air-gapped / quick test)
-yarn workspace app add file:./stadt-wien-backstage-plugin-cd-0.2.0.tgz
+yarn workspace app add file:./stadt-wien-backstage-plugin-cd-0.3.0.tgz
 ```
 
 > A ready-built tarball is at `docs/assets/` in release notes / this repo's artifacts. You can also build your own with `yarn workspace @stadt-wien/backstage-plugin-cd pack`.
@@ -289,36 +289,56 @@ import { wienLightTheme, wienDarkTheme } from '@stadt-wien/backstage-plugin-cd';
 
 ---
 
+## Translation coverage
+
+The plugin ships German translation bundles for **13 upstream Backstage plugins** plus its own `wienCdTranslationRef`. As of release `0.3.0`, every translatable key from every covered upstream ref has a German equivalent — measured by `plugins/wien-cd/scripts/coverage.cjs`:
+
+| Plugin | Keys | Translated | Coverage |
+|---|---:|---:|---:|
+| `@backstage/core-components` | 56 | 56 | 100% |
+| `@backstage/plugin-user-settings` | 50 | 50 | 100% |
+| `@backstage/plugin-catalog` | 92 | 92 | 100% |
+| `@backstage/plugin-catalog-react` | 92 | 92 | 100% |
+| `@backstage/plugin-catalog-graph` | 21 | 21 | 100% |
+| `@backstage/plugin-catalog-import` | 66 | 66 | 100% |
+| `@backstage/plugin-scaffolder` | 181 | 181 | 100% |
+| `@backstage/plugin-scaffolder-react` | 18 | 18 | 100% |
+| `@backstage/plugin-api-docs` | 29 | 29 | 100% |
+| `@backstage/plugin-search` | 7 | 7 | 100% |
+| `@backstage/plugin-search-react` | 11 | 11 | 100% |
+| `@backstage/plugin-org` | 22 | 22 | 100% |
+| `@backstage/plugin-notifications` | 59 | 59 | 100% |
+| **Total** | **704** | **704** | **100%** |
+
+The same script is wired into the Jest suite as a coverage gate: when an upstream Backstage release adds a new key, the next `yarn workspace @stadt-wien/backstage-plugin-cd test` run fails with a clear "missing German text" error so the bundle can't drift quietly. Run it on demand with:
+
+```sh
+yarn workspace @stadt-wien/backstage-plugin-cd i18n:coverage         # report only
+yarn workspace @stadt-wien/backstage-plugin-cd i18n:coverage:check   # fail if <100%
+```
+
+## Known limitations
+
+A small handful of strings in the upstream Backstage plugins are not routed through any translation ref and therefore stay English even with the language toggle on Deutsch. We document them here rather than pretend they're solved:
+
+- **TechDocs reader page** — the Markdown viewer is rendered by the underlying MkDocs theme. The toolbar tooltips and the "Edit this page" link come from MkDocs HTML, not from Backstage. Outside the plugin's scope.
+- **Catalog table titles of the form "Owned Components (3)"** — the kind ("Components") is pluralized by `lodash`/`pluralize` from a runtime filter value and bypasses every translation ref. Translating it requires forking the entire `CatalogTable` component or registering a replacement page; not done.
+- **Scaffolder sub-page tab titles** ("Templates / Tasks / Actions / Template Editor / Templating Extensions") — hard-coded JSX literals in `@backstage/plugin-scaffolder`. We override them statically to German via `page:scaffolder/<sub>.config.title` in `app-config.yaml`. Trade-off: the titles do not flip when the user toggles the language. Acceptable for Stadt-Wien-internal use; flag for any partner-facing deployment.
+
 ## Open tasks — to get it "enterprise ready"
 
-The plugin is solid enough for a Stadt Wien-internal rollout today, but the following items should be closed before shipping to external partners or publishing on public npm.
-
-### Translation coverage gaps
-
-Known strings that are **still English** regardless of the language toggle, because they're JSX-hard-coded upstream (no translation ref):
-
-- **Scaffolder** page title "Create" and the top tabs ("Templates / Tasks / Actions / Template Editor / Templating Extensions"). Fix: register a `page:app/wien-scaffolder` replacement like we did for techdocs.
-- **TechDocs reader page** (the actual Markdown viewer) — the top toolbar buttons and the "Edit this page" link.
-- **Catalog** "All Components (N)" / "All APIs (N)" headings (rendered as raw strings inside the `EntityListDocsTable` title prop).
-
-Easy wins that only need keys in existing upstream refs:
-
-- `@backstage/plugin-scaffolder`: ~200 additional keys under `actionsPage`, `templateWizardPage`, every `*RepoPicker` — coverage today is only `templateListPage.*`.
-- `@backstage/plugin-techdocs`: the public `techdocsTranslationRef` only covers `aboutCard.viewTechdocs`. When upstream exposes more, we can add them.
-
-We could run a small CI script that cross-checks every key from every covered `createTranslationRef` against `wienGermanTranslations`, and fail the build on missing German text.
+The plugin is production-ready for Stadt-Wien-internal use. The following items would be needed before shipping to external partners or publishing on public npm:
 
 ### Distribution / publishing
 
-- **CHANGELOG / release notes** via [changesets](https://github.com/changesets/changesets) — today the plugin jumps from 0.1.0 → 0.2.0 with no machine-readable changelog.
-- **Real publish pipeline.** The package is publishable (`yarn workspace @stadt-wien/backstage-plugin-cd pack` works and produces a ~108 KB tarball with the correct `exports`/`typesVersions`), but nothing pushes it to a registry. Decide: public npm, GitHub Packages inside the `@stadt-wien` org, Artifactory, or Verdaccio.
+- **Real publish pipeline.** The package is publishable (`yarn workspace @stadt-wien/backstage-plugin-cd pack` works and produces a ~119 KB tarball with the correct `exports`/`typesVersions`), but nothing pushes it to a registry. Decide: public npm, GitHub Packages inside the `@stadt-wien` org, Artifactory, or Verdaccio. Then wire `yarn changeset publish` into a GitHub Actions release job.
 - **Typography license handling.** The Wiener Melange font is embedded in the package. This is fine for Stadt Wien / partner use but would need an explicit written redistribution license from `markenmanagement@ma53.wien.gv.at` before uploading to public npmjs.com. An alternative "no-font" public build can strip the data URI and fall back to `@font-face` pointing at `https://assets.wien.gv.at/...`.
 - **Font license legal review.** Same deal; see `plugins/wien-cd/LICENSE` note.
 
 ### Tests
 
-- Today: **1 `App.test.tsx` smoke render + 8 plugin unit tests** on palette, themes, translation ref and the slug helper. That's enough to catch crashes; it's not enough to catch regressions in the visible behaviour.
-- Add: a Playwright-based **i18n integration test** that logs in, flips to English, flips back, and diffs the sidebar + Docs empty state DOM. This is what we run manually today through `computerUse`; it should be codified.
+- Today: 1 `App.test.tsx` smoke render + 9 plugin unit tests (palette, themes, translation ref, slug helper, full coverage gate). That's enough to catch crashes and key drift; it's not enough to catch visible-behaviour regressions.
+- Add: a Playwright-based **i18n integration test** that logs in, flips to English, flips back, and diffs the sidebar + Docs empty-state DOM. This is what we run manually today through `computerUse`; it should be codified.
 - Add: **visual-regression screenshots** (Chromatic / Percy) on the catalog, entity, docs pages in both themes, both languages.
 
 ### Config surface / DX polish
