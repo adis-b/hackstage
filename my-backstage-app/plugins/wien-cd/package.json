@@ -1,6 +1,6 @@
 {
   "name": "@stadt-wien/backstage-plugin-cd",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Stadt Wien Corporate Design (Wien Rot palette, Wiener Melange typography, German translations and an opinionated branded sidebar) for Backstage's frontend system.",
   "backstage": {
     "role": "frontend-plugin",
@@ -48,7 +48,9 @@
     "test": "backstage-cli package test",
     "clean": "backstage-cli package clean",
     "prepack": "backstage-cli package prepack",
-    "postpack": "backstage-cli package postpack"
+    "postpack": "backstage-cli package postpack",
+    "i18n:coverage": "node scripts/coverage.cjs",
+    "i18n:coverage:check": "node scripts/coverage.cjs --require-coverage 100"
   },
   "dependencies": {
     "@backstage/config": "^1.2.0",

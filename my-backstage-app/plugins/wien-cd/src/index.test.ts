@@ -80,4 +80,28 @@ describe('@stadt-wien/backstage-plugin-cd', () => {
       }
     });
   });
+
+  // Mirrors what `scripts/coverage.cjs --require-coverage 100` enforces
+  // at CI time. We assert here too so that a developer who breaks
+  // coverage by adding a new key to an upstream ref but forgetting the
+  // German bundle gets a fast `yarn workspace ... test` failure.
+  describe('translation coverage', () => {
+    it('every covered upstream ref is at 100% German coverage', () => {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const path = require('path');
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const { spawnSync } = require('child_process');
+      const script = path.resolve(__dirname, '..', 'scripts', 'coverage.cjs');
+      const result = spawnSync(
+        'node',
+        [script, '--require-coverage', '100'],
+        { encoding: 'utf8' },
+      );
+      if (result.status !== 0) {
+        // eslint-disable-next-line no-console
+        console.error(result.stdout, result.stderr);
+      }
+      expect(result.status).toBe(0);
+    }, 30000);
+  });
 });
