@@ -65,5 +65,56 @@ export const catalogDe = createTranslationMessages({
     'entityContextMenu.copyURLMenuTitle': 'Entitäts-URL kopieren',
     'entityContextMenu.unregisterMenuTitle': 'Entität abmelden',
     'entityContextMenu.moreButtonAriaLabel': 'mehr',
+    'entityLabelsCard.title': 'Labels',
+    'entityLabelsCard.columnKeyLabel': 'Schlüssel',
+    'entityLabelsCard.columnValueLabel': 'Wert',
+    'entityLabelsCard.emptyDescription': 'Keine Labels vorhanden.',
+    'entityLabelsCard.readMoreButtonTitle': 'Mehr erfahren',
+    'entityLabels.warningPanelTitle':
+      'Labels konnten nicht geladen werden.',
+    'entityLabels.ownerLabel': 'Eigentümer',
+    'entityLabels.lifecycleLabel': 'Lebenszyklus',
+    'entityLinksCard.title': 'Links',
+    'entityLinksCard.emptyDescription':
+      'Keine Links zu dieser Entität vorhanden.',
+    'entityLinksCard.readMoreButtonTitle': 'Mehr erfahren',
+    'entityNotFound.title': 'Entität nicht gefunden',
+    'entityNotFound.description':
+      'Die angeforderte Entität wurde nicht im Katalog gefunden.',
+    'entityNotFound.docButtonTitle': 'Dokumentation öffnen',
+    'entityTabs.tabsAriaLabel': 'Entitäts-Tabs',
+    'deleteEntity.dialogTitle':
+      'Möchten Sie diese Entität wirklich löschen?',
+    'deleteEntity.deleteButtonTitle': 'Löschen',
+    'deleteEntity.cancelButtonTitle': 'Abbrechen',
+    'deleteEntity.description':
+      'Diese Entität wird von keiner Location referenziert und erhält keine Aktualisierungen.',
+    'deleteEntity.actionButtonTitle': 'Entität löschen',
+    'entityProcessingErrorsDescription':
+      'Bei der Verarbeitung dieser Entität sind Fehler aufgetreten:',
+    'entityRelationWarningDescription':
+      'Diese Entität verweist auf andere Entitäten, die nicht im Katalog gefunden werden konnten.',
+    'hasComponentsCard.title': 'Hat Komponenten',
+    'hasComponentsCard.emptyMessage':
+      'Diesem System sind keine Komponenten zugeordnet.',
+    'hasResourcesCard.title': 'Hat Ressourcen',
+    'hasResourcesCard.emptyMessage':
+      'Diesem System sind keine Ressourcen zugeordnet.',
+    'hasSubcomponentsCard.title': 'Hat Unterkomponenten',
+    'hasSubcomponentsCard.emptyMessage':
+      'Dieser Komponente sind keine Unterkomponenten zugeordnet.',
+    'hasSubdomainsCard.title': 'Hat Unterbereiche',
+    'hasSubdomainsCard.emptyMessage':
+      'Diesem Bereich sind keine Unterbereiche zugeordnet.',
+    'hasSystemsCard.title': 'Hat Systeme',
+    'hasSystemsCard.emptyMessage':
+      'Diesem Bereich sind keine Systeme zugeordnet.',
+    'relatedEntitiesCard.emptyHelpLinkTitle': 'So können Sie das ändern.',
+    'systemDiagramCard.title': 'System-Diagramm',
+    'systemDiagramCard.description':
+      'Visualisierung der Beziehungen zwischen Komponenten, Ressourcen und APIs in diesem System.',
+    'systemDiagramCard.edgeLabels.partOf': 'Teil von',
+    'systemDiagramCard.edgeLabels.provides': 'stellt bereit',
+    'systemDiagramCard.edgeLabels.dependsOn': 'hängt ab von',
   },
 });

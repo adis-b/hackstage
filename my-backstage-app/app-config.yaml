@@ -43,6 +43,31 @@ app:
     # `/docs` route (page:app/wien-techdocs).
     - page:techdocs: false
 
+    # Override the hard-coded English titles of the Scaffolder root page
+    # and its sub-pages. These titles live as JSX literals in
+    # @backstage/plugin-scaffolder and do not flow through any
+    # translation ref, so we set them statically on the German default.
+    # Trade-off: the titles do not flip when the user toggles the
+    # language. For a Stadt-Wien-internal portal that is acceptable.
+    - page:scaffolder:
+        config:
+          title: Erstellen
+    - page:scaffolder/templates:
+        config:
+          title: Vorlagen
+    - page:scaffolder/tasks:
+        config:
+          title: Aufgaben
+    - page:scaffolder/actions:
+        config:
+          title: Aktionen
+    - page:scaffolder/editor:
+        config:
+          title: Vorlagen-Editor
+    - page:scaffolder/templating-extensions:
+        config:
+          title: Vorlagen-Erweiterungen
+
     # Configure the catalog index page to be the root page (normally
     # mounted on /catalog). The sidebar label is translated via the
     # wienCdTranslationRef in @stadt-wien/backstage-plugin-cd, so no
