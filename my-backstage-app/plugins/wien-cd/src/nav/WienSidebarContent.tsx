@@ -62,7 +62,10 @@ export const WienSidebarContent = ({
     />
   ));
 
+  // Items we render explicitly elsewhere — claim them so they do not
+  // also appear in the alphabetical `nav.rest()` list.
   nav.take('page:search'); // replaced by the search modal in the header group
+  nav.take('page:notifications'); // rendered as <NotificationsSidebarItem /> with its unread-count badge
 
   return (
     <Sidebar>
