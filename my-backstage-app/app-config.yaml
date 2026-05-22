@@ -31,7 +31,6 @@ app:
         config:
           currentInstanceId: on-prem
           scrollThreshold: 16
-          position: top-center
           instances:
             - id: on-prem
               label: On-Premises

@@ -1,25 +1,52 @@
 import { useEffect, useState } from 'react';
 
-function isScrollContainer(element: Element): element is HTMLElement {
-  if (!(element instanceof HTMLElement)) {
-    return false;
-  }
-  const style = window.getComputedStyle(element);
-  const overflowY = style.overflowY;
-  return (
-    (overflowY === 'auto' || overflowY === 'scroll' || overflowY === 'overlay') &&
-    element.scrollHeight > element.clientHeight
-  );
+function isScrolledPast(element: HTMLElement, threshold: number): boolean {
+  return element.scrollTop > threshold;
 }
 
-function collectScrollContainers(): HTMLElement[] {
-  const containers: HTMLElement[] = [document.documentElement, document.body];
-  for (const element of document.querySelectorAll('main, [class*="Backstage"]')) {
-    if (isScrollContainer(element)) {
-      containers.push(element);
+function isPageScrolled(threshold: number): boolean {
+  if (window.scrollY > threshold) {
+    return true;
+  }
+  if (document.documentElement.scrollTop > threshold) {
+    return true;
+  }
+  if (document.body.scrollTop > threshold) {
+    return true;
+  }
+  return false;
+}
+
+function isTargetOrAncestorScrolled(
+  target: EventTarget | null,
+  threshold: number,
+): boolean {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+
+  let element: HTMLElement | null = target;
+  while (element) {
+    if (isScrolledPast(element, threshold)) {
+      return true;
+    }
+    element = element.parentElement;
+  }
+  return false;
+}
+
+function isAnyScrollContainerScrolled(threshold: number): boolean {
+  if (isPageScrolled(threshold)) {
+    return true;
+  }
+
+  for (const element of document.querySelectorAll('[data-testid="page-content"], main, article')) {
+    if (element instanceof HTMLElement && isScrolledPast(element, threshold)) {
+      return true;
     }
   }
-  return containers;
+
+  return false;
 }
 
 /**
@@ -31,26 +58,32 @@ export function useScrollAtTop(threshold = 16): boolean {
   const [isAtTop, setIsAtTop] = useState(true);
 
   useEffect(() => {
-    const evaluate = () => {
-      const containers = collectScrollContainers();
-      const scrolled = containers.some(
-        container => container.scrollTop > threshold,
-      );
-      const windowScrolled = window.scrollY > threshold;
-      setIsAtTop(!scrolled && !windowScrolled);
+    const evaluateAll = () => {
+      setIsAtTop(!isAnyScrollContainerScrolled(threshold));
     };
 
-    evaluate();
+    const onScroll = (event: Event) => {
+      if (
+        isPageScrolled(threshold) ||
+        isTargetOrAncestorScrolled(event.target, threshold)
+      ) {
+        setIsAtTop(false);
+        return;
+      }
+      evaluateAll();
+    };
 
-    window.addEventListener('scroll', evaluate, { passive: true });
-    document.addEventListener('scroll', evaluate, { passive: true, capture: true });
+    evaluateAll();
 
-    const observer = new MutationObserver(() => evaluate());
+    window.addEventListener('scroll', onScroll, { passive: true, capture: true });
+    document.addEventListener('scroll', onScroll, { passive: true, capture: true });
+
+    const observer = new MutationObserver(evaluateAll);
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      window.removeEventListener('scroll', evaluate);
-      document.removeEventListener('scroll', evaluate, { capture: true });
+      window.removeEventListener('scroll', onScroll, { capture: true });
+      document.removeEventListener('scroll', onScroll, { capture: true });
       observer.disconnect();
     };
   }, [threshold]);

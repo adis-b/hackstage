@@ -105,7 +105,7 @@ export const InstanceSwitcher = ({
   currentInstanceId,
   instances,
   scrollThreshold = 16,
-  position = 'top-center',
+  position = 'top-right',
 }: InstanceSwitcherProps) => {
   const classes = useStyles();
   const { t } = useTranslationRef(wienCdTranslationRef);
@@ -167,8 +167,14 @@ export const InstanceSwitcher = ({
         open={Boolean(anchorEl)}
         onClose={closeMenu}
         getContentAnchorEl={null}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: position === 'top-right' ? 'right' : 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: position === 'top-right' ? 'right' : 'center',
+        }}
       >
         {instances.map(instance => {
           const isCurrent = instance.id === currentInstanceId;

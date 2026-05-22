@@ -41,7 +41,7 @@ export const InstanceSwitcherElement = AppRootElementBlueprint.makeWithOverrides
     currentInstanceId: z.string().min(1),
     instances: z.array(instanceSchema).min(2),
     scrollThreshold: z.number().int().positive().optional().default(16),
-    position: z.enum(['top-center', 'top-right']).optional().default('top-center'),
+    position: z.enum(['top-center', 'top-right']).optional().default('top-right'),
   },
   factory(originalFactory, { config }) {
     const instances = config.instances as InstanceSwitcherInstance[];

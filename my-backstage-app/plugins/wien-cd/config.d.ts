@@ -62,7 +62,7 @@ export interface Config {
    *    - `instances` (array, min 2): sibling instances to link to.
    *      Each entry: `id`, `label`, `url`, `variant` (`on-prem`|`cloud`).
    *    - `scrollThreshold` (number, optional): px from top before hiding.
-   *    - `position` (`top-center`|`top-right`, optional).
+   *    - `position` (`top-center`|`top-right`, optional, default `top-right`).
    *    Disable with `false`.
    *
    *  - `app-root-element:wien-cd/wiener-melange-font` — disable with

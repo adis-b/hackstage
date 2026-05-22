@@ -387,7 +387,7 @@ app:
               variant: cloud
 ```
 
-The switcher renders as a **floating pill at the top of the viewport** when the user scrolls back to the top. Selecting a sibling instance performs a full navigation to that URL — workflows and catalog data stay isolated per instance.
+The switcher renders as a **floating pill at the top-right of the viewport** when the user scrolls back to the top. Selecting a sibling instance performs a full navigation to that URL — workflows and catalog data stay isolated per instance.
 
 Example overlays for local two-instance demo: [`app-config.cloud.yaml`](my-backstage-app/app-config.cloud.yaml).
 
