@@ -1,0 +1,38 @@
+# Cloud deployment overlay — merge with app-config.yaml:
+#   yarn start --config ../../app-config.yaml --config ../../app-config.cloud.yaml
+#
+# For a local two-instance demo, run this on port 3001:
+#   yarn workspace app start --config ../../app-config.yaml --config ../../app-config.cloud.yaml --port 3001
+
+app:
+  baseUrl: http://localhost:3001
+
+  extensions:
+    - theme:app/wien-light:
+        config:
+          instanceVariant: cloud
+    - theme:app/wien-dark:
+        config:
+          instanceVariant: cloud
+    - app-root-element:wien-cd/instance-switcher:
+        config:
+          currentInstanceId: cloud
+          scrollThreshold: 16
+          position: top-center
+          instances:
+            - id: on-prem
+              label: On-Premises
+              url: http://localhost:3000
+              variant: on-prem
+            - id: cloud
+              label: Cloud
+              url: http://localhost:3001
+              variant: cloud
+
+backend:
+  baseUrl: http://localhost:7008
+  listen:
+    port: 7008
+
+  cors:
+    origin: http://localhost:3001

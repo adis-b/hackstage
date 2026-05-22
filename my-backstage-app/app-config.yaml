@@ -17,6 +17,30 @@ app:
     # Wien CD themes provided by @stadt-wien/backstage-plugin-cd.
     - theme:app/light: false
     - theme:app/dark: false
+    - theme:app/wien-light:
+        config:
+          instanceVariant: on-prem
+    - theme:app/wien-dark:
+        config:
+          instanceVariant: on-prem
+
+    # Floating instance switcher — links to sibling Backstage deployments.
+    # For local demo of both instances, run a second app on port 3001 with
+    # app-config.cloud.yaml (see app-config.cloud.yaml in this directory).
+    - app-root-element:wien-cd/instance-switcher:
+        config:
+          currentInstanceId: on-prem
+          scrollThreshold: 16
+          position: top-center
+          instances:
+            - id: on-prem
+              label: On-Premises
+              url: http://localhost:3000
+              variant: on-prem
+            - id: cloud
+              label: Cloud
+              url: http://localhost:3001
+              variant: cloud
 
     # Enable the language toggle under Settings → Appearance with
     # German and English (German default, matching the Stadt Wien CD).

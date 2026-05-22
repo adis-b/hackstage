@@ -355,6 +355,44 @@ The plugin is production-ready for Stadt-Wien-internal use. The following items 
 
 ---
 
+## Multi-instance deployments (on-prem + cloud)
+
+When Stadt Wien runs **separate Backstage instances** (on-premises and cloud) with the same plugin bundle, configure each deployment with its accent colour and a floating instance switcher:
+
+| Deployment | Theme `instanceVariant` | Accent |
+|---|---|---|
+| On-premises | `on-prem` | Wien Rot `#ff0000` |
+| Cloud | `cloud` | Wasserblau `#73cee5` |
+
+```yaml
+app:
+  extensions:
+    - theme:app/wien-light:
+        config:
+          instanceVariant: on-prem   # or cloud
+    - theme:app/wien-dark:
+        config:
+          instanceVariant: on-prem
+    - app-root-element:wien-cd/instance-switcher:
+        config:
+          currentInstanceId: on-prem
+          instances:
+            - id: on-prem
+              label: On-Premises
+              url: https://backstage.internal.wien.gv.at
+              variant: on-prem
+            - id: cloud
+              label: Cloud
+              url: https://backstage.cloud.wien.gv.at
+              variant: cloud
+```
+
+The switcher renders as a **floating pill at the top of the viewport** when the user scrolls back to the top. Selecting a sibling instance performs a full navigation to that URL — workflows and catalog data stay isolated per instance.
+
+Example overlays for local two-instance demo: [`app-config.cloud.yaml`](my-backstage-app/app-config.cloud.yaml).
+
+---
+
 ## Repository layout
 
 | Path | Purpose |

@@ -28,6 +28,13 @@ export {
   wienFontStack,
   wienLightTheme,
   wienDarkTheme,
+  wienCloudLightTheme,
+  wienCloudDarkTheme,
+  createWienTheme,
+  getVariantAccent,
+  getVariantDisplayColor,
+  type WienInstanceVariant,
+  type CreateWienThemeOptions,
 } from './theme/wienTheme';
 export { wienGermanTranslations } from './i18n/deMessages';
 export {

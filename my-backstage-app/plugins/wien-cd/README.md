@@ -65,6 +65,28 @@ app:
     - nav-item:catalog: false
     - nav-item:scaffolder: false
     - nav-item:user-settings: false
+
+    # Optional: per-deployment accent (on-prem = Wien Rot, cloud = Wasserblau)
+    - theme:app/wien-light:
+        config:
+          instanceVariant: on-prem
+    - theme:app/wien-dark:
+        config:
+          instanceVariant: on-prem
+
+    # Optional: floating instance switcher (links to sibling deployments)
+    - app-root-element:wien-cd/instance-switcher:
+        config:
+          currentInstanceId: on-prem
+          instances:
+            - id: on-prem
+              label: On-Premises
+              url: https://backstage.internal.example.com
+              variant: on-prem
+            - id: cloud
+              label: Cloud
+              url: https://backstage.cloud.example.com
+              variant: cloud
 ```
 
 That's it.
@@ -81,6 +103,7 @@ That's it.
 | `translation:app/*-de` (x 14)                  | translation      | German resource bundles for `user-settings`, `catalog`, `catalog-react`, `scaffolder`, `scaffolder-react`, `api-docs`, `catalog-graph`, `catalog-import`, `notifications`, `search`, `search-react`, `org`, `core-components`, `kubernetes`. |
 | `translation:app/wien-cd-de`                   | translation      | Sidebar labels + NavItem title overrides (the things no upstream ref covers).                                                                                                                                                                |
 | `nav-content:app/wien-sidebar`                 | nav-content      | Replaces the default Backstage sidebar with the Wien-branded one. Configurable title/subtitle.                                                                                                                                               |
+| `app-root-element:wien-cd/instance-switcher`   | app-root-element | Floating top instance picker linking to sibling Backstage deployments (on-prem ↔ cloud). Appears when scrolled to top.                                                                                                                         |
 | `app-root-element:wien-cd/wiener-melange-font` | app-root-element | `@font-face` injector with the embedded Wiener Melange variable font.                                                                                                                                                                        |
 
 
@@ -92,6 +115,8 @@ That's it.
 import {
   wienColors, wienFontStack,
   wienLightTheme, wienDarkTheme,        // raw UnifiedTheme objects
+  wienCloudLightTheme, wienCloudDarkTheme,
+  createWienTheme, getVariantDisplayColor,
   wienGermanTranslations,               // { userSettings, catalog, … } resources
   wienCdTranslationRef, slugifyNavItemId,
   WienerWappen, WienSidebarLogoFull, WienSidebarLogo,

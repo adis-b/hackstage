@@ -9,40 +9,55 @@ import { UnifiedThemeProvider } from '@backstage/theme';
 import { ThemeBlueprint } from '@backstage/plugin-app-react';
 import LightIcon from '@material-ui/icons/WbSunny';
 import DarkIcon from '@material-ui/icons/Brightness2';
+import { z } from 'zod';
 
-import { wienDarkTheme, wienLightTheme } from './wienTheme';
+import {
+  createWienTheme,
+  type WienInstanceVariant,
+} from './wienTheme';
 
-export const WienLightTheme = ThemeBlueprint.make({
+const instanceVariantSchema = z.enum(['on-prem', 'cloud']).optional().default('on-prem');
+
+export const WienLightTheme = ThemeBlueprint.makeWithOverrides({
   name: 'wien-light',
-  params: {
-    theme: {
-      id: 'light',
-      // Falsy title → UserSettingsThemeToggle uses t('themeToggle.names.light')
-      title: '',
-      variant: 'light',
-      icon: <LightIcon />,
-      Provider: ({ children }) => (
-        <UnifiedThemeProvider theme={wienLightTheme}>
-          {children}
-        </UnifiedThemeProvider>
-      ),
-    },
+  configSchema: {
+    instanceVariant: instanceVariantSchema,
+  },
+  factory(originalFactory, { config }) {
+    const variant = config.instanceVariant as WienInstanceVariant;
+    const theme = createWienTheme({ variant, mode: 'light' });
+    return originalFactory({
+      theme: {
+        id: 'light',
+        title: '',
+        variant: 'light',
+        icon: <LightIcon />,
+        Provider: ({ children }) => (
+          <UnifiedThemeProvider theme={theme}>{children}</UnifiedThemeProvider>
+        ),
+      },
+    });
   },
 });
 
-export const WienDarkTheme = ThemeBlueprint.make({
+export const WienDarkTheme = ThemeBlueprint.makeWithOverrides({
   name: 'wien-dark',
-  params: {
-    theme: {
-      id: 'dark',
-      title: '',
-      variant: 'dark',
-      icon: <DarkIcon />,
-      Provider: ({ children }) => (
-        <UnifiedThemeProvider theme={wienDarkTheme}>
-          {children}
-        </UnifiedThemeProvider>
-      ),
-    },
+  configSchema: {
+    instanceVariant: instanceVariantSchema,
+  },
+  factory(originalFactory, { config }) {
+    const variant = config.instanceVariant as WienInstanceVariant;
+    const theme = createWienTheme({ variant, mode: 'dark' });
+    return originalFactory({
+      theme: {
+        id: 'dark',
+        title: '',
+        variant: 'dark',
+        icon: <DarkIcon />,
+        Provider: ({ children }) => (
+          <UnifiedThemeProvider theme={theme}>{children}</UnifiedThemeProvider>
+        ),
+      },
+    });
   },
 });

@@ -66,6 +66,11 @@ export const wienCdTranslationRef = createTranslationRef({
     // https://backstage.io/docs/frontend-system/building-plugins/internationalization#jsx-elements
     // so the link label is translated together with the surrounding
     // sentence. `emptyState.linkLabel` is the inner text of the anchor.
+    instanceSwitcher: {
+      label: 'Instance',
+      ariaLabel: 'Switch Backstage instance',
+      current: 'current',
+    },
     techdocs: {
       errors: {
         couldNotLoad: 'Could not load available documentation.',

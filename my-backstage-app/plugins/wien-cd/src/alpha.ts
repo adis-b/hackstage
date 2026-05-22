@@ -48,6 +48,7 @@ import {
 
 import { WienDarkTheme, WienLightTheme } from './theme/themes';
 import { WienerMelangeFontElement } from './font/WienerMelangeFont';
+import { InstanceSwitcherElement } from './instance/InstanceSwitcherElement';
 import { WienGermanTranslationExtensions } from './i18n/translations';
 import { WienSidebar } from './nav/WienSidebar';
 import { WienTechDocsPage } from './techdocs/WienTechDocsPage';
@@ -78,7 +79,7 @@ export const wienCdAppModule = createFrontendModule({
  */
 export const wienCdPlugin = createFrontendPlugin({
   pluginId: 'wien-cd',
-  extensions: [WienerMelangeFontElement],
+  extensions: [WienerMelangeFontElement, InstanceSwitcherElement],
 });
 
 /**
@@ -97,6 +98,13 @@ export {
   wienFontStack,
   wienLightTheme,
   wienDarkTheme,
+  wienCloudLightTheme,
+  wienCloudDarkTheme,
+  createWienTheme,
+  getVariantAccent,
+  getVariantDisplayColor,
+  type WienInstanceVariant,
+  type CreateWienThemeOptions,
 } from './theme/wienTheme';
 export { wienGermanTranslations } from './i18n/deMessages';
 export {
