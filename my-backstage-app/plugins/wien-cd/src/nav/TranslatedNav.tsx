@@ -18,11 +18,9 @@ import { TranslatedNavContent } from './TranslatedNavContent';
  */
 export const TranslatedNav = NavContentBlueprint.make({
   name: 'translated-nav',
-  factory(originalFactory) {
-    return originalFactory({
-      component: ({ navItems }) => (
-        <TranslatedNavContent navItems={navItems} />
-      ),
-    });
+  params: {
+    component: ({ navItems }) => (
+      <TranslatedNavContent navItems={navItems} />
+    ),
   },
 });
