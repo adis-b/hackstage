@@ -22,10 +22,7 @@
  *             config:
  *               availableLanguages: [de, en]
  *               defaultLanguage: de
- *         - nav-content:app/wien-sidebar:
- *             config:
- *               title: Wien
- *               subtitle: Developer Portal
+ *         - nav-content:app/translated-nav: true
  *         - app-root-element:wien-cd/instance-switcher:
  *             config:
  *               currentInstanceId: on-prem
@@ -50,11 +47,11 @@ export interface Config {
    *       Defaults to `on-prem` (Wien Rot). Use `cloud` (Wasserblau) on
    *       cloud deployments.
    *
-   *  - `nav-content:app/wien-sidebar` — the branded sidebar. Supports:
-   *    - `title` (string): the main line of the wordmark next to the
-   *       Wiener Wappen. Defaults to "Wien".
-   *    - `subtitle` (string): the secondary line below the title.
-   *       Defaults to "Developer Portal".
+   *  - `nav-content:app/translated-nav` — grouped sidebar whose nav
+   *    labels follow `wienCdTranslationRef` (DE/EN toggle). No branding;
+   *    enable with `true`. For a custom branded sidebar, disable this
+   *    and register your own `NavContentBlueprint` (reuse
+   *    `wienCdTranslationRef` + `slugifyNavItemId` for nav i18n).
    *
    *  - `app-root-element:wien-cd/instance-switcher` — floating top
    *    instance picker. Supports:

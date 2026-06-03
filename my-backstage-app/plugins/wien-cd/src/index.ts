@@ -41,9 +41,3 @@ export {
   wienCdTranslationRef,
   slugifyNavItemId,
 } from './i18n/wienCdTranslationRef';
-export { WienerWappen } from './nav/WienerWappen';
-export {
-  WienSidebarLogoFull,
-  type WienSidebarLogoFullProps,
-} from './nav/WienSidebarLogoFull';
-export { WienSidebarLogo, type WienSidebarLogoProps } from './nav/WienSidebarLogo';

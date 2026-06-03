@@ -6,8 +6,8 @@ app:
   packages: all
 
   extensions:
-    # Suppress the auto-generated nav items for plugins that the Wien
-    # branded sidebar renders as part of its own groups instead.
+    # Suppress the auto-generated nav items for plugins that the
+    # translated sidebar renders as part of its own groups instead.
     - nav-item:search: false
     - nav-item:user-settings: false
     - nav-item:catalog: false
@@ -52,11 +52,8 @@ app:
             - en
           defaultLanguage: de
 
-    # Wordmark next to the Wiener Wappen in the sidebar.
-    - nav-content:app/wien-sidebar:
-        config:
-          title: Wien
-          subtitle: Developer Portal
+    # Grouped sidebar with DE/EN nav labels (no branding).
+    - nav-content:app/translated-nav: true
 
     # Replace the upstream techdocs index page with the Wien version
     # that renders a fully translated empty state. The upstream page

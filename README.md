@@ -1,6 +1,6 @@
 # hackstage — Stadt Wien Corporate Design for Backstage
 
-Drop-in Backstage frontend plugin (`@stadt-wien/backstage-plugin-cd`) that applies Stadt Wien branding: Wien CD colours, Wiener Melange typography, branded sidebar, German/English UI, and optional multi-instance switching for on-prem vs cloud deployments.
+Drop-in Backstage frontend plugin (`@stadt-wien/backstage-plugin-cd`) that applies Stadt Wien branding: Wien CD colours, Wiener Melange typography, translated grouped sidebar, German/English UI, and optional multi-instance switching for on-prem vs cloud deployments.
 
 ![Stadt Wien Developer Portal — Deutsch](docs/assets/wien_cd_de.png)
 
@@ -51,10 +51,7 @@ app:
     - nav-item:user-settings: false
     - page:techdocs: false
 
-    - nav-content:app/wien-sidebar:
-        config:
-          title: Wien
-          subtitle: Developer Portal
+    - nav-content:app/translated-nav: true
 
     # Optional: link sibling Backstage instances (on-prem ↔ cloud)
     - app-root-element:wien-cd/instance-switcher:
@@ -82,7 +79,7 @@ Run `yarn start` from `my-backstage-app/`.
 |---|---|
 | `theme:…/wien-light`, `theme:…/wien-dark` | Wien CD themes; `instanceVariant` sets accent (`on-prem` red, `cloud` blue) |
 | `translation:app/*-de` (×14) | German bundles for core Backstage plugins |
-| `nav-content:app/wien-sidebar` | Branded sidebar with Wiener Wappen + wordmark |
+| `nav-content:app/translated-nav` | Grouped sidebar with DE/EN nav labels (no branding) |
 | `page:app/wien-techdocs` | Translatable TechDocs empty state |
 | `app-root-element:wien-cd/instance-switcher` | Floating top-right picker linking sibling instances |
 | `app-root-element:wien-cd/wiener-melange-font` | Embedded Wiener Melange `@font-face` |

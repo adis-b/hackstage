@@ -4,11 +4,11 @@ Stadt Wien Corporate Design for [Backstage](https://backstage.io) — in one dro
 
 - brand colours (Wien Rot, Abendstimmung, Morgenrot, …) as two themes,
 - the **Wiener Melange** variable font (embedded),
-- a branded sidebar with the Wiener Wappen and configurable wordmark,
+- a grouped sidebar with DE/EN nav labels (no branding — add your own sidebar plugin if needed),
 - German translations for every user-visible core plugin,
 - full bidirectional language toggle (Deutsch ⇄ English) via Settings → Appearance.
 
-After installation and a ~10-line `app-config.yaml` change your Backstage app renders as a Stadt-Wien portal — no per-app styling, no per-app sidebar, no per-app i18n wiring required.
+After installation and a ~10-line `app-config.yaml` change your Backstage app picks up Stadt-Wien themes and German UI — no per-app styling or i18n wiring required.
 
 ## Installation
 
@@ -53,13 +53,10 @@ app:
           availableLanguages: [de, en]
           defaultLanguage: de
 
-    # Wordmark rendered next to the Wiener Wappen in the sidebar.
-    - nav-content:app/wien-sidebar:
-        config:
-          title: Wien
-          subtitle: Developer Portal
+    # Grouped sidebar with DE/EN nav labels.
+    - nav-content:app/translated-nav: true
 
-    # Suppress the auto-generated NavItems that the branded sidebar
+    # Suppress the auto-generated NavItems that the translated sidebar
     # already renders in its own groups.
     - nav-item:search: false
     - nav-item:catalog: false
@@ -102,7 +99,7 @@ That's it.
 | `theme:…/wien-dark` (AppTheme id `dark`)       | theme            | Dark CD palette; labels — DE „Wien (dunkel)“, EN „Dark“.                                                                                                                                                                                      |
 | `translation:app/*-de` (x 14)                  | translation      | German resource bundles for `user-settings`, `catalog`, `catalog-react`, `scaffolder`, `scaffolder-react`, `api-docs`, `catalog-graph`, `catalog-import`, `notifications`, `search`, `search-react`, `org`, `core-components`, `kubernetes`. |
 | `translation:app/wien-cd-de`                   | translation      | Sidebar labels + NavItem title overrides (the things no upstream ref covers).                                                                                                                                                                |
-| `nav-content:app/wien-sidebar`                 | nav-content      | Replaces the default Backstage sidebar with the Wien-branded one. Configurable title/subtitle.                                                                                                                                               |
+| `nav-content:app/translated-nav`                 | nav-content      | Grouped sidebar (Search / Menu / Settings) with DE/EN nav labels via `wienCdTranslationRef`. No logo — use a separate plugin for branded nav.                                                                                                |
 | `app-root-element:wien-cd/instance-switcher`   | app-root-element | Floating top instance picker linking to sibling Backstage deployments (on-prem ↔ cloud). Appears when scrolled to top.                                                                                                                         |
 | `app-root-element:wien-cd/wiener-melange-font` | app-root-element | `@font-face` injector with the embedded Wiener Melange variable font.                                                                                                                                                                        |
 
@@ -118,8 +115,7 @@ import {
   wienCloudLightTheme, wienCloudDarkTheme,
   createWienTheme, getVariantDisplayColor,
   wienGermanTranslations,               // { userSettings, catalog, … } resources
-  wienCdTranslationRef, slugifyNavItemId,
-  WienerWappen, WienSidebarLogoFull, WienSidebarLogo,
+  wienCdTranslationRef, slugifyNavItemId, // for custom NavContent i18n
 } from '@stadt-wien/backstage-plugin-cd';
 ```
 

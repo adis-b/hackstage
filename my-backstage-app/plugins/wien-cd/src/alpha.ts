@@ -12,8 +12,8 @@
  *
  *   - `wienCdPlugin`           — the Wiener Melange `@font-face`
  *                                injector (pluginId `wien-cd`).
- *   - `wienCdAppModule`        — themes, German translations, branded
- *                                sidebar. Attached to the core `app`
+ *   - `wienCdAppModule`        — themes, German translations, translated
+ *                                sidebar nav. Attached to the core `app`
  *                                plugin because the underlying theme /
  *                                translation / nav-content inputs are
  *                                all limited to the `app` plugin.
@@ -34,11 +34,8 @@
  *               availableLanguages: [de, en]
  *               defaultLanguage: de
  *
- *         # Optional: customise the sidebar wordmark.
- *         - nav-content:app/wien-sidebar:
- *             config:
- *               title: Wien
- *               subtitle: Developer Portal
+ *         # Grouped sidebar with DE/EN nav labels (no branding).
+ *         - nav-content:app/translated-nav: true
  */
 import {
   FrontendFeature,
@@ -50,7 +47,7 @@ import { WienDarkTheme, WienLightTheme } from './theme/themes';
 import { WienerMelangeFontElement } from './font/WienerMelangeFont';
 import { InstanceSwitcherElement } from './instance/InstanceSwitcherElement';
 import { WienGermanTranslationExtensions } from './i18n/translations';
-import { WienSidebar } from './nav/WienSidebar';
+import { TranslatedNav } from './nav/TranslatedNav';
 import { WienTechDocsPage } from './techdocs/WienTechDocsPage';
 
 /**
@@ -58,7 +55,7 @@ import { WienTechDocsPage } from './techdocs/WienTechDocsPage';
  * core `app` plugin:
  *   - Wien Rot / Wien Dark unified themes (the theme input is internal)
  *   - All German translation resources (the translation input is internal)
- *   - The branded sidebar (`NavContentBlueprint` attach point is
+ *   - The translated sidebar (`NavContentBlueprint` attach point is
  *     limited to the `app` plugin)
  */
 export const wienCdAppModule = createFrontendModule({
@@ -67,7 +64,7 @@ export const wienCdAppModule = createFrontendModule({
     WienLightTheme,
     WienDarkTheme,
     ...WienGermanTranslationExtensions,
-    WienSidebar,
+    TranslatedNav,
     WienTechDocsPage,
   ],
 });
@@ -111,9 +108,3 @@ export {
   wienCdTranslationRef,
   slugifyNavItemId,
 } from './i18n/wienCdTranslationRef';
-export { WienerWappen } from './nav/WienerWappen';
-export {
-  WienSidebarLogoFull,
-  type WienSidebarLogoFullProps,
-} from './nav/WienSidebarLogoFull';
-export { WienSidebarLogo, type WienSidebarLogoProps } from './nav/WienSidebarLogo';

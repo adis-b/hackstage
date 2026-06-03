@@ -1,7 +1,7 @@
 {
   "name": "@stadt-wien/backstage-plugin-cd",
   "version": "0.3.0",
-  "description": "Stadt Wien Corporate Design (Wien Rot palette, Wiener Melange typography, German translations and an opinionated branded sidebar) for Backstage's frontend system.",
+  "description": "Stadt Wien Corporate Design (Wien Rot palette, Wiener Melange typography, German translations and a grouped translated sidebar) for Backstage's frontend system.",
   "backstage": {
     "role": "frontend-plugin",
     "pluginId": "wien-cd",

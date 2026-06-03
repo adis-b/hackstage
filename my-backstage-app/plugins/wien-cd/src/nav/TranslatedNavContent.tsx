@@ -13,18 +13,10 @@ import { SidebarSearchModal } from '@backstage/plugin-search';
 import { UserSettingsSignInAvatar } from '@backstage/plugin-user-settings';
 import { NotificationsSidebarItem } from '@backstage/plugin-notifications';
 
-import { WienSidebarLogo } from './WienSidebarLogo';
 import {
   slugifyNavItemId,
   wienCdTranslationRef,
 } from '../i18n/wienCdTranslationRef';
-
-export interface WienSidebarProps {
-  /** Wordmark title shown next to the Wappen (defaults to "Wien"). */
-  title?: string;
-  /** Wordmark subtitle (defaults to "Developer Portal"). */
-  subtitle?: string;
-}
 
 interface NavContentProps {
   /** Nav item bag supplied by Backstage to any NavContentBlueprint component. */
@@ -32,20 +24,11 @@ interface NavContentProps {
 }
 
 /**
- * The Stadt Wien sidebar layout — top Wappen/wordmark logo, a Suche
- * group hosting the search modal, a Menü group with the main catalog
- * and scaffolder entries + everything else sorted alphabetically, a
- * Benachrichtigungen item and finally an Einstellungen group.
- *
- * All user-visible labels flow through `wienCdTranslationRef` so that
- * the language toggle under Settings → Appearance swaps them
- * bidirectionally without any hard-coded per-language strings.
+ * Grouped sidebar layout with DE/EN nav labels via `wienCdTranslationRef`.
+ * No branding — adopters can supply a custom NavContent in a separate
+ * plugin and reuse `wienCdTranslationRef` + `slugifyNavItemId`.
  */
-export const WienSidebarContent = ({
-  title,
-  subtitle,
-  navItems,
-}: WienSidebarProps & NavContentProps) => {
+export const TranslatedNavContent = ({ navItems }: NavContentProps) => {
   const { t } = useTranslationRef(wienCdTranslationRef);
 
   const titleForId = (id: string, fallback: string): string => {
@@ -69,7 +52,6 @@ export const WienSidebarContent = ({
 
   return (
     <Sidebar>
-      <WienSidebarLogo title={title} subtitle={subtitle} />
       <SidebarGroup
         label={t('sidebar.groups.search')}
         icon={<SearchIcon />}
