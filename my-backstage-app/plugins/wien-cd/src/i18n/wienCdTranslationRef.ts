@@ -67,9 +67,8 @@ export const wienCdTranslationRef = createTranslationRef({
     // so the link label is translated together with the surrounding
     // sentence. `emptyState.linkLabel` is the inner text of the anchor.
     instanceSwitcher: {
-      label: 'Instance',
       ariaLabel: 'Switch Backstage instance',
-      current: 'current',
+      current: 'active',
     },
     techdocs: {
       errors: {

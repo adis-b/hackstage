@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useTranslationRef } from '@backstage/frontend-plugin-api';
-import Chip from '@material-ui/core/Chip';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,10 +34,10 @@ const useStyles = makeStyles(theme => ({
     position: 'fixed',
     top: 12,
     zIndex: theme.zIndex.snackbar + 1,
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
-    gap: theme.spacing(0.5),
-    padding: theme.spacing(0.75, 1.5),
+    gap: theme.spacing(0.25),
+    padding: theme.spacing(0.5),
     borderRadius: 999,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[6],
@@ -70,15 +69,35 @@ const useStyles = makeStyles(theme => ({
     opacity: 0,
     pointerEvents: 'none',
   },
-  label: {
+  selection: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: theme.spacing(0.75),
+    minHeight: 28,
+    padding: theme.spacing(0.5, 1.25),
+    borderRadius: 999,
+    color: '#fff',
     fontWeight: 700,
     fontSize: 13,
-    marginRight: theme.spacing(0.5),
-    color: theme.palette.text.secondary,
+    lineHeight: 1,
   },
-  currentChip: {
-    fontWeight: 700,
-    color: '#fff',
+  selectionIcon: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 18,
+    '& svg': {
+      fontSize: 18,
+    },
+  },
+  chevron: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 24,
+    height: 24,
+    color: theme.palette.text.secondary,
   },
   menuItem: {
     display: 'flex',
@@ -152,15 +171,16 @@ export const InstanceSwitcher = ({
           }
         }}
       >
-        <span className={classes.label}>{t('instanceSwitcher.label')}</span>
-        <Chip
-          size="small"
-          icon={variantIcon(current.variant)}
-          label={current.label}
-          className={classes.currentChip}
+        <div
+          className={classes.selection}
           style={{ backgroundColor: getVariantDisplayColor(current.variant) }}
-        />
-        <ArrowDropDownIcon fontSize="small" />
+        >
+          <span className={classes.selectionIcon}>{variantIcon(current.variant)}</span>
+          <span>{current.label}</span>
+        </div>
+        <span className={classes.chevron} aria-hidden>
+          <ArrowDropDownIcon fontSize="small" />
+        </span>
       </div>
       <Menu
         anchorEl={anchorEl}
