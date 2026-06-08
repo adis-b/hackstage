@@ -128,7 +128,11 @@ Local two-instance demo overlay: [`app-config.cloud.yaml`](my-backstage-app/app-
 | `my-backstage-app/deploy/` | Docker, Kubernetes, OpenShift manifests |
 | `docs/assets/` | Screenshots and walkthrough media |
 
-## Demo media
+## Troubleshooting
+
+- **`Module not found: Can't resolve '@wien/backstage-*-plugin/alpha'`** — run `yarn install` in `my-backstage-app/`, then restart `yarn start`. A stale dev server started before the plugin split will not pick up the new workspace links.
+- **Port already in use (`EADDRINUSE`)** — stop the old dev server (`Ctrl+C` or kill processes on ports 3000/7007) before starting again.
+- **Cloud preview / Mac localhost shows connection refused** — the app runs in the cloud VM; use the Cursor cloud preview URL or run `yarn start` locally on your machine after `yarn install`.
 
 [Full walkthrough (MP4)](docs/assets/wien_cd_plugin_full_walkthrough.mp4)
 

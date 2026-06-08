@@ -6,6 +6,7 @@
     "node": "22 || 24"
   },
   "scripts": {
+    "prestart": "node scripts/check-wien-packages.js",
     "start": "backstage-cli repo start",
     "build:backend": "yarn workspace backend build",
     "build:all": "backstage-cli repo build --all",
