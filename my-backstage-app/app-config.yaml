@@ -89,14 +89,56 @@ app:
         config:
           title: Vorlagen-Erweiterungen
 
+    # PageBlueprint / SubPageBlueprint titles in the new frontend system are
+    # static English strings — they do not flow through translation refs.
+    # Override them here for the German-default portal (same trade-off as
+    # scaffolder above: titles stay German when the user toggles to English).
+    - page:user-settings:
+        config:
+          title: Einstellungen
+    - page:user-settings/general:
+        config:
+          title: Allgemein
+    - page:user-settings/auth-providers:
+        config:
+          title: Authentifizierungs-Anbieter
+    - page:user-settings/feature-flags:
+        config:
+          title: Feature-Flags
+    - page:catalog-graph:
+        config:
+          title: Katalog-Diagramm
+    - page:search:
+        config:
+          title: Suche
+    - page:api-docs:
+        config:
+          title: APIs
+    - page:catalog-import:
+        config:
+          title: Bestehende Komponente registrieren
+    - page:kubernetes:
+        config:
+          title: OpenShift
+    - page:notifications:
+        config:
+          title: Benachrichtigungen
+    - page:app/wien-techdocs:
+        config:
+          title: Dokumentation
+    - page:app-visualizer:
+        config:
+          title: Visualisierung
+
     # Configure the catalog index page to be the root page (normally
     # mounted on /catalog). The sidebar label is translated via the
-    # wienI18nDeTranslationRef in @wien/backstage-i18n-de-plugin, so no
-    # hard-coded `title:` override is needed here — the language toggle
-    # under Settings → Appearance swaps them bidirectionally.
+    # wienI18nDeTranslationRef in @wien/backstage-i18n-de-plugin; the page
+    # shell title is overridden here because PageBlueprint does not use
+    # catalogTranslationRef for the outer header.
     - page:catalog:
         config:
           path: /
+          title: Stadt Wien Katalog
 
 organization:
   name: Stadt Wien

@@ -42,6 +42,8 @@ app:
     - page:techdocs: false
 ```
 
+Page headers and tabs from `PageBlueprint` / `SubPageBlueprint` are **not** covered by translation refs. Copy the `page:*` title overrides from the demo `app-config.yaml` (Settings, Catalog Graph, Search, …).
+
 For a grouped German sidebar, copy `packages/app/src/nav/` from this repo into your app and register `demoAppModule` (see demo app).
 
 ## Extensions
