@@ -47,6 +47,14 @@ app:
 
 Disable the font with `- app-root-element:cd/wiener-melange-font: false`.
 
+## Screenshot
+
+![Wien CD theme — Wien Rot header and dark sidebar](../../../docs/assets/plugin-cd-theme.png)
+
+Settings → Darstellung shows **Wien (hell)** / **Wien (dunkel)** theme toggles:
+
+![Wien theme toggles in Settings](../../../docs/assets/plugin-i18n-settings-de.png)
+
 ## Stable API
 
 ```ts

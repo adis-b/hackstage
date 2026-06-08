@@ -8,6 +8,7 @@
   "scripts": {
     "prestart": "node scripts/check-wien-packages.js",
     "start": "backstage-cli repo start",
+    "screenshots": "node scripts/capture-plugin-screenshots.mjs",
     "build:backend": "yarn workspace backend build",
     "build:all": "backstage-cli repo build --all",
     "build-image": "yarn workspace backend build-image",

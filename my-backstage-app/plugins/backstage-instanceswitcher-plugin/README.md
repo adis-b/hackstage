@@ -45,6 +45,12 @@ app:
 
 Pair `instances[].variant` with `instanceVariant` on `@wien/backstage-cd-plugin` theme extensions per deployment.
 
+## Screenshots
+
+![Instance switcher pill](../../../docs/assets/plugin-instance-switcher.png)
+
+![Instance switcher menu — on-prem vs cloud variants](../../../docs/assets/plugin-instance-switcher-menu.png)
+
 ## Extensions
 
 | Extension ID | Purpose |
@@ -60,6 +66,12 @@ flowchart LR
   SwitcherPlugin --> Element[InstanceSwitcherElement]
   Element --> Shared["@wien/backstage-shared tokens"]
 ```
+
+## Screenshot
+
+Uses `getVariantDisplayColor()` from `@wien/backstage-shared` — on-prem pill is Wien Rot, cloud entry uses Wasserblau:
+
+![Instance switcher menu](../../../docs/assets/plugin-instance-switcher-menu.png)
 
 ## Troubleshooting
 

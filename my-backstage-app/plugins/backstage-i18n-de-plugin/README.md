@@ -100,6 +100,12 @@ yarn workspace @wien/backstage-i18n-de-plugin i18n:coverage:check
 
 The coverage script enforces 100% German coverage for all upstream translation refs.
 
+## Screenshots
+
+| German sidebar | TechDocs | Settings |
+|---|---|---|
+| ![German sidebar](../../../docs/assets/plugin-i18n-sidebar-de.png) | ![TechDocs DE](../../../docs/assets/plugin-i18n-techdocs-de.png) | ![Settings DE](../../../docs/assets/plugin-i18n-settings-de.png) |
+
 ## Related packages
 
 - `@wien/backstage-cd-plugin` — themes and font (install separately)

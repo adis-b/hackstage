@@ -12,6 +12,8 @@ yarn start
 - Frontend: http://localhost:3000
 - Backend: http://localhost:7007
 
+![Catalog with Wien CD and German sidebar](../docs/assets/plugin-cd-theme.png)
+
 Two-instance demo (on-prem + cloud):
 
 ```sh
@@ -42,6 +44,7 @@ yarn workspace @wien/backstage-cd-plugin test
 yarn workspace @wien/backstage-i18n-de-plugin test
 yarn workspace @wien/backstage-i18n-de-plugin i18n:coverage:check
 yarn workspace @wien/backstage-instanceswitcher-plugin test
+yarn screenshots                         # requires yarn start running
 ```
 
 ## Optional Docker backend

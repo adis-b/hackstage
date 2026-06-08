@@ -9,7 +9,7 @@ Publishable `@wien` frontend plugins for [Backstage](https://backstage.io), plus
 | `@wien/backstage-i18n-de-plugin` | German translations, grouped sidebar, TechDocs i18n |
 | `@wien/backstage-instanceswitcher-plugin` | Floating on-prem ↔ cloud instance switcher |
 
-![Stadt Wien Developer Portal — Deutsch](docs/assets/wien_cd_de.png)
+![Stadt Wien Developer Portal — catalog (German)](docs/assets/wien_cd_de.png)
 
 ## Quick start (Cursor VM or local)
 
@@ -20,6 +20,36 @@ yarn start
 ```
 
 Open http://localhost:3000. For a two-instance demo, run a second app on port 3001 with `app-config.cloud.yaml`.
+
+Verified running in this workspace via `yarn start` on ports 3000 (frontend) and 7007 (backend).
+
+## Plugin screenshots
+
+### `@wien/backstage-cd-plugin` — Corporate Design themes
+
+Wien Rot header, dark sidebar, Wiener Melange typography, and Wien light/dark theme toggles in Settings → Darstellung.
+
+![Wien CD theme on catalog page](docs/assets/plugin-cd-theme.png)
+
+### `@wien/backstage-i18n-de-plugin` — German UI
+
+Grouped sidebar with DE labels, translated TechDocs, and language/theme settings.
+
+| Sidebar (DE) | TechDocs | Settings |
+|---|---|---|
+| ![German sidebar](docs/assets/plugin-i18n-sidebar-de.png) | ![TechDocs DE](docs/assets/plugin-i18n-techdocs-de.png) | ![Settings DE](docs/assets/plugin-i18n-settings-de.png) |
+
+### `@wien/backstage-instanceswitcher-plugin` — Instance switcher
+
+Floating pill at top-right; on-prem (Wien Rot) vs cloud (Wasserblau) variants from `@wien/backstage-shared`.
+
+![Instance switcher pill](docs/assets/plugin-instance-switcher.png)
+
+![Instance switcher menu](docs/assets/plugin-instance-switcher-menu.png)
+
+### `@wien/backstage-shared` — Design tokens
+
+No UI of its own. Provides `wienColors`, `WienInstanceVariant`, and `getVariantDisplayColor()` used by the CD and instance-switcher plugins above.
 
 ## Plugin dependency graph
 
@@ -76,6 +106,15 @@ export default createApp({
 ```
 
 See each plugin README under `my-backstage-app/plugins/*/README.md` for extension IDs and config.
+
+## Regenerate screenshots
+
+With `yarn start` running:
+
+```sh
+cd my-backstage-app
+yarn screenshots
+```
 
 ## Optional: Docker
 
