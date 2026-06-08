@@ -12,6 +12,8 @@ German translations and translated UI chrome for [Backstage](https://backstage.i
 yarn workspace app add @wien/backstage-i18n-de-plugin
 ```
 
+Peer deps: the 14 upstream Backstage plugins whose translation refs this package extends (catalog, scaffolder, search, …), plus `@backstage/core-components`. The host app must install matching versions — see `package.json` `peerDependencies`.
+
 ## Wiring
 
 ### `packages/app/src/App.tsx`

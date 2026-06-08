@@ -1,26 +1,62 @@
-# hackstage — Stadt Wien Corporate Design for Backstage
+# hackstage — Stadt Wien Backstage Plugins
 
-Three publishable Backstage frontend plugins under the `@wien` scope:
+Publishable `@wien` frontend plugins for [Backstage](https://backstage.io), plus a minimal demo app for local development.
 
 | Package | Purpose |
 |---|---|
-| `@wien/backstage-cd-plugin` | Wien CD themes, Wiener Melange font, brand tokens |
+| `@wien/backstage-shared` | Brand colours + on-prem/cloud variant tokens (no React) |
+| `@wien/backstage-cd-plugin` | Wien CD themes, Wiener Melange font |
 | `@wien/backstage-i18n-de-plugin` | German translations, grouped sidebar, TechDocs i18n |
 | `@wien/backstage-instanceswitcher-plugin` | Floating on-prem ↔ cloud instance switcher |
 
 ![Stadt Wien Developer Portal — Deutsch](docs/assets/wien_cd_de.png)
 
-## Quick start
-
-### 1. Install
+## Quick start (Cursor VM or local)
 
 ```sh
-yarn workspace app add @wien/backstage-cd-plugin
-yarn workspace app add @wien/backstage-i18n-de-plugin
-yarn workspace app add @wien/backstage-instanceswitcher-plugin
+cd my-backstage-app
+yarn install
+yarn start
 ```
 
-### 2. Wire into `App.tsx`
+Open http://localhost:3000. For a two-instance demo, run a second app on port 3001 with `app-config.cloud.yaml`.
+
+## Plugin dependency graph
+
+```mermaid
+flowchart TB
+  Shared["@wien/backstage-shared<br/>wienColors, variant tokens"]
+  CD["@wien/backstage-cd-plugin<br/>themes + font"]
+  I18N["@wien/backstage-i18n-de-plugin<br/>14 DE bundles + nav"]
+  SW["@wien/backstage-instanceswitcher-plugin<br/>floating switcher"]
+
+  Shared --> CD
+  Shared --> SW
+  I18N -.->|"peerDeps: 14 upstream plugins"| Upstream["@backstage/plugin-*"]
+  CD --> App["demo app createApp()"]
+  I18N --> App
+  SW --> App
+```
+
+### `@wien/backstage-shared`
+
+Framework-agnostic tokens. Import when you need `wienColors` or `getVariantDisplayColor()` without the CD theme plugin.
+
+### `@wien/backstage-cd-plugin`
+
+Depends on `@wien/backstage-shared`. Re-exports shared tokens from its stable API for backward compatibility.
+
+### `@wien/backstage-i18n-de-plugin`
+
+**Runtime dependencies:** `@backstage/frontend-plugin-api`, `@backstage/plugin-app-react`, MUI, `@backstage/ui`.
+
+**Peer dependencies (host app must install):** the 14 upstream Backstage plugins whose translation refs this package extends, plus `@backstage/core-components` for the translated sidebar and TechDocs page.
+
+### `@wien/backstage-instanceswitcher-plugin`
+
+Depends on `@wien/backstage-shared` only (not the CD plugin). Pair `instances[].variant` with `instanceVariant` on CD theme extensions in `app-config.yaml`.
+
+## Wiring
 
 ```tsx
 import { createApp } from '@backstage/frontend-defaults';
@@ -39,76 +75,32 @@ export default createApp({
 });
 ```
 
-### 3. Configure `app-config.yaml`
+See each plugin README under `my-backstage-app/plugins/*/README.md` for extension IDs and config.
 
-```yaml
-app:
-  title: Wien Developer Portal
-  extensions:
-    - theme:app/light: false
-    - theme:app/dark: false
-    - theme:app/wien-light:
-        config:
-          instanceVariant: on-prem   # on-prem = Wien Rot, cloud = Wasserblau
-    - theme:app/wien-dark:
-        config:
-          instanceVariant: on-prem
+## Optional: Docker
 
-    - api:app/app-language:
-        config:
-          availableLanguages: [de, en]
-          defaultLanguage: de
-
-    - nav-item:search: false
-    - nav-item:catalog: false
-    - nav-item:scaffolder: false
-    - nav-item:user-settings: false
-    - page:techdocs: false
-
-    - nav-content:app/translated-nav: true
-
-    # Optional: link sibling Backstage instances (on-prem ↔ cloud)
-    - app-root-element:instanceswitcher/instance-switcher:
-        config:
-          currentInstanceId: on-prem
-          instances:
-            - id: on-prem
-              label: On-Premises
-              url: https://backstage.internal.wien.gv.at
-              variant: on-prem
-            - id: cloud
-              label: Cloud
-              url: https://backstage.cloud.wien.gv.at
-              variant: cloud
-
-organization:
-  name: Stadt Wien
+```sh
+cd my-backstage-app
+./docker/start.sh
 ```
 
-Run `yarn start` from `my-backstage-app/`.
+Builds the backend image (if needed) and starts Postgres + Backstage at http://localhost:7007. Primary development path is `yarn start`.
 
-## What the plugins provide
+## Repository layout
 
-| Extension | Package |
+| Path | Purpose |
 |---|---|
-| `theme:…/wien-light`, `theme:…/wien-dark` | `@wien/backstage-cd-plugin` |
-| `app-root-element:cd/wiener-melange-font` | `@wien/backstage-cd-plugin` |
-| `translation:app/*-de` (×14) | `@wien/backstage-i18n-de-plugin` |
-| `nav-content:app/translated-nav` | `@wien/backstage-i18n-de-plugin` |
-| `page:app/wien-techdocs` | `@wien/backstage-i18n-de-plugin` |
-| `app-root-element:instanceswitcher/instance-switcher` | `@wien/backstage-instanceswitcher-plugin` |
+| `my-backstage-app/plugins/backstage-*-plugin/` | Four `@wien` packages (shared + three frontend plugins) |
+| `my-backstage-app/packages/app/` | Demo Backstage app |
+| `my-backstage-app/packages/backend/` | Demo backend |
+| `my-backstage-app/docker/` | Optional Docker Compose for backend smoke test |
+| `docs/assets/` | Screenshots |
 
-Plugin READMEs:
+## Troubleshooting
 
-- [`my-backstage-app/plugins/backstage-cd-plugin/README.md`](my-backstage-app/plugins/backstage-cd-plugin/README.md)
-- [`my-backstage-app/plugins/backstage-i18n-de-plugin/README.md`](my-backstage-app/plugins/backstage-i18n-de-plugin/README.md)
-- [`my-backstage-app/plugins/backstage-instanceswitcher-plugin/README.md`](my-backstage-app/plugins/backstage-instanceswitcher-plugin/README.md)
-
-## Multi-instance deployments
-
-Stadt Wien runs **separate Backstage instances** for on-prem and cloud. Each deployment sets its own `instanceVariant` on the CD themes and lists sibling URLs in the instance switcher.
-
-Local two-instance demo overlay: [`app-config.cloud.yaml`](my-backstage-app/app-config.cloud.yaml).
+- **`Module not found: Can't resolve '@wien/backstage-*-plugin/alpha'`** — run `yarn install` in `my-backstage-app/`, then restart `yarn start`.
+- **Port already in use** — stop processes on ports 3000/7007 before restarting.
+- **Cloud preview connection refused** — use the Cursor cloud preview URL or run locally after `yarn install`.
 
 ## Requirements
 
@@ -117,30 +109,6 @@ Local two-instance demo overlay: [`app-config.cloud.yaml`](my-backstage-app/app-
 | Backstage | ≥ 1.36 (tested on 1.50.0) |
 | Node | 22 or 24 |
 | React | 17 or 18 |
-
-## Repository layout
-
-| Path | Purpose |
-|---|---|
-| `my-backstage-app/plugins/backstage-*-plugin/` | Three distributable `@wien` plugins |
-| `my-backstage-app/packages/app/` | Demo Backstage app |
-| `my-backstage-app/packages/backend/` | Backstage backend |
-| `my-backstage-app/deploy/` | Docker, Kubernetes, OpenShift manifests |
-| `docs/assets/` | Screenshots and walkthrough media |
-
-## Troubleshooting
-
-- **`Module not found: Can't resolve '@wien/backstage-*-plugin/alpha'`** — run `yarn install` in `my-backstage-app/`, then restart `yarn start`. A stale dev server started before the plugin split will not pick up the new workspace links.
-- **Port already in use (`EADDRINUSE`)** — stop the old dev server (`Ctrl+C` or kill processes on ports 3000/7007) before starting again.
-- **Cloud preview / Mac localhost shows connection refused** — the app runs in the cloud VM; use the Cursor cloud preview URL or run `yarn start` locally on your machine after `yarn install`.
-
-[Full walkthrough (MP4)](docs/assets/wien_cd_plugin_full_walkthrough.mp4)
-
-## Contacts
-
-- **Repository:** [adis-b/hackstage](https://github.com/adis-b/hackstage)
-- **Stadt Wien Markenmanagement:** [markenmanagement@ma53.wien.gv.at](mailto:markenmanagement@ma53.wien.gv.at)
-- **Wien CD Manual:** https://www.wien.gv.at/spezial/cd-manual/
 
 ## License
 

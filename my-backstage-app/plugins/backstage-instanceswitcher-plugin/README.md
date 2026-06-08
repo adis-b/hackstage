@@ -2,12 +2,12 @@
 
 Floating instance switcher for [Backstage](https://backstage.io) — links sibling deployments (on-prem ↔ cloud) with variant-coloured pills.
 
-Depends on `@wien/backstage-cd-plugin` for `getVariantDisplayColor` and `WienInstanceVariant`.
+Uses `@wien/backstage-shared` for variant colours. Does **not** depend on the CD theme plugin.
 
 ## Installation
 
 ```sh
-yarn workspace app add @wien/backstage-cd-plugin
+yarn workspace app add @wien/backstage-shared
 yarn workspace app add @wien/backstage-instanceswitcher-plugin
 ```
 
@@ -16,11 +16,10 @@ yarn workspace app add @wien/backstage-instanceswitcher-plugin
 ### `packages/app/src/App.tsx`
 
 ```tsx
-import { cdFeatures } from '@wien/backstage-cd-plugin/alpha';
 import { instanceSwitcherFeatures } from '@wien/backstage-instanceswitcher-plugin/alpha';
 
 export default createApp({
-  features: [catalogPlugin, ...cdFeatures, ...instanceSwitcherFeatures],
+  features: [catalogPlugin, ...instanceSwitcherFeatures],
 });
 ```
 
@@ -29,13 +28,6 @@ export default createApp({
 ```yaml
 app:
   extensions:
-    - theme:app/wien-light:
-        config:
-          instanceVariant: on-prem
-    - theme:app/wien-dark:
-        config:
-          instanceVariant: on-prem
-
     - app-root-element:instanceswitcher/instance-switcher:
         config:
           currentInstanceId: on-prem
@@ -51,7 +43,7 @@ app:
               variant: cloud
 ```
 
-Pair `instances[].variant` with `instanceVariant` on the CD theme extensions per deployment.
+Pair `instances[].variant` with `instanceVariant` on `@wien/backstage-cd-plugin` theme extensions per deployment.
 
 ## Extensions
 
@@ -60,21 +52,13 @@ Pair `instances[].variant` with `instanceVariant` on the CD theme extensions per
 | `app-root-element:instanceswitcher/instance-switcher` | Floating top instance picker |
 | `translation:app/instanceswitcher-de` | DE/EN strings for the switcher UI |
 
-### Breaking extension ID migration
-
-| Old (monolith) | New |
-|---|---|
-| `app-root-element:wien-cd/instance-switcher` | `app-root-element:instanceswitcher/instance-switcher` |
-
 ## Architecture
 
 ```mermaid
 flowchart LR
   AppTsx[App.tsx] --> SwitcherPlugin[instanceSwitcherPlugin]
-  AppTsx --> SwitcherModule[instanceSwitcherAppModule]
   SwitcherPlugin --> Element[InstanceSwitcherElement]
-  SwitcherModule --> Translation[instanceswitcher-de]
-  Element --> CD["@wien/backstage-cd-plugin tokens"]
+  Element --> Shared["@wien/backstage-shared tokens"]
 ```
 
 ## Troubleshooting
@@ -91,4 +75,5 @@ yarn workspace @wien/backstage-instanceswitcher-plugin test
 
 ## Related packages
 
-- `@wien/backstage-cd-plugin` — required peer for variant colours
+- `@wien/backstage-shared` — variant colours (required)
+- `@wien/backstage-cd-plugin` — optional; provides matching theme accents per variant

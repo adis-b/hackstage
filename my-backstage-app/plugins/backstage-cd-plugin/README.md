@@ -86,5 +86,6 @@ yarn workspace @wien/backstage-cd-plugin test
 
 ## Related packages
 
+- `@wien/backstage-shared` — shared brand colours and variant tokens (used internally)
 - `@wien/backstage-i18n-de-plugin` — German UI and translated sidebar
-- `@wien/backstage-instanceswitcher-plugin` — on-prem ↔ cloud switcher (uses `getVariantDisplayColor` from this package)
+- `@wien/backstage-instanceswitcher-plugin` — on-prem ↔ cloud switcher

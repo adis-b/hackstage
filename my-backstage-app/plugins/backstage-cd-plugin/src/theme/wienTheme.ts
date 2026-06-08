@@ -17,65 +17,20 @@ import {
   palettes,
   shapes,
 } from '@backstage/theme';
+import {
+  getVariantAccent,
+  wienColors,
+  type WienInstanceVariant,
+  type WienVariantAccent,
+} from '@wien/backstage-shared';
 
-/** Deployment instance type — drives the primary accent colour. */
-export type WienInstanceVariant = 'on-prem' | 'cloud';
-
-/** Stadt Wien brand palette (HEX from the wien.gv.at handbook). */
-export const wienColors = {
-  wienRot: '#ff0000',
-  morgenrot: '#ff5a64',
-  morgenrotLight: '#ffced1',
-  abendstimmung: '#49274b',
-  abendstimmungLight: '#d4c8d4',
-  flieder: '#aaaafa',
-  fliederLight: '#e6e5fe',
-  frischgruen: '#82d282',
-  frischgruenLight: '#cdedcd',
-  goldgelb: '#e6c828',
-  goldgelbLight: '#f8efbd',
-  wasserblau: '#73cee5',
-  wasserblauLight: '#d2f0ff',
-  nebelgrau: '#d6d1ca',
-  nebelgrauLight: '#f3f1ef',
-  fastSchwarz: '#292929',
-  weiss: '#ffffff',
-  uiLink: '#1f4baf',
-  uiError: '#910000',
-  uiSuccess: '#005738',
-  uiInteractive: '#4b4b82',
-} as const;
-
-/** Accent colours used by a deployment instance variant. */
-export interface WienVariantAccent {
-  primary: string;
-  primaryLight: string;
-  primaryDark: string;
-  primaryHover: string;
-}
-
-/** Resolve accent tokens for an instance variant. */
-export function getVariantAccent(variant: WienInstanceVariant): WienVariantAccent {
-  if (variant === 'cloud') {
-    return {
-      primary: wienColors.wasserblau,
-      primaryLight: wienColors.wasserblauLight,
-      primaryDark: wienColors.uiLink,
-      primaryHover: '#1f4baf',
-    };
-  }
-  return {
-    primary: wienColors.wienRot,
-    primaryLight: wienColors.morgenrot,
-    primaryDark: '#cd0000',
-    primaryHover: '#cd0000',
-  };
-}
-
-/** Map instance variant to a display colour (for chips, badges). */
-export function getVariantDisplayColor(variant: WienInstanceVariant): string {
-  return getVariantAccent(variant).primary;
-}
+export {
+  getVariantAccent,
+  getVariantDisplayColor,
+  wienColors,
+  type WienInstanceVariant,
+  type WienVariantAccent,
+} from '@wien/backstage-shared';
 
 /**
  * Wiener Melange font stack with the Lucida Sans fallback chain recommended

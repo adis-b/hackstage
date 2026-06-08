@@ -15,7 +15,8 @@ export interface Config {
    *    Disable with `false`.
    *
    * Pair `instances[].variant` with `theme:app/wien-light` /
-   * `theme:app/wien-dark` `instanceVariant` from `@wien/backstage-cd-plugin`.
+   * `theme:app/wien-dark` `instanceVariant` from `@wien/backstage-cd-plugin`
+   * (colours resolve via `@wien/backstage-shared`).
    */
   app?: {
     extensions?: unknown[];

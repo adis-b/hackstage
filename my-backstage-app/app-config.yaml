@@ -113,7 +113,12 @@ backend:
     # Uncomment the following host directive to bind to specific interfaces
     # host: 127.0.0.1
   csp:
-    connect-src: ["'self'", 'http:', 'https:']
+    connect-src:
+      - "'self'"
+      - 'http://localhost:3000'
+      - 'http://localhost:3001'
+      - 'http://localhost:7007'
+      - 'http://localhost:7008'
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
@@ -121,7 +126,7 @@ backend:
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   # This is for local development only, it is not recommended to use this in production
-  # The production database configuration is stored in app-config.production.yaml
+  # For Docker, see app-config.docker.yaml (Postgres via docker-compose).
   database:
     client: better-sqlite3
     connection: ':memory:'

@@ -10,7 +10,7 @@ import StorageIcon from '@material-ui/icons/Storage';
 import {
   getVariantDisplayColor,
   type WienInstanceVariant,
-} from '@wien/backstage-cd-plugin';
+} from '@wien/backstage-shared';
 import { wienInstanceSwitcherTranslationRef } from '../i18n/wienInstanceSwitcherTranslationRef';
 import { useScrollAtTop } from './useScrollAtTop';
 import { navigateToInstanceUrl } from './navigation';

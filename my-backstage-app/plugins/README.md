@@ -1,9 +1,12 @@
-# The Plugins Folder
+# @wien Backstage plugins
 
-This is where your own plugins and their associated modules live, each in a
-separate folder of its own.
+| Package | npm name | Depends on |
+|---|---|---|
+| [backstage-shared](./backstage-shared/) | `@wien/backstage-shared` | — |
+| [backstage-cd-plugin](./backstage-cd-plugin/) | `@wien/backstage-cd-plugin` | `@wien/backstage-shared` |
+| [backstage-i18n-de-plugin](./backstage-i18n-de-plugin/) | `@wien/backstage-i18n-de-plugin` | 14 upstream `@backstage/plugin-*` peers |
+| [backstage-instanceswitcher-plugin](./backstage-instanceswitcher-plugin/) | `@wien/backstage-instanceswitcher-plugin` | `@wien/backstage-shared` |
 
-If you want to create a new plugin here, go to your project root directory, run
-the command `yarn new`, and follow the on-screen instructions.
+Each plugin has its own README with wiring, extensions, and tests.
 
-You can also check out existing plugins on [the plugin marketplace](https://backstage.io/plugins)!
+Create a new plugin with `yarn new` from the repo root.

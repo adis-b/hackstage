@@ -55,6 +55,7 @@
     "@backstage/plugin-app-react": "^0.2.0",
     "@backstage/theme": "^0.7.0",
     "@material-ui/icons": "^4.9.1",
+    "@wien/backstage-shared": "workspace:^",
     "zod": "^4.0.0"
   },
   "peerDependencies": {

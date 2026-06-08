@@ -1,0 +1,50 @@
+{
+  "name": "@wien/backstage-shared",
+  "version": "1.0.0",
+  "description": "Shared Stadt Wien Backstage tokens — brand colours and on-prem/cloud instance variant helpers.",
+  "backstage": {
+    "role": "common-library",
+    "pluginId": "wien-shared",
+    "pluginPackages": [
+      "@wien/backstage-shared"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "backstage",
+    "stadt-wien",
+    "wien",
+    "design-tokens"
+  ],
+  "homepage": "https://github.com/adis-b/hackstage/tree/main/my-backstage-app/plugins/backstage-shared",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adis-b/hackstage",
+    "directory": "my-backstage-app/plugins/backstage-shared"
+  },
+  "license": "Apache-2.0",
+  "sideEffects": false,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "backstage-cli package build",
+    "lint": "backstage-cli package lint",
+    "test": "backstage-cli package test",
+    "clean": "backstage-cli package clean",
+    "prepack": "backstage-cli package prepack",
+    "postpack": "backstage-cli package postpack"
+  },
+  "devDependencies": {
+    "@backstage/cli": "^0.36.0"
+  }
+}

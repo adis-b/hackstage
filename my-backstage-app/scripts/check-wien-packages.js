@@ -10,6 +10,7 @@ const path = require('path');
 
 const repoRoot = path.resolve(__dirname, '..');
 const required = [
+  'backstage-shared',
   'backstage-cd-plugin',
   'backstage-i18n-de-plugin',
   'backstage-instanceswitcher-plugin',
