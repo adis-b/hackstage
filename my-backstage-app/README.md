@@ -14,6 +14,10 @@ yarn start
 
 ![Catalog with Wien CD and German sidebar](../docs/assets/plugin-cd-theme.png)
 
+The grouped German sidebar is wired in `packages/app/src/nav/` + `demoAppModule.ts`, not in the i18n plugin.
+
+![German sidebar](../docs/assets/plugin-i18n-sidebar-de.png)
+
 Two-instance demo (on-prem + cloud):
 
 ```sh
@@ -32,7 +36,7 @@ yarn workspace app start --config ../../app-config.yaml --config ../../app-confi
 | `plugins/backstage-cd-plugin` | `@wien/backstage-cd-plugin` |
 | `plugins/backstage-i18n-de-plugin` | `@wien/backstage-i18n-de-plugin` |
 | `plugins/backstage-instanceswitcher-plugin` | `@wien/backstage-instanceswitcher-plugin` |
-| `packages/app` | Demo frontend |
+| `packages/app` | Demo frontend + grouped German sidebar (`src/nav/`) |
 | `packages/backend` | Demo backend |
 
 ## Commands

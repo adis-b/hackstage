@@ -12,11 +12,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import { SidebarSearchModal } from '@backstage/plugin-search';
 import { UserSettingsSignInAvatar } from '@backstage/plugin-user-settings';
 import { NotificationsSidebarItem } from '@backstage/plugin-notifications';
-
 import {
   slugifyNavItemId,
   wienI18nDeTranslationRef,
-} from '../i18n/wienI18nDeTranslationRef';
+} from '@wien/backstage-i18n-de-plugin';
 
 interface NavContentProps {
   /** Nav item bag supplied by Backstage to any NavContentBlueprint component. */
@@ -24,9 +23,9 @@ interface NavContentProps {
 }
 
 /**
- * Grouped sidebar layout with DE/EN nav labels via `wienI18nDeTranslationRef`.
- * No branding — adopters can supply a custom NavContent in a separate
- * plugin and reuse `wienI18nDeTranslationRef` + `slugifyNavItemId`.
+ * Demo-app sidebar layout with DE/EN nav labels via `wienI18nDeTranslationRef`.
+ * Adopters can copy this into their own app or build a custom NavContent that
+ * reuses `wienI18nDeTranslationRef` + `slugifyNavItemId` from the i18n plugin.
  */
 export const TranslatedNavContent = ({ navItems }: NavContentProps) => {
   const { t } = useTranslationRef(wienI18nDeTranslationRef);
@@ -45,10 +44,8 @@ export const TranslatedNavContent = ({ navItems }: NavContentProps) => {
     />
   ));
 
-  // Items we render explicitly elsewhere — claim them so they do not
-  // also appear in the alphabetical `nav.rest()` list.
-  nav.take('page:search'); // replaced by the search modal in the header group
-  nav.take('page:notifications'); // rendered as <NotificationsSidebarItem /> with its unread-count badge
+  nav.take('page:search');
+  nav.take('page:notifications');
 
   return (
     <Sidebar>

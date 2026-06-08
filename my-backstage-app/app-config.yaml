@@ -52,7 +52,8 @@ app:
             - en
           defaultLanguage: de
 
-    # Grouped sidebar with DE/EN nav labels (no branding).
+    # Grouped sidebar with DE/EN nav labels — wired by the demo app
+    # (packages/app/src/demoAppModule.ts), not the i18n plugin.
     - nav-content:app/translated-nav: true
 
     # Replace the upstream techdocs index page with the Wien version

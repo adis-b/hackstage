@@ -8,16 +8,11 @@ import {
 } from '@backstage/frontend-plugin-api';
 
 import { WienGermanTranslationExtensions } from './i18n/translations';
-import { TranslatedNav } from './nav/TranslatedNav';
 import { WienTechDocsPage } from './techdocs/WienTechDocsPage';
 
 export const wienI18nDeAppModule = createFrontendModule({
   pluginId: 'app',
-  extensions: [
-    ...WienGermanTranslationExtensions,
-    TranslatedNav,
-    WienTechDocsPage,
-  ],
+  extensions: [...WienGermanTranslationExtensions, WienTechDocsPage],
 });
 
 export const i18nDePlugin = createFrontendPlugin({

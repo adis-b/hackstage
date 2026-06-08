@@ -6,7 +6,7 @@ Publishable `@wien` frontend plugins for [Backstage](https://backstage.io), plus
 |---|---|
 | `@wien/backstage-shared` | Brand colours + on-prem/cloud variant tokens (no React) |
 | `@wien/backstage-cd-plugin` | Wien CD themes, Wiener Melange font |
-| `@wien/backstage-i18n-de-plugin` | German translations, grouped sidebar, TechDocs i18n |
+| `@wien/backstage-i18n-de-plugin` | German translations, TechDocs i18n |
 | `@wien/backstage-instanceswitcher-plugin` | Floating on-prem ↔ cloud instance switcher |
 
 ![Stadt Wien Developer Portal — catalog (German)](docs/assets/wien_cd_de.png)
@@ -31,13 +31,19 @@ Wien Rot header, dark sidebar, Wiener Melange typography, and Wien light/dark th
 
 ![Wien CD theme on catalog page](docs/assets/plugin-cd-theme.png)
 
-### `@wien/backstage-i18n-de-plugin` — German UI
+### `@wien/backstage-i18n-de-plugin` — German translations
 
-Grouped sidebar with DE labels, translated TechDocs, and language/theme settings.
+14 DE translation bundles, `wienI18nDeTranslationRef`, and translated TechDocs empty state. Sidebar layout is **not** included — see demo app below.
 
-| Sidebar (DE) | TechDocs | Settings |
-|---|---|---|
-| ![German sidebar](docs/assets/plugin-i18n-sidebar-de.png) | ![TechDocs DE](docs/assets/plugin-i18n-techdocs-de.png) | ![Settings DE](docs/assets/plugin-i18n-settings-de.png) |
+| TechDocs | Settings |
+|---|---|
+| ![TechDocs DE](docs/assets/plugin-i18n-techdocs-de.png) | ![Settings DE](docs/assets/plugin-i18n-settings-de.png) |
+
+### Demo app — grouped German sidebar
+
+The demo app wires `packages/app/src/nav/` (uses `wienI18nDeTranslationRef` from the i18n plugin):
+
+![German sidebar](docs/assets/plugin-i18n-sidebar-de.png)
 
 ### `@wien/backstage-instanceswitcher-plugin` — Instance switcher
 
@@ -57,7 +63,8 @@ No UI of its own. Provides `wienColors`, `WienInstanceVariant`, and `getVariantD
 flowchart TB
   Shared["@wien/backstage-shared<br/>wienColors, variant tokens"]
   CD["@wien/backstage-cd-plugin<br/>themes + font"]
-  I18N["@wien/backstage-i18n-de-plugin<br/>14 DE bundles + nav"]
+  I18N["@wien/backstage-i18n-de-plugin<br/>14 DE bundles + TechDocs"]
+  DemoNav["demo app nav/<br/>grouped sidebar"]
   SW["@wien/backstage-instanceswitcher-plugin<br/>floating switcher"]
 
   Shared --> CD
@@ -65,6 +72,8 @@ flowchart TB
   I18N -.->|"peerDeps: 14 upstream plugins"| Upstream["@backstage/plugin-*"]
   CD --> App["demo app createApp()"]
   I18N --> App
+  DemoNav --> App
+  DemoNav -.-> I18N
   SW --> App
 ```
 
@@ -80,7 +89,7 @@ Depends on `@wien/backstage-shared`. Re-exports shared tokens from its stable AP
 
 **Runtime dependencies:** `@backstage/frontend-plugin-api`, `@backstage/plugin-app-react`, MUI, `@backstage/ui`.
 
-**Peer dependencies (host app must install):** the 14 upstream Backstage plugins whose translation refs this package extends, plus `@backstage/core-components` for the translated sidebar and TechDocs page.
+**Peer dependencies (host app must install):** the 14 upstream Backstage plugins whose translation refs this package extends, plus `@backstage/core-components` for the TechDocs page. Does not include sidebar layout — copy `packages/app/src/nav/` from the demo app if you want the grouped German sidebar.
 
 ### `@wien/backstage-instanceswitcher-plugin`
 

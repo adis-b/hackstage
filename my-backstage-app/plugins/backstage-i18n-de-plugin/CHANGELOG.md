@@ -5,8 +5,8 @@
 Initial release under `@wien` scope. Split from `@stadt-wien/backstage-plugin-cd`.
 
 - 14 German translation bundles
-- `TranslatedNav` grouped sidebar
 - `WienTechDocsPage` with translated empty state
 - Coverage CI script (`i18n:coverage:check`)
+- Grouped sidebar moved to demo app (`packages/app/src/nav/`) — plugin is translations-only
 
 **Breaking:** `wienCdTranslationRef` renamed to `wienI18nDeTranslationRef` (id `i18n-de`).

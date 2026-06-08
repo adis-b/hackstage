@@ -3594,7 +3594,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage/plugin-notifications@npm:^0.5.0, @backstage/plugin-notifications@npm:^0.5.16":
+"@backstage/plugin-notifications@npm:^0.5.16":
   version: 0.5.16
   resolution: "@backstage/plugin-notifications@npm:0.5.16"
   dependencies:
@@ -13331,7 +13331,6 @@ __metadata:
     "@backstage/plugin-catalog-graph": "npm:^0.6.0"
     "@backstage/plugin-catalog-import": "npm:^0.13.0"
     "@backstage/plugin-catalog-react": "npm:^2.0.0"
-    "@backstage/plugin-notifications": "npm:^0.5.0"
     "@backstage/plugin-org": "npm:^0.7.0"
     "@backstage/plugin-scaffolder": "npm:^1.30.0"
     "@backstage/plugin-scaffolder-react": "npm:^1.19.0"
@@ -13340,7 +13339,6 @@ __metadata:
     "@backstage/plugin-techdocs": "npm:^1.17.0"
     "@backstage/plugin-user-settings": "npm:^0.9.0"
     "@backstage/ui": "npm:^0.14.0"
-    "@material-ui/core": "npm:^4.12.2"
     "@material-ui/icons": "npm:^4.9.1"
     "@types/react": "npm:^18.0.0"
     "@types/react-dom": "npm:^18.0.0"
@@ -13351,7 +13349,6 @@ __metadata:
     "@backstage/plugin-catalog-graph": ^0.6.0
     "@backstage/plugin-catalog-import": ^0.13.0
     "@backstage/plugin-catalog-react": ^2.0.0
-    "@backstage/plugin-notifications": ^0.5.0
     "@backstage/plugin-org": ^0.7.0
     "@backstage/plugin-scaffolder": ^1.30.0
     "@backstage/plugin-scaffolder-react": ^1.19.0

@@ -4,11 +4,14 @@ import { cdFeatures } from '@wien/backstage-cd-plugin/alpha';
 import { i18nDeFeatures } from '@wien/backstage-i18n-de-plugin/alpha';
 import { instanceSwitcherFeatures } from '@wien/backstage-instanceswitcher-plugin/alpha';
 
+import { demoAppModule } from './demoAppModule';
+
 export default createApp({
   features: [
     catalogPlugin,
     ...cdFeatures,
     ...i18nDeFeatures,
     ...instanceSwitcherFeatures,
+    demoAppModule,
   ],
 });
