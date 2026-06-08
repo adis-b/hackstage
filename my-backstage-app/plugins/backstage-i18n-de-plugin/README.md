@@ -3,8 +3,9 @@
 German translations for [Backstage](https://backstage.io):
 
 - 14 German translation bundles for core Backstage plugins
-- `wienI18nDeTranslationRef` for custom nav labels (DE/EN)
+- `wienI18nDeTranslationRef` for custom nav labels and page shell titles (DE/EN)
 - TechDocs index page with a fully translated empty state
+- Language-aware page headers via a swappable `PageLayout` override
 
 This plugin does **not** ship a sidebar layout. The demo app wires a grouped
 German sidebar in `packages/app/src/nav/` using `wienI18nDeTranslationRef`.
@@ -42,7 +43,7 @@ app:
     - page:techdocs: false
 ```
 
-Page headers and tabs from `PageBlueprint` / `SubPageBlueprint` are **not** covered by translation refs. Copy the `page:*` title overrides from the demo `app-config.yaml` (Settings, Catalog Graph, Search, …).
+Page headers and sub-page tabs from `PageBlueprint` / `SubPageBlueprint` are translated at render time by this plugin's `TranslatedPageLayout` override (`component:app/core-page-layout`). No static `page:*` title overrides in `app-config.yaml` are required.
 
 For a grouped German sidebar, copy `packages/app/src/nav/` from this repo into your app and register `demoAppModule` (see demo app).
 
@@ -50,6 +51,7 @@ For a grouped German sidebar, copy `packages/app/src/nav/` from this repo into y
 
 | Extension ID | Purpose |
 |---|---|
+| `component:app/core-page-layout` | Language-aware page headers and sub-page tabs |
 | `translation:app/wien-i18n-de-de` | Nav title overrides + sidebar group strings |
 | `translation:app/*-de` (×13) | Upstream plugin German bundles |
 | `page:app/wien-techdocs` | Translatable TechDocs empty state on `/docs` |
@@ -73,12 +75,14 @@ flowchart LR
   AppTsx[App.tsx] --> i18nDeFeatures[i18nDeFeatures]
   i18nDeFeatures --> AppModule[wienI18nDeAppModule]
   AppModule --> Translations[14 DE bundles]
+  AppModule --> PageLayout[TranslatedPageLayout]
   AppModule --> TechDocs[WienTechDocsPage]
   DemoNav[demo app nav/] -.-> Ref[wienI18nDeTranslationRef]
 ```
 
 ## Troubleshooting
 
+- **Page headers stay English:** ensure `i18nDeFeatures` is loaded (registers `TranslatedPageLayout`); do not add static `page:*` title overrides in `app-config.yaml`.
 - **Nav labels stay English:** enable `api:app/app-language` and set `defaultLanguage: de`; ensure your app wires a NavContent that uses `wienI18nDeTranslationRef`.
 - **TechDocs empty state untranslated:** disable upstream `page:techdocs` so `page:app/wien-techdocs` takes over.
 
