@@ -14,7 +14,7 @@ app:
     - nav-item:scaffolder: false
 
     # Replace the default Backstage light/dark themes with the Stadt
-    # Wien CD themes provided by @stadt-wien/backstage-plugin-cd.
+    # Wien CD themes provided by @wien/backstage-cd-plugin.
     - theme:app/light: false
     - theme:app/dark: false
     - theme:app/wien-light:
@@ -27,7 +27,7 @@ app:
     # Floating instance switcher — links to sibling Backstage deployments.
     # For local demo of both instances, run a second app on port 3001 with
     # app-config.cloud.yaml (see app-config.cloud.yaml in this directory).
-    - app-root-element:wien-cd/instance-switcher:
+    - app-root-element:instanceswitcher/instance-switcher:
         config:
           currentInstanceId: on-prem
           scrollThreshold: 16
@@ -44,7 +44,7 @@ app:
     # Enable the language toggle under Settings → Appearance with
     # German and English (German default, matching the Stadt Wien CD).
     # German translation resources are registered by
-    # @stadt-wien/backstage-plugin-cd.
+    # @wien/backstage-i18n-de-plugin.
     - api:app/app-language:
         config:
           availableLanguages:
@@ -59,7 +59,7 @@ app:
     # that renders a fully translated empty state. The upstream page
     # hard-codes "No documents to show" / "Create your own document"
     # / "DOCS" in JSX literals and does not route them through any
-    # translation ref, so wien-cd ships a thin replacement on the same
+    # translation ref, so the i18n-de plugin ships a thin replacement on the same
     # `/docs` route (page:app/wien-techdocs).
     - page:techdocs: false
 
@@ -90,7 +90,7 @@ app:
 
     # Configure the catalog index page to be the root page (normally
     # mounted on /catalog). The sidebar label is translated via the
-    # wienCdTranslationRef in @stadt-wien/backstage-plugin-cd, so no
+    # wienI18nDeTranslationRef in @wien/backstage-i18n-de-plugin, so no
     # hard-coded `title:` override is needed here — the language toggle
     # under Settings → Appearance swaps them bidirectionally.
     - page:catalog:

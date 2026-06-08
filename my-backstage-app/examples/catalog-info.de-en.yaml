@@ -24,7 +24,7 @@
 #      wien.gv.at/description-en    — English description
 #      wien.gv.at/<key>-<lang>      — any other localised piece
 #
-#  The @stadt-wien/backstage-plugin-cd package's `wienCdTranslationRef`
+#  The @wien/backstage-i18n-de-plugin package's `wienI18nDeTranslationRef`
 #  is used for UI-chrome strings. This file, in contrast, is about
 #  **content** — the team decided what the component is called, in both
 #  languages — so there is no translation ref here. An entity card that

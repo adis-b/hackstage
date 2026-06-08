@@ -14,7 +14,7 @@ app:
     - theme:app/wien-dark:
         config:
           instanceVariant: cloud
-    - app-root-element:wien-cd/instance-switcher:
+    - app-root-element:instanceswitcher/instance-switcher:
         config:
           currentInstanceId: cloud
           scrollThreshold: 16

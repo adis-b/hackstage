@@ -1,6 +1,12 @@
 # hackstage — Stadt Wien Corporate Design for Backstage
 
-Drop-in Backstage frontend plugin (`@stadt-wien/backstage-plugin-cd`) that applies Stadt Wien branding: Wien CD colours, Wiener Melange typography, translated grouped sidebar, German/English UI, and optional multi-instance switching for on-prem vs cloud deployments.
+Three publishable Backstage frontend plugins under the `@wien` scope:
+
+| Package | Purpose |
+|---|---|
+| `@wien/backstage-cd-plugin` | Wien CD themes, Wiener Melange font, brand tokens |
+| `@wien/backstage-i18n-de-plugin` | German translations, grouped sidebar, TechDocs i18n |
+| `@wien/backstage-instanceswitcher-plugin` | Floating on-prem ↔ cloud instance switcher |
 
 ![Stadt Wien Developer Portal — Deutsch](docs/assets/wien_cd_de.png)
 
@@ -9,8 +15,9 @@ Drop-in Backstage frontend plugin (`@stadt-wien/backstage-plugin-cd`) that appli
 ### 1. Install
 
 ```sh
-yarn workspace app add @stadt-wien/backstage-plugin-cd
-# or: yarn workspace app add file:./stadt-wien-backstage-plugin-cd-0.3.0.tgz
+yarn workspace app add @wien/backstage-cd-plugin
+yarn workspace app add @wien/backstage-i18n-de-plugin
+yarn workspace app add @wien/backstage-instanceswitcher-plugin
 ```
 
 ### 2. Wire into `App.tsx`
@@ -18,10 +25,17 @@ yarn workspace app add @stadt-wien/backstage-plugin-cd
 ```tsx
 import { createApp } from '@backstage/frontend-defaults';
 import catalogPlugin from '@backstage/plugin-catalog/alpha';
-import { wienCdFeatures } from '@stadt-wien/backstage-plugin-cd/alpha';
+import { cdFeatures } from '@wien/backstage-cd-plugin/alpha';
+import { i18nDeFeatures } from '@wien/backstage-i18n-de-plugin/alpha';
+import { instanceSwitcherFeatures } from '@wien/backstage-instanceswitcher-plugin/alpha';
 
 export default createApp({
-  features: [catalogPlugin, ...wienCdFeatures],
+  features: [
+    catalogPlugin,
+    ...cdFeatures,
+    ...i18nDeFeatures,
+    ...instanceSwitcherFeatures,
+  ],
 });
 ```
 
@@ -54,7 +68,7 @@ app:
     - nav-content:app/translated-nav: true
 
     # Optional: link sibling Backstage instances (on-prem ↔ cloud)
-    - app-root-element:wien-cd/instance-switcher:
+    - app-root-element:instanceswitcher/instance-switcher:
         config:
           currentInstanceId: on-prem
           instances:
@@ -73,22 +87,26 @@ organization:
 
 Run `yarn start` from `my-backstage-app/`.
 
-## What the plugin provides
+## What the plugins provide
 
-| Extension | Purpose |
+| Extension | Package |
 |---|---|
-| `theme:…/wien-light`, `theme:…/wien-dark` | Wien CD themes; `instanceVariant` sets accent (`on-prem` red, `cloud` blue) |
-| `translation:app/*-de` (×14) | German bundles for core Backstage plugins |
-| `nav-content:app/translated-nav` | Grouped sidebar with DE/EN nav labels (no branding) |
-| `page:app/wien-techdocs` | Translatable TechDocs empty state |
-| `app-root-element:wien-cd/instance-switcher` | Floating top-right picker linking sibling instances |
-| `app-root-element:wien-cd/wiener-melange-font` | Embedded Wiener Melange `@font-face` |
+| `theme:…/wien-light`, `theme:…/wien-dark` | `@wien/backstage-cd-plugin` |
+| `app-root-element:cd/wiener-melange-font` | `@wien/backstage-cd-plugin` |
+| `translation:app/*-de` (×14) | `@wien/backstage-i18n-de-plugin` |
+| `nav-content:app/translated-nav` | `@wien/backstage-i18n-de-plugin` |
+| `page:app/wien-techdocs` | `@wien/backstage-i18n-de-plugin` |
+| `app-root-element:instanceswitcher/instance-switcher` | `@wien/backstage-instanceswitcher-plugin` |
 
-Full plugin docs: [`my-backstage-app/plugins/wien-cd/README.md`](my-backstage-app/plugins/wien-cd/README.md).
+Plugin READMEs:
+
+- [`my-backstage-app/plugins/backstage-cd-plugin/README.md`](my-backstage-app/plugins/backstage-cd-plugin/README.md)
+- [`my-backstage-app/plugins/backstage-i18n-de-plugin/README.md`](my-backstage-app/plugins/backstage-i18n-de-plugin/README.md)
+- [`my-backstage-app/plugins/backstage-instanceswitcher-plugin/README.md`](my-backstage-app/plugins/backstage-instanceswitcher-plugin/README.md)
 
 ## Multi-instance deployments
 
-Stadt Wien runs **separate Backstage instances** for on-prem and cloud (same plugin bundle, isolated workflows and catalog data). Each deployment sets its own `instanceVariant` and lists sibling URLs in the instance switcher. The switcher appears as a floating pill at the **top-right** when scrolled to the top.
+Stadt Wien runs **separate Backstage instances** for on-prem and cloud. Each deployment sets its own `instanceVariant` on the CD themes and lists sibling URLs in the instance switcher.
 
 Local two-instance demo overlay: [`app-config.cloud.yaml`](my-backstage-app/app-config.cloud.yaml).
 
@@ -104,8 +122,8 @@ Local two-instance demo overlay: [`app-config.cloud.yaml`](my-backstage-app/app-
 
 | Path | Purpose |
 |---|---|
-| `my-backstage-app/plugins/wien-cd/` | Distributable plugin |
-| `my-backstage-app/packages/app/` | Demo Backstage app (~42 LOC) |
+| `my-backstage-app/plugins/backstage-*-plugin/` | Three distributable `@wien` plugins |
+| `my-backstage-app/packages/app/` | Demo Backstage app |
 | `my-backstage-app/packages/backend/` | Backstage backend |
 | `my-backstage-app/deploy/` | Docker, Kubernetes, OpenShift manifests |
 | `docs/assets/` | Screenshots and walkthrough media |
@@ -122,5 +140,4 @@ Local two-instance demo overlay: [`app-config.cloud.yaml`](my-backstage-app/app-
 
 ## License
 
-Code: Apache-2.0 ([`my-backstage-app/plugins/wien-cd/LICENSE`](my-backstage-app/plugins/wien-cd/LICENSE)).\
-Wiener Melange typeface: proprietary, © Stadt Wien.
+Code: Apache-2.0. Wiener Melange typeface: proprietary, © Stadt Wien.
