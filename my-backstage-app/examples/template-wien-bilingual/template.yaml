@@ -33,6 +33,17 @@ spec:
         - lifecycle
         - owner
       properties:
+        # Read-only: shows the current deployment (On-Premises / Cloud),
+        # resolved from app.baseUrl. The value cannot be changed here.
+        # If you want to change environment - use the multi instance switcher
+        # on the top right.
+        environment:
+          title: Environment
+          description: >-
+            If you want to change environment - use the multi instance switcher
+            on the top right
+          type: string
+          ui:field: WienEnvironment
         name:
           title: Technischer Name
           description: >-
