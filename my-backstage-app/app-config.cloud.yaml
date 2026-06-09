@@ -3,31 +3,13 @@
 #
 # For a local two-instance demo, run this on port 3001:
 #   yarn workspace app start --config ../../app-config.yaml --config ../../app-config.cloud.yaml --port 3001
+#
+# Only app.baseUrl changes — the instance switcher, CD theme accent, and the
+# wien:instance:current scaffolder action all resolve "cloud" by matching this
+# baseUrl against the shared wien.instances registry in app-config.yaml.
 
 app:
   baseUrl: http://localhost:3001
-
-  extensions:
-    - theme:app/wien-light:
-        config:
-          instanceVariant: cloud
-    - theme:app/wien-dark:
-        config:
-          instanceVariant: cloud
-    - app-root-element:instanceswitcher/instance-switcher:
-        config:
-          currentInstanceId: cloud
-          scrollThreshold: 16
-          compactDelayMs: 4000
-          instances:
-            - id: on-prem
-              label: On-Premises
-              url: http://localhost:3000
-              variant: on-prem
-            - id: cloud
-              label: Cloud
-              url: http://localhost:3001
-              variant: cloud
 
 backend:
   baseUrl: http://localhost:7008

@@ -25,6 +25,10 @@ export default createApp({
 
 ### `app-config.yaml`
 
+The deployment registry lives once in `wien.instances`. The **current** instance
+is resolved by matching `app.baseUrl` against each entry's `url`, so there is no
+`currentInstanceId` to keep in sync per environment.
+
 ## Behaviour
 
 1. **Expanded pill** at page top on load (variant icon + label + menu chevron).
@@ -36,27 +40,31 @@ export default createApp({
 
 ```yaml
 app:
+  baseUrl: https://backstage.internal.example.com # picks the current instance
   extensions:
     - app-root-element:instanceswitcher/instance-switcher:
         config:
-          currentInstanceId: on-prem
           scrollThreshold: 16
           compactDelayMs: 4000   # 0 = never compact
           position: top-right
           offsetTop: 8
           offsetRight: 20
-          instances:
-            - id: on-prem
-              label: On-Premises
-              url: https://backstage.internal.example.com
-              variant: on-prem
-            - id: cloud
-              label: Cloud
-              url: https://backstage.cloud.example.com
-              variant: cloud
+
+# Shared registry — also drives the CD theme accent and the
+# wien:instance:current scaffolder action.
+wien:
+  instances:
+    - id: on-prem
+      label: On-Premises
+      url: https://backstage.internal.example.com
+      variant: on-prem
+    - id: cloud
+      label: Cloud
+      url: https://backstage.cloud.example.com
+      variant: cloud
 ```
 
-Pair `instances[].variant` with `instanceVariant` on `@wien/backstage-cd-plugin` theme extensions per deployment.
+The matching `instances[].variant` automatically drives the `@wien/backstage-cd-plugin` theme accent for the current deployment — no separate theme config needed.
 
 ## Screenshots
 
@@ -90,7 +98,7 @@ Uses `getVariantDisplayColor()` from `@wien/backstage-shared` — on-prem pill i
 
 - **Switcher not visible:** appears only when scrolled to the top (`scrollThreshold`, default 16px).
 - **Still full pill at top:** wait for `compactDelayMs` (default 4s) or hover to expand from compact circle.
-- **Wrong pill colour:** match `instances[].variant` with theme `instanceVariant` from CD plugin.
+- **Wrong pill colour:** check the `variant` on the matching `wien.instances` entry (matched to `app.baseUrl`).
 - **Fewer than two instances:** switcher renders nothing by design.
 
 ## Tests

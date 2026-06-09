@@ -9,13 +9,13 @@ metadata:
     Titel und Beschreibung sowohl auf Deutsch als auch Englisch hinterlegt
     sind. Die deutschen Werte landen direkt in metadata.title und
     metadata.description, die englischen werden als Annotations
-    wien.gv.at/title-en und wien.gv.at/description-en mitgegeben.
+    wien.at/title-en und wien.at/description-en mitgegeben.
 
     Generates a catalog-info.yaml for a Stadt Wien component whose title
     and description are stored in both German and English. The German
     values go straight into metadata.title and metadata.description, the
-    English variants are stored as wien.gv.at/title-en and
-    wien.gv.at/description-en annotations.
+    English variants are stored as wien.at/title-en and
+    wien.at/description-en annotations.
   tags:
     - stadt-wien
     - bilingual
@@ -33,6 +33,17 @@ spec:
         - lifecycle
         - owner
       properties:
+        # Read-only: shows the current deployment (On-Premises / Cloud),
+        # resolved from app.baseUrl. The value cannot be changed here.
+        # If you want to change environment - use the multi instance switcher
+        # on the top right.
+        environment:
+          title: Environment
+          description: >-
+            If you want to change environment - use the multi instance switcher
+            on the top right
+          type: string
+          ui:field: WienEnvironment
         name:
           title: Technischer Name
           description: >-
@@ -118,14 +129,14 @@ spec:
         titleEn:
           title: Title (English)
           description: >-
-            Stored as the wien.gv.at/title-en annotation. The portal's UI
+            Stored as the wien.at/title-en annotation. The portal's UI
             picks this up when the user switches the language to English.
           type: string
           ui:placeholder: City of Vienna Citizen Service
         descriptionEn:
           title: Description (English)
           description: >-
-            Stored as the wien.gv.at/description-en annotation.
+            Stored as the wien.at/description-en annotation.
           type: string
           ui:widget: textarea
           ui:options:
@@ -136,6 +147,10 @@ spec:
   # Workspace. Damit landet die fertige catalog-info.yaml als File in der
   # Output-Section, die User runterladen oder per Copy-Paste übernehmen.
   steps:
+    - id: resolve-instance
+      name: Resolve Wien instance / Wien-Instanz auflösen
+      action: wien:instance:current
+
     - id: write-catalog-info
       name: Schreibe catalog-info.yaml
       action: catalog:write
@@ -149,10 +164,13 @@ spec:
             description: ${{ parameters.descriptionDe }}
             tags: ${{ parameters.tags | dump }}
             annotations:
-              wien.gv.at/title-de: ${{ parameters.titleDe }}
-              wien.gv.at/title-en: ${{ parameters.titleEn }}
-              wien.gv.at/description-de: ${{ parameters.descriptionDe }}
-              wien.gv.at/description-en: ${{ parameters.descriptionEn }}
+              wien.at/instance: ${{ steps['resolve-instance'].output.id }}
+              wien.at/instance-variant: ${{ steps['resolve-instance'].output.variant }}
+              wien.at/instance-url: ${{ steps['resolve-instance'].output.url }}
+              wien.at/title-de: ${{ parameters.titleDe }}
+              wien.at/title-en: ${{ parameters.titleEn }}
+              wien.at/description-de: ${{ parameters.descriptionDe }}
+              wien.at/description-en: ${{ parameters.descriptionEn }}
           spec:
             type: ${{ parameters.type }}
             lifecycle: ${{ parameters.lifecycle }}
@@ -189,11 +207,14 @@ spec:
               - ${{ t }}
           {%- endfor %}
             annotations:
-              wien.gv.at/title-de: ${{ parameters.titleDe }}
-              wien.gv.at/title-en: ${{ parameters.titleEn }}
-              wien.gv.at/description-de: |-
+              wien.at/instance: ${{ steps['resolve-instance'].output.id }}
+              wien.at/instance-variant: ${{ steps['resolve-instance'].output.variant }}
+              wien.at/instance-url: ${{ steps['resolve-instance'].output.url }}
+              wien.at/title-de: ${{ parameters.titleDe }}
+              wien.at/title-en: ${{ parameters.titleEn }}
+              wien.at/description-de: |-
                 ${{ parameters.descriptionDe }}
-              wien.gv.at/description-en: |-
+              wien.at/description-en: |-
                 ${{ parameters.descriptionEn }}
           spec:
             type: ${{ parameters.type }}

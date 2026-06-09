@@ -14,33 +14,22 @@ app:
     - nav-item:scaffolder: false
 
     # Replace the default Backstage light/dark themes with the Stadt
-    # Wien CD themes provided by @wien/backstage-cd-plugin.
+    # Wien CD themes provided by @wien/backstage-cd-plugin. The accent
+    # (Wien Rot vs Wasserblau) is derived from app.baseUrl against the
+    # shared wien.instances registry below.
     - theme:app/light: false
     - theme:app/dark: false
-    - theme:app/wien-light:
-        config:
-          instanceVariant: on-prem
-    - theme:app/wien-dark:
-        config:
-          instanceVariant: on-prem
+    - theme:app/wien-light: true
+    - theme:app/wien-dark: true
 
     # Floating instance switcher — links to sibling Backstage deployments.
-    # For local demo of both instances, run a second app on port 3001 with
-    # app-config.cloud.yaml (see app-config.cloud.yaml in this directory).
+    # The registry lives once in wien.instances (below); the current
+    # instance is resolved from app.baseUrl. For a local two-instance demo,
+    # run a second app on port 3001 with app-config.cloud.yaml.
     - app-root-element:instanceswitcher/instance-switcher:
         config:
-          currentInstanceId: on-prem
           scrollThreshold: 16
           compactDelayMs: 4000
-          instances:
-            - id: on-prem
-              label: On-Premises
-              url: http://localhost:3000
-              variant: on-prem
-            - id: cloud
-              label: Cloud
-              url: http://localhost:3001
-              variant: cloud
 
     # Enable the language toggle under Settings → Appearance with
     # German and English (German default, matching the Stadt Wien CD).
@@ -219,6 +208,21 @@ catalog:
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
     #   rules:
     #     - allow: [User, Group]
+
+# Single deployment registry shared by the instance switcher, the CD theme
+# accent, and the wien:instance:current scaffolder action. The current
+# deployment is whichever entry's url matches app.baseUrl, so the cloud
+# overlay (app-config.cloud.yaml) only needs to change app.baseUrl.
+wien:
+  instances:
+    - id: on-prem
+      label: On-Premises
+      url: http://localhost:3000
+      variant: on-prem
+    - id: cloud
+      label: Cloud
+      url: http://localhost:3001
+      variant: cloud
 
 kubernetes:
   # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options

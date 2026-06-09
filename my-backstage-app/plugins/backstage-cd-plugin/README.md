@@ -29,20 +29,20 @@ app:
   extensions:
     - theme:app/light: false
     - theme:app/dark: false
-    - theme:app/wien-light:
-        config:
-          instanceVariant: on-prem   # on-prem = Wien Rot, cloud = Wasserblau
-    - theme:app/wien-dark:
-        config:
-          instanceVariant: on-prem
+    - theme:app/wien-light: true
+    - theme:app/wien-dark: true
 ```
+
+The accent (on-prem = Wien Rot, cloud = Wasserblau) is derived from `app.baseUrl`
+matched against the shared `wien.instances` registry — see
+`@wien/backstage-instanceswitcher-plugin`.
 
 ## Extensions
 
 | Extension ID | Purpose |
 |---|---|
-| `theme:app/wien-light` | Light theme; `instanceVariant` selects accent |
-| `theme:app/wien-dark` | Dark theme; `instanceVariant` selects accent |
+| `theme:app/wien-light` | Light theme; accent from current `wien.instances` variant |
+| `theme:app/wien-dark` | Dark theme; accent from current `wien.instances` variant |
 | `app-root-element:cd/wiener-melange-font` | Embedded Wiener Melange `@font-face` |
 
 Disable the font with `- app-root-element:cd/wiener-melange-font: false`.
@@ -83,7 +83,7 @@ flowchart LR
 ## Troubleshooting
 
 - **Themes not applied:** ensure default `theme:app/light` and `theme:app/dark` are disabled.
-- **Wrong accent colour:** set `instanceVariant` on both `wien-light` and `wien-dark` extensions.
+- **Wrong accent colour:** check the `variant` on the `wien.instances` entry whose `url` matches `app.baseUrl`.
 - **Font not loading:** check that `app-root-element:cd/wiener-melange-font` is not disabled.
 
 ## Tests

@@ -4,28 +4,42 @@
  * **AppTheme** ids are the standard `light` / `dark` so
  * `UserSettingsThemeToggle` can resolve labels via
  * `userSettingsTranslationRef` (DE/EN) instead of a hard-coded title.
+ *
+ * The accent variant (Wien Rot vs Wasserblau) is derived from `app.baseUrl`
+ * matched against the shared `wien.instances` registry — there is no separate
+ * `instanceVariant` to configure per environment.
  */
+import { useMemo } from 'react';
 import { UnifiedThemeProvider } from '@backstage/theme';
 import { ThemeBlueprint } from '@backstage/plugin-app-react';
+import { configApiRef, useApi } from '@backstage/frontend-plugin-api';
 import LightIcon from '@material-ui/icons/WbSunny';
 import DarkIcon from '@material-ui/icons/Brightness2';
-import { z } from 'zod';
 
-import {
-  createWienTheme,
-  type WienInstanceVariant,
-} from './wienTheme';
+import { readCurrentWienInstance } from '@wien/backstage-shared';
+import { createWienTheme } from './wienTheme';
 
-const instanceVariantSchema = z.enum(['on-prem', 'cloud']).optional().default('on-prem');
+/** Resolve the deployment variant from config, defaulting to on-prem. */
+const WienThemeProvider = ({
+  mode,
+  children,
+}: {
+  mode: 'light' | 'dark';
+  children: React.ReactNode;
+}) => {
+  const configApi = useApi(configApiRef);
+  const { current } = readCurrentWienInstance(configApi);
+  const variant = current?.variant ?? 'on-prem';
+  const theme = useMemo(
+    () => createWienTheme({ variant, mode }),
+    [variant, mode],
+  );
+  return <UnifiedThemeProvider theme={theme}>{children}</UnifiedThemeProvider>;
+};
 
 export const WienLightTheme = ThemeBlueprint.makeWithOverrides({
   name: 'wien-light',
-  configSchema: {
-    instanceVariant: instanceVariantSchema,
-  },
-  factory(originalFactory, { config }) {
-    const variant = config.instanceVariant as WienInstanceVariant;
-    const theme = createWienTheme({ variant, mode: 'light' });
+  factory(originalFactory) {
     return originalFactory({
       theme: {
         id: 'light',
@@ -33,7 +47,7 @@ export const WienLightTheme = ThemeBlueprint.makeWithOverrides({
         variant: 'light',
         icon: <LightIcon />,
         Provider: ({ children }) => (
-          <UnifiedThemeProvider theme={theme}>{children}</UnifiedThemeProvider>
+          <WienThemeProvider mode="light">{children}</WienThemeProvider>
         ),
       },
     });
@@ -42,12 +56,7 @@ export const WienLightTheme = ThemeBlueprint.makeWithOverrides({
 
 export const WienDarkTheme = ThemeBlueprint.makeWithOverrides({
   name: 'wien-dark',
-  configSchema: {
-    instanceVariant: instanceVariantSchema,
-  },
-  factory(originalFactory, { config }) {
-    const variant = config.instanceVariant as WienInstanceVariant;
-    const theme = createWienTheme({ variant, mode: 'dark' });
+  factory(originalFactory) {
     return originalFactory({
       theme: {
         id: 'dark',
@@ -55,7 +64,7 @@ export const WienDarkTheme = ThemeBlueprint.makeWithOverrides({
         variant: 'dark',
         icon: <DarkIcon />,
         Provider: ({ children }) => (
-          <UnifiedThemeProvider theme={theme}>{children}</UnifiedThemeProvider>
+          <WienThemeProvider mode="dark">{children}</WienThemeProvider>
         ),
       },
     });

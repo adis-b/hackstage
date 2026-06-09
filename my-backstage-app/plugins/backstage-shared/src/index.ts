@@ -11,3 +11,11 @@ export {
   type WienInstanceVariant,
   type WienVariantAccent,
 } from './variants';
+export {
+  normalizeInstanceUrl,
+  readWienInstances,
+  resolveCurrentInstance,
+  readCurrentWienInstance,
+  type WienInstance,
+  type CurrentWienInstance,
+} from './instances';

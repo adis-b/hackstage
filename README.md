@@ -93,7 +93,7 @@ Depends on `@wien/backstage-shared`. Re-exports shared tokens from its stable AP
 
 ### `@wien/backstage-instanceswitcher-plugin`
 
-Depends on `@wien/backstage-shared` only (not the CD plugin). Pair `instances[].variant` with `instanceVariant` on CD theme extensions in `app-config.yaml`.
+Depends on `@wien/backstage-shared` only (not the CD plugin). Reads the shared `wien.instances` registry and resolves the current deployment from `app.baseUrl`; the matching `variant` also drives the CD theme accent and the `wien:instance:current` scaffolder action.
 
 ## Wiring
 

@@ -1,31 +1,28 @@
 {
-  "name": "@wien/backstage-shared",
+  "name": "@wien/backstage-scaffolder-backend-module-wien",
   "version": "1.0.0",
-  "description": "Shared Stadt Wien Backstage tokens — brand colours and on-prem/cloud instance variant helpers.",
+  "description": "Stadt Wien scaffolder backend actions — deployment instance resolution from app-config.",
   "backstage": {
-    "role": "common-library",
-    "pluginId": "wien-shared",
-    "pluginPackages": [
-      "@wien/backstage-shared"
-    ]
+    "role": "backend-plugin-module",
+    "pluginId": "scaffolder",
+    "pluginPackage": "@backstage/plugin-scaffolder-backend"
   },
   "publishConfig": {
     "access": "public"
   },
   "keywords": [
     "backstage",
+    "scaffolder",
     "stadt-wien",
-    "wien",
-    "design-tokens"
+    "wien"
   ],
-  "homepage": "https://github.com/adis-b/hackstage/tree/main/my-backstage-app/plugins/backstage-shared",
+  "homepage": "https://github.com/adis-b/hackstage/tree/main/my-backstage-app/plugins/backstage-scaffolder-backend-module-wien",
   "repository": {
     "type": "git",
     "url": "https://github.com/adis-b/hackstage",
-    "directory": "my-backstage-app/plugins/backstage-shared"
+    "directory": "my-backstage-app/plugins/backstage-scaffolder-backend-module-wien"
   },
   "license": "Apache-2.0",
-  "sideEffects": false,
   "main": "src/index.ts",
   "types": "src/index.ts",
   "exports": {
@@ -45,9 +42,12 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
-    "@backstage/config": "^1.3.7"
+    "@backstage/backend-plugin-api": "^1.9.0",
+    "@backstage/config": "^1.3.7",
+    "@backstage/plugin-scaffolder-node": "^0.13.2",
+    "@wien/backstage-shared": "workspace:^"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.36.0"
+    "@backstage/cli": "^0.36.1"
   }
 }

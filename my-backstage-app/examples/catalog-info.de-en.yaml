@@ -18,18 +18,18 @@
 #
 #  Annotation-Konvention / naming convention:
 #
-#      wien.gv.at/title-de          — German title
-#      wien.gv.at/title-en          — English title
-#      wien.gv.at/description-de    — German description
-#      wien.gv.at/description-en    — English description
-#      wien.gv.at/<key>-<lang>      — any other localised piece
+#      wien.at/title-de          — German title
+#      wien.at/title-en          — English title
+#      wien.at/description-de    — German description
+#      wien.at/description-en    — English description
+#      wien.at/<key>-<lang>      — any other localised piece
 #
 #  The @wien/backstage-i18n-de-plugin package's `wienI18nDeTranslationRef`
 #  is used for UI-chrome strings. This file, in contrast, is about
 #  **content** — the team decided what the component is called, in both
 #  languages — so there is no translation ref here. An entity card that
 #  wants to show the localised title/description reads
-#  `entity.metadata.annotations['wien.gv.at/title-' + currentLanguage]`
+#  `entity.metadata.annotations['wien.at/title-' + currentLanguage]`
 #  (with a fallback to `entity.metadata.title`).
 #
 #  Backstage itself will happily ingest this file — annotations are part
@@ -69,15 +69,15 @@ metadata:
 
   annotations:
     # --- i18n metadata: German ------------------------------------------
-    wien.gv.at/title-de: Wiener Bürgerservice
-    wien.gv.at/description-de: >-
+    wien.at/title-de: Wiener Bürgerservice
+    wien.at/description-de: >-
       Zentraler Dienst für alle digitalen Kontakte zwischen
       Wienerinnen, Wienern und der Stadt Wien. Bietet Single Sign-On,
       Formular-Management und Rückfragen-Tracking.
 
     # --- i18n metadata: English -----------------------------------------
-    wien.gv.at/title-en: City of Vienna Citizen Service
-    wien.gv.at/description-en: >-
+    wien.at/title-en: City of Vienna Citizen Service
+    wien.at/description-en: >-
       Central service for every digital interaction between citizens
       and the City of Vienna. Provides single sign-on, form management
       and follow-up tracking.
