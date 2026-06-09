@@ -63,7 +63,7 @@
     "react-dom": "^17 || ^18"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.36.0",
+    "@backstage/cli": "^0.36.1",
     "@backstage/frontend-test-utils": "^0.5.0",
     "@backstage/test-utils": "^1.7.0",
     "@testing-library/react": "^14.0.0",

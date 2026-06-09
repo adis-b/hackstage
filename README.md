@@ -7,7 +7,8 @@ Publishable `@wien` frontend plugins for [Backstage](https://backstage.io), plus
 | `@wien/backstage-shared` | Brand colours + on-prem/cloud variant tokens (no React) |
 | `@wien/backstage-cd-plugin` | Wien CD themes, Wiener Melange font |
 | `@wien/backstage-i18n-de-plugin` | German translations, TechDocs i18n |
-| `@wien/backstage-instanceswitcher-plugin` | Floating on-prem ↔ cloud instance switcher |
+| `@wien/backstage-instanceswitcher-plugin` | Floating on-prem ↔ cloud instance switcher + `WienEnvironment` scaffolder field |
+| `@wien/backstage-scaffolder-backend-module-wien` | `wien:instance:current` scaffolder action (backend) |
 
 ![Stadt Wien Developer Portal — catalog (German)](docs/assets/wien_cd_de.png)
 
@@ -55,31 +56,35 @@ Floating pill at top-right; on-prem (Wien Rot) vs cloud (Wasserblau) variants fr
 
 ### `@wien/backstage-shared` — Design tokens
 
-No UI of its own. Provides `wienColors`, `WienInstanceVariant`, and `getVariantDisplayColor()` used by the CD and instance-switcher plugins above.
+No UI of its own. Provides `wienColors`, `WienInstanceVariant`, `getVariantDisplayColor()`, the `wien.instances` config resolver, and `wienAnnotations` (`wien.at/*` catalog keys) used by the CD, instance-switcher, and scaffolder packages above.
 
 ## Plugin dependency graph
 
 ```mermaid
 flowchart TB
-  Shared["@wien/backstage-shared<br/>wienColors, variant tokens"]
+  Shared["@wien/backstage-shared<br/>tokens, wien.instances, wienAnnotations"]
   CD["@wien/backstage-cd-plugin<br/>themes + font"]
   I18N["@wien/backstage-i18n-de-plugin<br/>14 DE bundles + TechDocs"]
   DemoNav["demo app nav/<br/>grouped sidebar"]
-  SW["@wien/backstage-instanceswitcher-plugin<br/>floating switcher"]
+  SW["@wien/backstage-instanceswitcher-plugin<br/>switcher + WienEnvironment field"]
+  ScaffBE["@wien/backstage-scaffolder-backend-module-wien<br/>wien:instance:current"]
 
   Shared --> CD
   Shared --> SW
+  Shared --> ScaffBE
   I18N -.->|"peerDeps: 14 upstream plugins"| Upstream["@backstage/plugin-*"]
   CD --> App["demo app createApp()"]
   I18N --> App
   DemoNav --> App
   DemoNav -.-> I18N
   SW --> App
+  ScaffBE --> BE["packages/backend"]
+  App --> BE
 ```
 
 ### `@wien/backstage-shared`
 
-Framework-agnostic tokens. Import when you need `wienColors` or `getVariantDisplayColor()` without the CD theme plugin.
+Framework-agnostic tokens. Import when you need `wienColors`, `readCurrentWienInstance()`, or `wienAnnotations` without the CD theme plugin. Contributes the canonical `wien.instances` config schema.
 
 ### `@wien/backstage-cd-plugin`
 
@@ -138,7 +143,7 @@ Builds the backend image (if needed) and starts Postgres + Backstage at http://l
 
 | Path | Purpose |
 |---|---|
-| `my-backstage-app/plugins/backstage-*-plugin/` | Four `@wien` packages (shared + three frontend plugins) |
+| `my-backstage-app/plugins/backstage-*-plugin/` | Five `@wien` packages (shared, three frontend plugins, one backend module) |
 | `my-backstage-app/packages/app/` | Demo Backstage app |
 | `my-backstage-app/packages/backend/` | Demo backend |
 | `my-backstage-app/docker/` | Optional Docker Compose for backend smoke test |

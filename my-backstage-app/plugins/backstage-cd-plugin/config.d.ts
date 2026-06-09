@@ -1,6 +1,9 @@
 /**
  * Configuration schema contributed by `@wien/backstage-cd-plugin`.
  *
+ * The `wien.instances` registry (used to derive the theme accent from
+ * `app.baseUrl`) is declared canonically by `@wien/backstage-shared`.
+ *
  * Typical snippet:
  *
  *     app:

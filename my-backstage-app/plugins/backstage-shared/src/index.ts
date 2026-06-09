@@ -19,3 +19,8 @@ export {
   type WienInstance,
   type CurrentWienInstance,
 } from './instances';
+export {
+  WIEN_ANNOTATION_PREFIX,
+  wienAnnotations,
+  type WienAnnotationKey,
+} from './annotations';

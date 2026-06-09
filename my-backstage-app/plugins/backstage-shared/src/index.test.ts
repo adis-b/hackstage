@@ -6,6 +6,8 @@ import {
   readCurrentWienInstance,
   readWienInstances,
   resolveCurrentInstance,
+  WIEN_ANNOTATION_PREFIX,
+  wienAnnotations,
   wienColors,
 } from './index';
 
@@ -83,5 +85,13 @@ describe('wien.instances registry', () => {
       },
     });
     expect(() => readWienInstances(bad)).toThrow(/variant/);
+  });
+});
+
+describe('wien.at annotations', () => {
+  it('exports stable annotation keys', () => {
+    expect(wienAnnotations.instance).toBe('wien.at/instance');
+    expect(wienAnnotations.titleEn).toBe('wien.at/title-en');
+    expect(WIEN_ANNOTATION_PREFIX).toBe('wien.at');
   });
 });

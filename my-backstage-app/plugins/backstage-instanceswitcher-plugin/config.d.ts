@@ -1,45 +1,10 @@
 /**
  * Configuration schema contributed by `@wien/backstage-instanceswitcher-plugin`.
+ *
+ * The `wien.instances` registry is declared canonically by
+ * `@wien/backstage-shared` (see that package's `config.d.ts`).
  */
 export interface Config {
-  /**
-   * Stadt Wien deployment registry, shared by the instance switcher, the CD
-   * theme accent, and the `wien:instance:current` scaffolder action.
-   *
-   * The **current** deployment is resolved by matching `app.baseUrl` against
-   * each entry's `url`, so there is no separate "current instance id" to keep
-   * in sync per environment.
-   */
-  wien?: {
-    /**
-     * Sibling Backstage deployments (min 2 to render the switcher).
-     * @visibility frontend
-     */
-    instances?: Array<{
-      /**
-       * Stable instance id.
-       * @visibility frontend
-       */
-      id: string;
-      /**
-       * Human-readable label shown in the switcher.
-       * @visibility frontend
-       */
-      label: string;
-      /**
-       * Public base URL of the deployment. Matched against `app.baseUrl`
-       * to determine the current instance.
-       * @visibility frontend
-       */
-      url: string;
-      /**
-       * Visual variant driving the Stadt Wien accent colour.
-       * @visibility frontend
-       */
-      variant: 'on-prem' | 'cloud';
-    }>;
-  };
-
   /**
    * Backstage `app.extensions` keys relevant for this plugin:
    *
