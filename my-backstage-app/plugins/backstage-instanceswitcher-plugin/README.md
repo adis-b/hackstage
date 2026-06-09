@@ -25,6 +25,14 @@ export default createApp({
 
 ### `app-config.yaml`
 
+## Behaviour
+
+1. **Expanded pill** at page top on load (variant icon + label + menu chevron).
+2. After **`compactDelayMs`** (default 4000 ms) idle at top, shrinks to a **32px variant-coloured circle** (icon only).
+3. **Hover, focus, or open menu** expands back to the full pill.
+4. **Scroll down** hides the switcher completely (`scrollThreshold`, default 16 px).
+5. Set **`compactDelayMs: 0`** to keep the full pill at all times.
+
 ```yaml
 app:
   extensions:
@@ -32,6 +40,7 @@ app:
         config:
           currentInstanceId: on-prem
           scrollThreshold: 16
+          compactDelayMs: 4000   # 0 = never compact
           instances:
             - id: on-prem
               label: On-Premises
@@ -76,6 +85,7 @@ Uses `getVariantDisplayColor()` from `@wien/backstage-shared` — on-prem pill i
 ## Troubleshooting
 
 - **Switcher not visible:** appears only when scrolled to the top (`scrollThreshold`, default 16px).
+- **Still full pill at top:** wait for `compactDelayMs` (default 4s) or hover to expand from compact circle.
 - **Wrong pill colour:** match `instances[].variant` with theme `instanceVariant` from CD plugin.
 - **Fewer than two instances:** switcher renders nothing by design.
 

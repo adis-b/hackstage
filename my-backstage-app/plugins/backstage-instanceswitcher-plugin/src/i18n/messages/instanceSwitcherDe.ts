@@ -6,6 +6,8 @@ export const instanceSwitcherDe = createTranslationMessages({
   full: false,
   messages: {
     'instanceSwitcher.ariaLabel': 'Backstage-Instanz wechseln',
+    'instanceSwitcher.compactAriaLabel':
+      'Aktuelle Instanz: {{label}}. Klicken zum Wechseln.',
     'instanceSwitcher.current': 'aktiv',
   },
 });

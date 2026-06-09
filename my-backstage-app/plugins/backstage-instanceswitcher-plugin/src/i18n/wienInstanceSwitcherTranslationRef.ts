@@ -5,6 +5,7 @@ export const wienInstanceSwitcherTranslationRef = createTranslationRef({
   messages: {
     instanceSwitcher: {
       ariaLabel: 'Switch Backstage instance',
+      compactAriaLabel: 'Current instance: {{label}}. Click to switch.',
       current: 'active',
     },
   },

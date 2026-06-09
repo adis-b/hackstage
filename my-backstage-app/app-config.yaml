@@ -31,6 +31,7 @@ app:
         config:
           currentInstanceId: on-prem
           scrollThreshold: 16
+          compactDelayMs: 4000
           instances:
             - id: on-prem
               label: On-Premises

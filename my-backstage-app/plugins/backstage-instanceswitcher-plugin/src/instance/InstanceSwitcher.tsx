@@ -12,6 +12,7 @@ import {
   type WienInstanceVariant,
 } from '@wien/backstage-shared';
 import { wienInstanceSwitcherTranslationRef } from '../i18n/wienInstanceSwitcherTranslationRef';
+import { useCompactAfterDelay } from './useCompactAfterDelay';
 import { useScrollAtTop } from './useScrollAtTop';
 import { navigateToInstanceUrl } from './navigation';
 
@@ -26,6 +27,8 @@ export interface InstanceSwitcherProps {
   currentInstanceId: string;
   instances: InstanceSwitcherInstance[];
   scrollThreshold?: number;
+  /** Ms at page top before shrinking to the compact circle. 0 disables compact mode. */
+  compactDelayMs?: number;
   position?: 'top-center' | 'top-right';
 }
 
@@ -43,8 +46,16 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[6],
     border: `1px solid ${theme.palette.divider}`,
     cursor: 'pointer',
-    transition: 'opacity 220ms ease, transform 220ms ease',
+    transition:
+      'opacity 220ms ease, transform 220ms ease, padding 220ms ease, gap 220ms ease',
     userSelect: 'none',
+  },
+  rootCompact: {
+    padding: 0,
+    gap: 0,
+    borderColor: 'transparent',
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
   },
   topCenter: {
     left: '50%',
@@ -81,6 +92,16 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700,
     fontSize: 13,
     lineHeight: 1,
+    transition: 'min-width 220ms ease, padding 220ms ease, gap 220ms ease',
+  },
+  selectionCompact: {
+    width: 32,
+    height: 32,
+    minHeight: 32,
+    padding: 0,
+    gap: 0,
+    borderRadius: '50%',
+    boxShadow: theme.shadows[4],
   },
   selectionIcon: {
     display: 'inline-flex',
@@ -91,6 +112,16 @@ const useStyles = makeStyles(theme => ({
       fontSize: 18,
     },
   },
+  label: {
+    maxWidth: 160,
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    transition: 'max-width 220ms ease, opacity 180ms ease',
+  },
+  labelCompact: {
+    maxWidth: 0,
+    opacity: 0,
+  },
   chevron: {
     display: 'inline-flex',
     alignItems: 'center',
@@ -98,6 +129,12 @@ const useStyles = makeStyles(theme => ({
     width: 24,
     height: 24,
     color: theme.palette.text.secondary,
+    overflow: 'hidden',
+    transition: 'width 220ms ease, opacity 180ms ease',
+  },
+  chevronCompact: {
+    width: 0,
+    opacity: 0,
   },
   menuItem: {
     display: 'flex',
@@ -113,26 +150,40 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function variantIcon(variant: WienInstanceVariant) {
-  return variant === 'cloud' ? <CloudIcon fontSize="small" /> : <StorageIcon fontSize="small" />;
+  return variant === 'cloud' ? (
+    <CloudIcon fontSize="small" />
+  ) : (
+    <StorageIcon fontSize="small" />
+  );
 }
 
 /**
  * Floating instance switcher shown near the top of the viewport when the
- * user has scrolled back to the top of the page.
+ * user has scrolled back to the top of the page. Shrinks to a compact
+ * variant-coloured circle after `compactDelayMs` to stay out of the way.
  */
 export const InstanceSwitcher = ({
   currentInstanceId,
   instances,
   scrollThreshold = 16,
+  compactDelayMs = 4000,
   position = 'top-right',
 }: InstanceSwitcherProps) => {
   const classes = useStyles();
   const { t } = useTranslationRef(wienInstanceSwitcherTranslationRef);
   const isAtTop = useScrollAtTop(scrollThreshold);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const current = instances.find(instance => instance.id === currentInstanceId);
-  if (!current || instances.length < 2) {
+  const hasEnoughInstances = Boolean(current) && instances.length >= 2;
+
+  const canCompact = isAtTop && !anchorEl && !isHovered && !isFocused && hasEnoughInstances;
+  const isCompact = useCompactAfterDelay(canCompact, compactDelayMs);
+  const isExpanded = !isCompact || isHovered || isFocused || Boolean(anchorEl);
+
+  if (!hasEnoughInstances || !current) {
     return null;
   }
 
@@ -152,6 +203,10 @@ export const InstanceSwitcher = ({
     navigateToInstanceUrl(url);
   };
 
+  const ariaLabel = isExpanded
+    ? t('instanceSwitcher.ariaLabel')
+    : t('instanceSwitcher.compactAriaLabel', { label: current.label });
+
   return (
     <>
       <div
@@ -159,11 +214,15 @@ export const InstanceSwitcher = ({
         tabIndex={0}
         aria-haspopup="listbox"
         aria-expanded={Boolean(anchorEl)}
-        aria-label={t('instanceSwitcher.ariaLabel')}
+        aria-label={ariaLabel}
         className={`${classes.root} ${positionClass} ${
           isAtTop ? classes.visible : `${classes.hidden} ${hiddenPositionClass}`
-        }`}
+        } ${isExpanded ? '' : classes.rootCompact}`}
         onClick={openMenu}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         onKeyDown={event => {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
@@ -172,13 +231,23 @@ export const InstanceSwitcher = ({
         }}
       >
         <div
-          className={classes.selection}
+          className={`${classes.selection} ${
+            isExpanded ? '' : classes.selectionCompact
+          }`}
           style={{ backgroundColor: getVariantDisplayColor(current.variant) }}
         >
           <span className={classes.selectionIcon}>{variantIcon(current.variant)}</span>
-          <span>{current.label}</span>
+          <span
+            className={`${classes.label} ${isExpanded ? '' : classes.labelCompact}`}
+            aria-hidden={!isExpanded}
+          >
+            {current.label}
+          </span>
         </div>
-        <span className={classes.chevron} aria-hidden>
+        <span
+          className={`${classes.chevron} ${isExpanded ? '' : classes.chevronCompact}`}
+          aria-hidden
+        >
           <ArrowDropDownIcon fontSize="small" />
         </span>
       </div>

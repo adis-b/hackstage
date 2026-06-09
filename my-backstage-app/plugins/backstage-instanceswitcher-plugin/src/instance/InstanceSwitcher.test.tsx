@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { TestApiProvider, wrapInTestApp } from '@backstage/test-utils';
 
 import { InstanceSwitcher } from './InstanceSwitcher';
@@ -83,5 +83,38 @@ describe('InstanceSwitcher', () => {
     );
 
     expect(container.firstChild).toBeNull();
+  });
+
+  it('shrinks to compact mode after compactDelayMs at page top', () => {
+    jest.useFakeTimers();
+
+    render(
+      wrapInTestApp(
+        <TestApiProvider apis={[]}>
+          <InstanceSwitcher
+            currentInstanceId="on-prem"
+            instances={instances}
+            compactDelayMs={4000}
+          />
+        </TestApiProvider>,
+      ),
+    );
+
+    expect(screen.getByText('On-Premises')).toBeTruthy();
+
+    act(() => {
+      jest.advanceTimersByTime(4000);
+    });
+
+    expect(
+      screen.getByRole('button', {
+        name: /current instance: on-premises\. click to switch\./i,
+      }),
+    ).toBeTruthy();
+    expect(
+      screen.queryByRole('button', { name: /switch backstage instance/i }),
+    ).toBeNull();
+
+    jest.useRealTimers();
   });
 });

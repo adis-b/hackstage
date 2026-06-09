@@ -11,6 +11,8 @@ export interface Config {
    *    - `instances` (array, min 2): sibling instances to link to.
    *      Each entry: `id`, `label`, `url`, `variant` (`on-prem`|`cloud`).
    *    - `scrollThreshold` (number, optional): px from top before hiding.
+   *    - `compactDelayMs` (number, optional): ms at top before shrinking to
+   *      a compact circle (default 4000). Set to 0 to disable compact mode.
    *    - `position` (`top-center`|`top-right`, optional, default `top-right`).
    *    Disable with `false`.
    *
