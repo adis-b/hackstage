@@ -1,24 +1,40 @@
 # @wien/backstage-scaffolder-backend-module-wien
 
-Backend scaffolder module that exposes the configured Wien deployment instance to templates.
+Backend scaffolder module that exposes the active Wien deployment instance to templates.
+
+Scaffolder template YAML cannot read `app-config` directly (`${{ }}` only resolves
+`parameters`, `steps`, `secrets`, and `user`). This module bridges that gap with a
+single action that resolves the current deployment and surfaces it as step outputs.
 
 ## Configuration
 
-Add to `app-config.yaml` (and `app-config.cloud.yaml` for the cloud profile):
+The deployment registry lives once in `app-config.yaml` and is shared by every
+instance. The **current** instance is resolved by matching `app.baseUrl` against
+each entry's `url` — no per-environment instance id to keep in sync.
 
 ```yaml
+app:
+  baseUrl: http://localhost:3000 # decides which instance "this" deployment is
+
 wien:
-  instance:
-  # Must match app.extensions config for the instance switcher.
-    id: on-prem
-    variant: on-prem # on-prem | cloud
-    label: On-Premises
-    url: http://localhost:3000
+  instances:
+    - id: on-prem
+      label: On-Premises
+      url: http://localhost:3000
+      variant: on-prem # on-prem | cloud
+    - id: cloud
+      label: Cloud
+      url: http://localhost:3001
+      variant: cloud
 ```
+
+The same `wien.instances` registry drives the frontend instance switcher and the
+Stadt Wien CD theme accent (`@wien/backstage-instanceswitcher-plugin`,
+`@wien/backstage-cd-plugin`).
 
 ## Scaffolder action: `wien:instance:current`
 
-Resolves the active instance from backend config. No input required.
+Resolves the active instance from `app.baseUrl`. No input required.
 
 **Outputs:**
 
@@ -47,9 +63,9 @@ steps:
         metadata:
           name: ${{ parameters.name }}
           annotations:
-            wien.gv.at/instance: ${{ steps['resolve-instance'].output.id }}
-            wien.gv.at/instance-variant: ${{ steps['resolve-instance'].output.variant }}
-            wien.gv.at/instance-url: ${{ steps['resolve-instance'].output.url }}
+            wien.at/instance: ${{ steps['resolve-instance'].output.id }}
+            wien.at/instance-variant: ${{ steps['resolve-instance'].output.variant }}
+            wien.at/instance-url: ${{ steps['resolve-instance'].output.url }}
 ```
 
 ## Development

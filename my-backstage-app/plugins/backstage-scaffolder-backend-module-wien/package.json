@@ -29,10 +29,8 @@
     ".": "./src/index.ts",
     "./package.json": "./package.json"
   },
-  "configSchema": "config.d.ts",
   "files": [
     "dist",
-    "config.d.ts",
     "README.md"
   ],
   "scripts": {

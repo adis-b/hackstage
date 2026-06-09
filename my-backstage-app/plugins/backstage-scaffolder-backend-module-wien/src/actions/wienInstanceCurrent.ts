@@ -1,20 +1,24 @@
 import { Config } from '@backstage/config';
 import { createTemplateAction } from '@backstage/plugin-scaffolder-node';
 
-import { readWienInstanceFromConfig } from '../instance/readWienInstanceFromConfig';
+import { readCurrentWienInstance } from '@wien/backstage-shared';
 
-/** Scaffolder action that resolves the current deployment from `wien.instance`. */
+/**
+ * Scaffolder action that resolves the current deployment by matching
+ * `app.baseUrl` against the `wien.instances` registry. Templates cannot read
+ * app-config directly, so this action surfaces the active instance as step
+ * outputs they can stamp onto generated entities.
+ */
 export function createWienInstanceCurrentAction(options: { config: Config }) {
   const { config } = options;
 
   return createTemplateAction({
     id: 'wien:instance:current',
     description:
-      'Returns the current Backstage deployment instance (on-prem or cloud) from app-config wien.instance',
+      'Returns the current Backstage deployment instance (on-prem or cloud), resolved from app.baseUrl against the wien.instances registry',
     schema: {
       output: {
-        id: z =>
-          z.string().describe('Instance id (e.g. on-prem, cloud)'),
+        id: z => z.string().describe('Instance id (e.g. on-prem, cloud)'),
         variant: z =>
           z
             .enum(['on-prem', 'cloud'])
@@ -24,14 +28,20 @@ export function createWienInstanceCurrentAction(options: { config: Config }) {
       },
     },
     async handler(ctx) {
-      const instance = readWienInstanceFromConfig(config);
+      const { current, instances } = readCurrentWienInstance(config);
+      if (!current) {
+        throw new Error(
+          `Could not resolve the current Wien instance: app.baseUrl did not match any wien.instances url ` +
+            `(configured: ${instances.map(i => i.url).join(', ') || 'none'})`,
+        );
+      }
       ctx.logger.info(
-        `Resolved deployment instance: ${instance.id} (${instance.variant})`,
+        `Resolved deployment instance: ${current.id} (${current.variant})`,
       );
-      ctx.output('id', instance.id);
-      ctx.output('variant', instance.variant);
-      ctx.output('label', instance.label);
-      ctx.output('url', instance.url);
+      ctx.output('id', current.id);
+      ctx.output('variant', current.variant);
+      ctx.output('label', current.label);
+      ctx.output('url', current.url);
     },
   });
 }
