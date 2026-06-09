@@ -9,6 +9,7 @@ import {
 
 import { InstanceSwitcherElement } from './instance/InstanceSwitcherElement';
 import { InstanceSwitcherTranslationExtension } from './i18n/translations';
+import { WienEnvironmentFormField } from './scaffolder/WienEnvironmentFormField';
 
 export const instanceSwitcherAppModule = createFrontendModule({
   pluginId: 'app',
@@ -17,7 +18,7 @@ export const instanceSwitcherAppModule = createFrontendModule({
 
 export const instanceSwitcherPlugin = createFrontendPlugin({
   pluginId: 'instanceswitcher',
-  extensions: [InstanceSwitcherElement],
+  extensions: [InstanceSwitcherElement, WienEnvironmentFormField],
 });
 
 export const instanceSwitcherFeatures: FrontendFeature[] = [
