@@ -87,7 +87,7 @@ backend:
 | Instance switcher | `@wien/backstage-instanceswitcher-plugin` | Floating pill linking siblings; current = matched `app.baseUrl` |
 | CD theme accent | `@wien/backstage-cd-plugin` | `variant` of the current instance → Wien Rot (on-prem) / Wasserblau (cloud) |
 | Scaffolder action | `@wien/backstage-scaffolder-backend-module-wien` | `wien:instance:current` resolves the current instance for templates |
-| Template form field | `packages/app` (`WienEnvironment`) | Read-only "Environment" field in scaffolder forms |
+| Template form field | `@wien/backstage-instanceswitcher-plugin` (`WienEnvironment`) | Read-only "Environment" field in scaffolder forms |
 
 The shared resolver lives in `@wien/backstage-shared`
 (`readWienInstances` / `resolveCurrentInstance` / `readCurrentWienInstance`) and works
@@ -151,9 +151,9 @@ parameters:
 ```
 
 The field is greyed out and cannot be edited; switching environments is done via
-the floating instance switcher. It is registered in `packages/app`
-(`src/scaffolder/`) and wired through `demoAppModule.ts`, so it is available to
-every template in this app. See
+the floating instance switcher. It ships with
+`@wien/backstage-instanceswitcher-plugin` (`src/scaffolder/`), so any app that
+installs the switcher gets the field automatically — no extra wiring. See
 `examples/template-wien-bilingual/template.yaml` for a full example.
 
 > **Annotation namespace:** Stadt Wien metadata uses the `wien.at/*` prefix

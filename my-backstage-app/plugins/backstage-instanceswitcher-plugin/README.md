@@ -72,11 +72,38 @@ The matching `instances[].variant` automatically drives the `@wien/backstage-cd-
 
 ![Instance switcher menu — on-prem vs cloud variants](../../../docs/assets/plugin-instance-switcher-menu.png)
 
+## Scaffolder field: `WienEnvironment`
+
+The plugin also ships a **read-only** scaffolder form field that displays the
+current deployment (resolved from `app.baseUrl`, same as the switcher). Use it
+in templates via `ui:field`:
+
+```yaml
+parameters:
+  - title: Component identity
+    properties:
+      # Read-only — value cannot be changed in the form.
+      # If you want to change environment - use the multi instance switcher
+      # on the top right.
+      environment:
+        title: Environment
+        description: >-
+          If you want to change environment - use the multi instance switcher
+          on the top right
+        type: string
+        ui:field: WienEnvironment
+```
+
+The field is disabled and shows the current instance label (e.g. "On-Premises").
+Override the helper text with `ui:description` if needed. The component is
+lazy-loaded, so apps that never open the scaffolder pay no bundle cost.
+
 ## Extensions
 
 | Extension ID | Purpose |
 |---|---|
 | `app-root-element:instanceswitcher/instance-switcher` | Floating top instance picker |
+| `scaffolder-form-field:instanceswitcher/wien-environment` | Read-only `WienEnvironment` template field |
 | `translation:app/instanceswitcher-de` | DE/EN strings for the switcher UI |
 
 ## Architecture

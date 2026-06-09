@@ -71,9 +71,9 @@ steps:
 ## Companion: read-only `WienEnvironment` form field
 
 To **show** the current instance in a scaffolder form (rather than stamp it on the
-output), use the `WienEnvironment` field extension shipped by the demo app
-(`packages/app/src/scaffolder/`). It renders a disabled "Environment" field
-resolved from `app.baseUrl`:
+output), use the `WienEnvironment` field extension shipped by
+`@wien/backstage-instanceswitcher-plugin`. It renders a disabled "Environment"
+field resolved from `app.baseUrl`:
 
 ```yaml
 parameters:
