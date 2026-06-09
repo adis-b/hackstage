@@ -76,7 +76,7 @@
     "react-dom": "^17 || ^18"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.36.0",
+    "@backstage/cli": "^0.36.1",
     "@backstage/core-components": "^0.18.0",
     "@backstage/frontend-test-utils": "^0.5.0",
     "@backstage/plugin-api-docs": "^0.14.0",

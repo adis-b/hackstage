@@ -28,9 +28,9 @@ wien:
       variant: cloud
 ```
 
-The same `wien.instances` registry drives the frontend instance switcher and the
-Stadt Wien CD theme accent (`@wien/backstage-instanceswitcher-plugin`,
-`@wien/backstage-cd-plugin`).
+The same `wien.instances` registry drives the frontend instance switcher, the CD theme
+accent, and this backend action. The config schema is declared by
+`@wien/backstage-shared`.
 
 ## Scaffolder action: `wien:instance:current`
 

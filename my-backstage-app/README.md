@@ -48,7 +48,8 @@ own base URL — there is no per-deployment instance id to keep in sync.
 
 ### 1. The single registry: `wien.instances`
 
-Define every sibling deployment **once** in `app-config.yaml`:
+Define every sibling deployment **once** in `app-config.yaml`. The config schema is
+declared canonically by `@wien/backstage-shared` (`config.d.ts`).
 
 ```yaml
 app:
@@ -157,7 +158,8 @@ installs the switcher gets the field automatically — no extra wiring. See
 `examples/template-wien-bilingual/template.yaml` for a full example.
 
 > **Annotation namespace:** Stadt Wien metadata uses the `wien.at/*` prefix
-> (e.g. `wien.at/title-de`, `wien.at/instance`).
+> (e.g. `wien.at/title-de`, `wien.at/instance`). Import `wienAnnotations` from
+> `@wien/backstage-shared` in TypeScript instead of string literals.
 
 ## Commands
 
