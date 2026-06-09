@@ -220,6 +220,15 @@ catalog:
     #   rules:
     #     - allow: [User, Group]
 
+wien:
+  instance:
+    # Authoritative deployment identity for backend scaffolder actions.
+    # Must match currentInstanceId on the instance switcher extension above.
+    id: on-prem
+    variant: on-prem
+    label: On-Premises
+    url: http://localhost:3000
+
 kubernetes:
   # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
 

@@ -1,6 +1,6 @@
 # my-backstage-app — Plugin development workspace
 
-Minimal [Backstage](https://backstage.io) monorepo for developing and testing the four `@wien` plugins.
+Minimal [Backstage](https://backstage.io) monorepo for developing and testing the `@wien` plugins.
 
 ## Run locally
 
@@ -36,6 +36,7 @@ yarn workspace app start --config ../../app-config.yaml --config ../../app-confi
 | `plugins/backstage-cd-plugin` | `@wien/backstage-cd-plugin` |
 | `plugins/backstage-i18n-de-plugin` | `@wien/backstage-i18n-de-plugin` |
 | `plugins/backstage-instanceswitcher-plugin` | `@wien/backstage-instanceswitcher-plugin` |
+| `plugins/backstage-scaffolder-backend-module-wien` | `@wien/backstage-scaffolder-backend-module-wien` — `wien:instance:current` scaffolder action |
 | `packages/app` | Demo frontend + grouped German sidebar (`src/nav/`) |
 | `packages/backend` | Demo backend |
 
@@ -48,6 +49,7 @@ yarn workspace @wien/backstage-cd-plugin test
 yarn workspace @wien/backstage-i18n-de-plugin test
 yarn workspace @wien/backstage-i18n-de-plugin i18n:coverage:check
 yarn workspace @wien/backstage-instanceswitcher-plugin test
+yarn workspace @wien/backstage-scaffolder-backend-module-wien test
 yarn screenshots                         # requires yarn start running
 ```
 

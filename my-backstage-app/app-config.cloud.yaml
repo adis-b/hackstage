@@ -29,6 +29,13 @@ app:
               url: http://localhost:3001
               variant: cloud
 
+wien:
+  instance:
+    id: cloud
+    variant: cloud
+    label: Cloud
+    url: http://localhost:3001
+
 backend:
   baseUrl: http://localhost:7008
   listen:

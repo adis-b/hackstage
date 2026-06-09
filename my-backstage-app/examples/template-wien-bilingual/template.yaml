@@ -136,6 +136,10 @@ spec:
   # Workspace. Damit landet die fertige catalog-info.yaml als File in der
   # Output-Section, die User runterladen oder per Copy-Paste übernehmen.
   steps:
+    - id: resolve-instance
+      name: Resolve Wien instance / Wien-Instanz auflösen
+      action: wien:instance:current
+
     - id: write-catalog-info
       name: Schreibe catalog-info.yaml
       action: catalog:write
@@ -149,6 +153,9 @@ spec:
             description: ${{ parameters.descriptionDe }}
             tags: ${{ parameters.tags | dump }}
             annotations:
+              wien.gv.at/instance: ${{ steps['resolve-instance'].output.id }}
+              wien.gv.at/instance-variant: ${{ steps['resolve-instance'].output.variant }}
+              wien.gv.at/instance-url: ${{ steps['resolve-instance'].output.url }}
               wien.gv.at/title-de: ${{ parameters.titleDe }}
               wien.gv.at/title-en: ${{ parameters.titleEn }}
               wien.gv.at/description-de: ${{ parameters.descriptionDe }}
@@ -189,6 +196,9 @@ spec:
               - ${{ t }}
           {%- endfor %}
             annotations:
+              wien.gv.at/instance: ${{ steps['resolve-instance'].output.id }}
+              wien.gv.at/instance-variant: ${{ steps['resolve-instance'].output.variant }}
+              wien.gv.at/instance-url: ${{ steps['resolve-instance'].output.url }}
               wien.gv.at/title-de: ${{ parameters.titleDe }}
               wien.gv.at/title-en: ${{ parameters.titleEn }}
               wien.gv.at/description-de: |-
