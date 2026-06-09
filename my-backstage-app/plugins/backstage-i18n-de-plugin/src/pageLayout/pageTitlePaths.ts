@@ -18,7 +18,7 @@ const PAGE_TITLE_EXACT: ReadonlyRecord<string, string> = {
   '/search': 'pageTitles.page_search',
   '/api-docs': 'pageTitles.page_api_docs',
   '/catalog-import': 'pageTitles.page_catalog_import',
-  '/kubernetes': 'pageTitles.page_kubernetes',
+  '/kubernetes': 'pageTitles.page_app_openshift',
   '/notifications': 'pageTitles.page_notifications',
   '/docs': 'pageTitles.page_app_wien_techdocs',
   '/visualizer': 'pageTitles.page_app_visualizer',

@@ -29,6 +29,7 @@ export const wienI18nDeTranslationRef = createTranslationRef({
       page_notifications: 'Notifications',
       page_app_wien_techdocs: 'Docs',
       page_app_visualizer: 'Visualizer',
+      page_app_openshift: 'OpenShift',
       page_scaffolder: 'Create',
       page_scaffolder_templates: 'Templates',
       page_scaffolder_tasks: 'Tasks',
@@ -56,6 +57,14 @@ export const wienI18nDeTranslationRef = createTranslationRef({
       nav_item_app_visualizer: 'Visualizer',
       page_user_settings: 'Settings',
       nav_item_user_settings: 'Settings',
+      page_app_openshift: 'OpenShift',
+    },
+    openshift: {
+      emptyState: {
+        title: 'OpenShift not configured',
+        description:
+          'This demo portal does not connect to a cluster yet. OpenShift workload views appear on catalog entity pages once `kubernetes.io/*` annotations are configured.',
+      },
     },
     techdocs: {
       errors: {
