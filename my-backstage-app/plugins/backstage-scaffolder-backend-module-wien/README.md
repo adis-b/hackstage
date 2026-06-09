@@ -68,6 +68,26 @@ steps:
             wien.at/instance-url: ${{ steps['resolve-instance'].output.url }}
 ```
 
+## Companion: read-only `WienEnvironment` form field
+
+To **show** the current instance in a scaffolder form (rather than stamp it on the
+output), use the `WienEnvironment` field extension shipped by the demo app
+(`packages/app/src/scaffolder/`). It renders a disabled "Environment" field
+resolved from `app.baseUrl`:
+
+```yaml
+parameters:
+  - title: Component identity
+    properties:
+      environment:
+        title: Environment
+        description: >-
+          If you want to change environment - use the multi instance switcher
+          on the top right
+        type: string
+        ui:field: WienEnvironment
+```
+
 ## Development
 
 ```bash
