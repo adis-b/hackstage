@@ -32,6 +32,7 @@ export default createApp({
 3. **Hover, focus, or open menu** expands back to the full pill.
 4. **Scroll down** hides the switcher completely (`scrollThreshold`, default 16 px).
 5. Set **`compactDelayMs: 0`** to keep the full pill at all times.
+6. **`offsetTop`** / **`offsetRight`** (defaults **8** / **20** px) pin the switcher to the viewport corner.
 
 ```yaml
 app:
@@ -41,6 +42,9 @@ app:
           currentInstanceId: on-prem
           scrollThreshold: 16
           compactDelayMs: 4000   # 0 = never compact
+          position: top-right
+          offsetTop: 8
+          offsetRight: 20
           instances:
             - id: on-prem
               label: On-Premises

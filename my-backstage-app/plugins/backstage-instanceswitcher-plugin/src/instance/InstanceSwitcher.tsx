@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { useTranslationRef } from '@backstage/frontend-plugin-api';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -30,12 +30,15 @@ export interface InstanceSwitcherProps {
   /** Ms at page top before shrinking to the compact circle. 0 disables compact mode. */
   compactDelayMs?: number;
   position?: 'top-center' | 'top-right';
+  /** Fixed offset from the top of the viewport in px (default 8). */
+  offsetTop?: number;
+  /** Fixed offset from the right edge when `position` is `top-right` (default 20). */
+  offsetRight?: number;
 }
 
 const useStyles = makeStyles(theme => ({
   root: {
     position: 'fixed',
-    top: 12,
     zIndex: theme.zIndex.snackbar + 1,
     display: 'inline-flex',
     alignItems: 'center',
@@ -65,11 +68,8 @@ const useStyles = makeStyles(theme => ({
     left: '50%',
     transform: 'translateX(-50%) translateY(-120%)',
   },
-  topRight: {
-    right: 24,
-  },
+  topRight: {},
   topRightHidden: {
-    right: 24,
     transform: 'translateY(-120%)',
   },
   visible: {
@@ -168,6 +168,8 @@ export const InstanceSwitcher = ({
   scrollThreshold = 16,
   compactDelayMs = 4000,
   position = 'top-right',
+  offsetTop = 8,
+  offsetRight = 20,
 }: InstanceSwitcherProps) => {
   const classes = useStyles();
   const { t } = useTranslationRef(wienInstanceSwitcherTranslationRef);
@@ -207,6 +209,11 @@ export const InstanceSwitcher = ({
     ? t('instanceSwitcher.ariaLabel')
     : t('instanceSwitcher.compactAriaLabel', { label: current.label });
 
+  const positioningStyle: CSSProperties = {
+    top: offsetTop,
+    ...(position === 'top-right' ? { right: offsetRight } : {}),
+  };
+
   return (
     <>
       <div
@@ -218,6 +225,7 @@ export const InstanceSwitcher = ({
         className={`${classes.root} ${positionClass} ${
           isAtTop ? classes.visible : `${classes.hidden} ${hiddenPositionClass}`
         } ${isExpanded ? '' : classes.rootCompact}`}
+        style={positioningStyle}
         onClick={openMenu}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

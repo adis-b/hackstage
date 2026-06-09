@@ -85,6 +85,25 @@ describe('InstanceSwitcher', () => {
     expect(container.firstChild).toBeNull();
   });
 
+  it('applies viewport offset from config', () => {
+    render(
+      wrapInTestApp(
+        <TestApiProvider apis={[]}>
+          <InstanceSwitcher
+            currentInstanceId="on-prem"
+            instances={instances}
+            offsetTop={8}
+            offsetRight={20}
+          />
+        </TestApiProvider>,
+      ),
+    );
+
+    const button = screen.getByRole('button', { name: /switch backstage instance/i });
+    expect(button.style.top).toBe('8px');
+    expect(button.style.right).toBe('20px');
+  });
+
   it('shrinks to compact mode after compactDelayMs at page top', () => {
     jest.useFakeTimers();
 
