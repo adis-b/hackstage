@@ -58,3 +58,15 @@ yarn screenshots                         # requires yarn start running
 ```
 
 See [../README.md](../README.md) for plugin architecture and dependency details.
+
+## Troubleshooting
+
+**Changes not visible on http://localhost:3000?** Pull the latest `main`, then fully restart the dev server — `app-config.yaml` and frontend module changes are not picked up by hot reload:
+
+```sh
+git pull origin main
+# stop the running yarn start (Ctrl+C), then:
+yarn start
+```
+
+**OpenShift (`/kubernetes`) shows `Entity context is not available`:** You are on an old build or stale dev server. After pulling and restarting, the page should show an “OpenShift nicht konfiguriert” placeholder instead.

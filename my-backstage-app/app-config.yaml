@@ -64,9 +64,8 @@ app:
     # `/docs` route (page:app/wien-techdocs).
     - page:techdocs: false
 
-    # Upstream page:kubernetes calls useEntity() and crashes on a standalone
-    # route ("Entity context is not available"). The demo app mounts
-    # page:app/openshift on the same path instead (see demoAppModule.ts).
+    # Upstream page:kubernetes calls useEntity() on a standalone route. Disabled
+    # in favour of page:app/openshift (see packages/app/src/pages/).
     - page:kubernetes: false
 
     # Override the hard-coded English titles of the Scaffolder root page

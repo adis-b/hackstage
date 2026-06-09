@@ -6,8 +6,8 @@ import { OpenShiftPlaceholderContent } from './OpenShiftPlaceholderContent';
 /**
  * Stadt Wien demo page on `/kubernetes` (sidebar label: OpenShift).
  *
- * Disables the upstream `page:kubernetes` route, which expects catalog entity
- * context and throws "Entity context is not available" on a standalone page.
+ * Mounted while `page:kubernetes` is disabled in app-config.yaml — the upstream
+ * page calls `useEntity()` and crashes on a standalone route.
  */
 export const OpenShiftPlaceholderPage = PageBlueprint.make({
   name: 'openshift',
