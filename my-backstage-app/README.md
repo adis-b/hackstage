@@ -193,3 +193,16 @@ yarn start
 ```
 
 **OpenShift (`/kubernetes`) shows `Entity context is not available`:** You are on an old build or stale dev server. After pulling and restarting, the page should show an “OpenShift nicht konfiguriert” placeholder instead.
+
+**`ChunkLoadError` on Template Editor, Templating Extensions, or sidebar search:** The browser is requesting JavaScript chunks from a stale `yarn start` build (hot reload does not replace lazy-loaded chunks). This is **not** caused by the Wien plugins or the `WienEnvironment` field. Fix:
+
+```sh
+# 1. Stop every running yarn start (all terminals)
+# 2. Confirm nothing listens on 3000/7007:
+lsof -ti tcp:3000 tcp:7007 | xargs -r kill
+# 3. From my-backstage-app/:
+yarn start
+# 4. In the browser: hard refresh (Ctrl+Shift+R) or open a private window
+```
+
+Affected routes include `/create/edit`, `/create/templating-extensions`, and the sidebar search modal — they all lazy-load large chunks (`highlight.js`, scaffolder pages).
