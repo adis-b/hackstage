@@ -52,7 +52,7 @@
   "dependencies": {
     "@backstage/frontend-plugin-api": "^0.16.0",
     "@backstage/plugin-app-react": "^0.2.0",
-    "@backstage/plugin-scaffolder-react": "^1.20.1",
+    "@backstage/plugin-scaffolder-react": "patch:@backstage/plugin-scaffolder-react@npm%3A1.20.1#~/.yarn/patches/@backstage-plugin-scaffolder-react-npm-1.20.1-5db8ed920f.patch",
     "@material-ui/core": "^4.12.2",
     "@material-ui/icons": "^4.9.1",
     "@wien/backstage-shared": "workspace:^",
