@@ -8,5 +8,11 @@ export const wienInstanceSwitcherTranslationRef = createTranslationRef({
       compactAriaLabel: 'Current instance: {{label}}. Click to switch.',
       current: 'active',
     },
+    environmentField: {
+      label: 'Environment',
+      helperText:
+        'If you want to change environment - use the multi instance switcher on the top right',
+      unknown: 'Unknown',
+    },
   },
 });

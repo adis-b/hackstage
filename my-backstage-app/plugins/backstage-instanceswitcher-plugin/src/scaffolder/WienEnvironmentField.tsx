@@ -1,19 +1,25 @@
 import { useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
-import { configApiRef, useApi } from '@backstage/frontend-plugin-api';
+import {
+  configApiRef,
+  useApi,
+  useTranslationRef,
+} from '@backstage/frontend-plugin-api';
 import { createFormField } from '@backstage/plugin-scaffolder-react/alpha';
 import type { FieldExtensionComponentProps } from '@backstage/plugin-scaffolder-react';
 
 import { readCurrentWienInstance } from '@wien/backstage-shared';
 
-const DEFAULT_HELPER_TEXT =
-  'If you want to change environment - use the multi instance switcher on the top right';
+import { wienInstanceSwitcherTranslationRef } from '../i18n/wienInstanceSwitcherTranslationRef';
 
 /**
  * Read-only scaffolder field that displays the current deployment instance
  * (On-Premises / Cloud), resolved from `app.baseUrl` against the shared
  * `wien.instances` registry. The value cannot be edited from the form —
  * switching environments is done via the floating instance switcher.
+ *
+ * Label and helper text follow the language selected in the frontend
+ * (German / English) via the plugin's translation ref.
  */
 const WienEnvironmentFieldComponent = ({
   onChange,
@@ -21,8 +27,9 @@ const WienEnvironmentFieldComponent = ({
   uiSchema,
 }: FieldExtensionComponentProps<string>) => {
   const configApi = useApi(configApiRef);
+  const { t } = useTranslationRef(wienInstanceSwitcherTranslationRef);
   const { current } = readCurrentWienInstance(configApi);
-  const label = current?.label ?? 'Unbekannt / Unknown';
+  const label = current?.label ?? t('environmentField.unknown');
 
   useEffect(() => {
     if (formData !== label) {
@@ -31,12 +38,13 @@ const WienEnvironmentFieldComponent = ({
   }, [label, formData, onChange]);
 
   const helperText =
-    (uiSchema?.['ui:description'] as string | undefined) ?? DEFAULT_HELPER_TEXT;
+    (uiSchema?.['ui:description'] as string | undefined) ??
+    t('environmentField.helperText');
 
   return (
     <TextField
       id="wien-environment"
-      label="Environment"
+      label={t('environmentField.label')}
       value={label}
       disabled
       fullWidth
