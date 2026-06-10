@@ -9,5 +9,9 @@ export const instanceSwitcherDe = createTranslationMessages({
     'instanceSwitcher.compactAriaLabel':
       'Aktuelle Instanz: {{label}}. Klicken zum Wechseln.',
     'instanceSwitcher.current': 'aktiv',
+    'environmentField.label': 'Umgebung',
+    'environmentField.helperText':
+      'Wenn Sie die Umgebung wechseln möchten, verwenden Sie den Multi-Instanz-Umschalter oben rechts',
+    'environmentField.unknown': 'Unbekannt',
   },
 });

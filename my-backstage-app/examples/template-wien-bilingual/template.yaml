@@ -37,11 +37,10 @@ spec:
         # resolved from app.baseUrl. The value cannot be changed here.
         # If you want to change environment - use the multi instance switcher
         # on the top right.
+        # Label and helper text are translated by the field itself (DE/EN),
+        # so no description is set here.
         environment:
           title: Environment
-          description: >-
-            If you want to change environment - use the multi instance switcher
-            on the top right
           type: string
           ui:field: WienEnvironment
         name:
