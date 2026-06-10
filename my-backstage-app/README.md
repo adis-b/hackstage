@@ -206,3 +206,5 @@ yarn start
 ```
 
 Affected routes include `/create/edit`, `/create/templating-extensions`, and the sidebar search modal — they all lazy-load large chunks (`highlight.js`, scaffolder pages).
+
+**`TypeError: Cannot read properties of null (reading 'readOnly')` in Template Form Playground (`/create/edit/template-form`):** Typing incomplete YAML — for example adding a property key with no schema (`meh:` before another field) — used to crash the live preview because RJSF received `null` property schemas. This repo patches `@backstage/plugin-scaffolder-react` to drop invalid property entries during schema extraction, so the preview keeps rendering while you fix the YAML.

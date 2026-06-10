@@ -1,0 +1,12 @@
+diff --git a/dist/next/lib/schema.esm.js b/dist/next/lib/schema.esm.js
+index 33f8783933e8f0814a993a1ad904a3afb20a640a..6c380b65fb40c02d2ca2a161b7f55e017105c325 100644
+--- a/dist/next/lib/schema.esm.js
++++ b/dist/next/lib/schema.esm.js
+@@ -33,6 +33,7 @@ function extractUiSchema(schema, uiSchema) {
+       }
+       const schemaNode = properties[propName];
+       if (!isObject(schemaNode)) {
++        delete properties[propName];
+         continue;
+       }
+       if (!isObject(uiSchema[propName])) {
