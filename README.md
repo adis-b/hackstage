@@ -1,4 +1,4 @@
-# hackstage — Stadt Wien Backstage Plugins
+# hackstage — Stadt Wien Backstage Plugins (v2)
 
 Publishable `@wien` frontend plugins for [Backstage](https://backstage.io), plus a minimal demo app for local development.
 
